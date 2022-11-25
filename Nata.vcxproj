@@ -1073,6 +1073,9 @@
     <ClInclude Include="include\imgui\imstb_truetype.h" />
     <ClInclude Include="include\stb_image.h" />
     <ClInclude Include="src\core\core.h" />
+    <ClInclude Include="src\core\ecs\test_entity.hpp" />
+    <ClInclude Include="src\core\ecs\test_gamemode.hpp" />
+    <ClInclude Include="src\core\ecs\transform_comp.hpp" />
     <ClInclude Include="src\core\ecs\ecs.h" />
     <ClInclude Include="src\core\ecs\component.hpp" />
     <ClInclude Include="src\core\ecs\entity.hpp" />

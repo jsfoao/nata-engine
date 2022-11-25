@@ -6,50 +6,29 @@ using namespace std;
 
 namespace Nata
 {
-	class World;
-	class Entity;
-	class Component;
+	class NGameMode;
+	class NWorld;
+	class NEntity;
+	class NComponent;
 
-	class Component
+	class NEntity
 	{
 	private:
-		Entity* m_Owner;
-
-		friend class Entity;
-
-	public: 
-		Component(Entity* owner)
-		{
-			m_Owner = owner;
-		}
-
-		Entity* GetOwner()
-		{
-			return m_Owner;
-		}
-
-		virtual void Begin();
-		virtual void Tick();
-	};
-
-	class Entity
-	{
-	private:
-		World* m_World;
-		vector<Component*> m_Components;
+		NWorld* m_World;
+		vector<NComponent*> m_Components;
 
 	public:
-		Entity(World* world)
+		NEntity() {}
+
+		NEntity(NWorld* world)
 		{
 			m_World = world;
 		}
 
-		World* GetWorld()
-		{
-			return m_World;
-		}
+		NWorld* GetWorld() { return m_World; }
+		void SetWorld(NWorld* world) { m_World = world; }
 
-		template<typename T, class = typename std::enable_if<std::is_base_of<Component, T>::value>::type>
+		template<typename T, class = typename std::enable_if<std::is_base_of<NComponent, T>::value>::type>
 		T* AddComponent()
 		{
 			T* newComp = new T();
@@ -61,7 +40,7 @@ namespace Nata
 		template<typename T>
 		T* GetComponent()
 		{
-			for (Component* comp : m_Components)
+			for (NComponent* comp : m_Components)
 			{
 				if (typeid(*comp).name() == typeid(T).name())
 				{
@@ -70,8 +49,89 @@ namespace Nata
 			}
 		}
 
+		vector<NComponent*> GetALlComponents()
+		{
+			return m_Components;
+		}
+
 		virtual void Begin();
 		virtual void Tick();
-		virtual void OnDestroy();
+	};
+
+	class NComponent
+	{
+	private:
+		NEntity* m_Owner;
+
+		friend class NEntity;
+
+	public:
+		NComponent() {}
+
+		NComponent(NEntity* owner)
+		{
+			m_Owner = owner;
+		}
+
+		NEntity* GetOwner() { return m_Owner; }
+		void SetOwner(NEntity* owner) { m_Owner = owner; }
+
+		virtual void Begin();
+		virtual void Tick();
+	};
+
+	// behaviour in level lifetime
+	class NGameMode
+	{
+	private:
+		NWorld* m_World;
+
+	public:
+		NGameMode(){}
+
+		NWorld* GetWorld() { return m_World; }
+		void SetWorld(NWorld* world) { m_World = world; }
+
+		virtual void Begin();
+		virtual void Tick();
+	};
+
+	// behaviour in application lifetime
+	class NGameInstance
+	{
+	public:
+		virtual void Begin();
+		virtual void Tick();
+	};
+
+	class NWorld
+	{
+	private:
+		NGameMode* m_GameMode;
+		vector<NEntity*> m_Entities;
+
+	public:
+		NWorld(){}
+
+		vector<NEntity*> GetAllEntities() { return m_Entities; }
+		void SetGameMode(NGameMode* gameMode) { m_GameMode = gameMode; }
+
+		void Begin()
+		{
+			m_GameMode->Begin();
+			for (NEntity* entity : m_Entities)
+			{
+				entity->Begin();
+			}
+		}
+
+		void Tick()
+		{
+			m_GameMode->Tick();
+			for (NEntity* entity : m_Entities)
+			{
+				entity->Tick();
+			}
+		}
 	};
 } 
