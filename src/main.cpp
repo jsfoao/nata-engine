@@ -1,6 +1,5 @@
 #pragma once
 #include "nata.h"
-#include "exercises/exercises.hpp"
 #include "core/ecs/ecs.h"
 
 #include "core/ecs/EOurObject.hpp"
@@ -31,11 +30,13 @@ int main(int argc, char** argv)
     EOurObject* entity = world->Instantiate<EOurObject>();
 
     Window* win = new Window("OpenGL Studies", 700, 500);
+    NRenderer* renderer = win->GetRenderer();
     Input* input = win->GetInput();
 
     NShader* ourShader = new NShader("src\\shaders\\unlit.vert", "src\\shaders\\unlit.frag");
     NTexture* ourTexture = new NTexture("container2.png", "res", TEXTURE_DIFFUSE);
     NModel* ourModel = new NModel("res\\models\\teapot.obj");
+    NModel* ourOtherModel = new NModel("res\\models\\teapot.obj");
 
     //entity->MeshRenderer->Shader = shader;
     //entity->MeshRenderer->Texture = texture;
@@ -53,12 +54,15 @@ int main(int argc, char** argv)
     const float camSens = 1.f;
     float pitchDeg = 0.f;
     float yawDeg = -90.f;
-    vec3 camPos = vec3(0.f, 0.f, 0.f);
+    vec3 camPos = vec3(0.f, 0.f, 8.f);
     vec2 lastMousePos = vec2(0.f, 0.f);
     const float rotationSpeed = .5f;
 
     float deltaTime = 0.f;
     double lastFrame = 0.f;
+
+    ourModel->Shader = *ourShader;
+    ourOtherModel->Shader = *ourShader;
 
     world->Begin();
     while (!win->Closed())
@@ -92,15 +96,12 @@ int main(int argc, char** argv)
         ourShader->SetUniformMat4("view", view);
         ourShader->SetUniformMat4("projection", projection);
 
-        ourShader->Enable();
-        vec3 position = vec3(0.f, 0.f, -10.f);
-        mat4 model = mat4(1.0f);
-        model = translate(model, position);
-        model = rotate(model, NTime::Time * 5.f, vec3(0.f, 1.f, 0.f));
-        ourShader->SetUniformMat4("model", model);
-        ourShader->Disable();
+        ourModel->Position = vec3(0.f);
+        renderer->Submit(ourModel);
 
-        ourModel->Draw(*ourShader);
+        ourOtherModel->Position = vec3(0.f, 2.f, 0.f);
+        renderer->Submit(ourOtherModel);
+
         win->Update();
     }
 }

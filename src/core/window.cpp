@@ -4,6 +4,7 @@ namespace Nata
 {
 	Window::Window(const char* title, int width, int height)
 	{
+		m_Renderer = new NRenderer();
 		m_Title = title;
 		m_Width = width;
 		m_Height = height;
@@ -76,6 +77,7 @@ namespace Nata
 
 	void Window::Update()
 	{
+		m_Renderer->Flush();
 		GLenum error = glGetError();
 		if (error != GL_NO_ERROR)
 		{

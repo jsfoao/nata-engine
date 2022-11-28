@@ -37,12 +37,12 @@ namespace Nata
 		this->SetupMesh();
 	}
 
-	void NMesh::BindResources(NShader shader)
+	void NMesh::BindResources()
 	{
 		if (this->textures.size() == 0)
 			return;
 
-		shader.Enable();
+		Shader.Enable();
 
 		unsigned int diffuseNr = 0;
 		unsigned int specularNr = 0;
@@ -65,34 +65,36 @@ namespace Nata
 			{
 				continue;
 			}
-			shader.SetUniform1i((name + number).c_str(), i);
+			Shader.SetUniform1i((name + number).c_str(), i);
 			glBindTexture(GL_TEXTURE_2D, this->textures[i].m_ID);
 		}
 	}
 
-	void NMesh::Draw(NShader shader)
+	void NMesh::Draw()
 	{
-		shader.Enable();
-		BindResources(shader);
+		Shader.Enable();
+		BindResources();
+		mat4 model = mat4(1.f);
+		model = translate(model, Position);
+		Shader.SetUniformMat4("model", model);
+
 		m_VAO->Bind();
 		m_IBO->Bind();
-
 		glDrawElements(GL_TRIANGLES, this->indices.size(), GL_UNSIGNED_INT, 0);
-
 		m_VAO->Unbind();
 		m_IBO->Unbind();
 	}
 
-	void NMesh::DrawArrays(NShader shader)
+	void NMesh::DrawArrays()
 	{
-		shader.Enable();
-		BindResources(shader);
+		Shader.Enable();
+		BindResources();
 		m_VAO->Bind();
 
 		glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 		m_VAO->Unbind();
 		
-		shader.Disable();
+		Shader.Disable();
 	}
 
 	void NMesh::SetupMesh()

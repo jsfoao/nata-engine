@@ -18,7 +18,6 @@
 // OpenGL math library
 #include "core/glm_math.h"
 
-
 // Nata
 #include "core/core.h"
 #include "core/window.h"
@@ -27,5 +26,6 @@
 #include "core/renderer/buffer.h"
 #include "core/renderer/mesh.h"
 #include "core/renderer/model.h"
+#include "core/renderer/renderer.hpp"
 #include "core/editor/editor.h"
 #include "core/ecs/ecs.h"

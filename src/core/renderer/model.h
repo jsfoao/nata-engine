@@ -1,4 +1,5 @@
 #pragma once
+#include "renderable.hpp"
 #include "core/glm_math.h"
 #include <vector>
 #include "texture.h"
@@ -13,7 +14,7 @@
 using namespace std;
 namespace Nata
 {
-	class NModel
+	class NModel : public NRenderable
 	{
 	public:
 		vector<NMesh> Meshes;
@@ -24,7 +25,7 @@ namespace Nata
 		unsigned int TrisCount;
 
 		NModel(string path);
-		void Draw(NShader shader);
+		void Draw() override;
 		void AddTexture(NTexture texture)
 		{
 			for (unsigned int i = 0; i < Meshes.size(); i++)

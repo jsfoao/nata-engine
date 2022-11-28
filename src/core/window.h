@@ -4,6 +4,7 @@
 #include <iostream>
 #include "core.h"
 #include "core/input.h"
+#include "renderer/renderer.hpp"
 
 namespace Nata
 {
@@ -15,6 +16,7 @@ namespace Nata
 		GLFWwindow* m_Window;
 		Input* m_Input;
 		bool m_Closed;
+		NRenderer* m_Renderer;
 
 	public:
 		Window(const char* name, int width, int height);
@@ -27,6 +29,7 @@ namespace Nata
 		inline int GetHeight() const { return m_Height;  }
 		inline GLFWwindow* GetWindow() const { return m_Window; }
 		inline Input* GetInput() const { return m_Input; }
+		inline NRenderer* GetRenderer() const { return m_Renderer; }
 
 	public:
 		bool Init();

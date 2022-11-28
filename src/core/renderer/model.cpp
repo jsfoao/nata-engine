@@ -7,11 +7,13 @@ namespace Nata
 		Load(path);
 	}
 
-	void NModel::Draw(NShader shader)
+	void NModel::Draw()
 	{
 		for (unsigned int i = 0; i < Meshes.size(); i++)
 		{
-			Meshes[i].Draw(shader);
+			Meshes[i].Position = Position;
+			Meshes[i].Shader = Shader;
+			Meshes[i].Draw();
 		}
 	}
 

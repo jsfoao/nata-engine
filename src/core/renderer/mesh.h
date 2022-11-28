@@ -1,4 +1,5 @@
 #pragma once
+#include "renderable.hpp"
 #include "core/glm_math.h"
 #include <vector>
 #include "texture.h"
@@ -22,7 +23,7 @@ namespace Nata
 		vec3 Bitangent;
 	};
 
-	class NMesh
+	class NMesh : public NRenderable
 	{
 	public:
 		//mesh data
@@ -41,9 +42,9 @@ namespace Nata
 		NMesh(vector<Vertex> vertices, vector<NTexture> textures);
 		NMesh(vector<float> vertices, vector<NTexture> textures);
 
-		void BindResources(NShader shader);
-		void Draw(NShader shader);
-		void DrawArrays(NShader shader);
+		void BindResources();
+		void Draw() override;
+		void DrawArrays();
 		void AddTexture(NTexture texture)
 		{
 			textures.push_back(texture);
