@@ -2,7 +2,7 @@
 
 namespace Nata
 {
-	Mesh::Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures)
+	NMesh::NMesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<NTexture> textures)
 	{
 		this->vertices = vertices;
 		this->indices = indices;
@@ -15,7 +15,7 @@ namespace Nata
 		this->SetupMesh();
 	}
 
-	Mesh::Mesh(vector<Vertex> vertices, vector<Texture> textures)
+	NMesh::NMesh(vector<Vertex> vertices, vector<NTexture> textures)
 	{
 		this->vertices = vertices;
 		this->textures = textures;
@@ -26,7 +26,7 @@ namespace Nata
 		this->SetupMesh();
 	}
 
-	Mesh::Mesh(vector<float> vertices, vector<Texture> textures)
+	NMesh::NMesh(vector<float> vertices, vector<NTexture> textures)
 	{
 		this->vertices = ToVertexData(vertices);
 		this->textures = textures;
@@ -37,7 +37,7 @@ namespace Nata
 		this->SetupMesh();
 	}
 
-	void Mesh::BindResources(Shader shader)
+	void NMesh::BindResources(NShader shader)
 	{
 		if (this->textures.size() == 0)
 			return;
@@ -70,7 +70,7 @@ namespace Nata
 		}
 	}
 
-	void Mesh::Draw(Shader shader)
+	void NMesh::Draw(NShader shader)
 	{
 		shader.Enable();
 		BindResources(shader);
@@ -83,7 +83,7 @@ namespace Nata
 		m_IBO->Unbind();
 	}
 
-	void Mesh::DrawArrays(Shader shader)
+	void NMesh::DrawArrays(NShader shader)
 	{
 		shader.Enable();
 		BindResources(shader);
@@ -95,7 +95,7 @@ namespace Nata
 		shader.Disable();
 	}
 
-	void Mesh::SetupMesh()
+	void NMesh::SetupMesh()
 	{
 		m_VAO->Bind();
 		m_VBO->Bind();
@@ -110,7 +110,7 @@ namespace Nata
 		m_VAO->Unbind();
 	}
 
-	vector<Vertex> Mesh::ToVertexData(const vector<float> vertices)
+	vector<Vertex> NMesh::ToVertexData(const vector<float> vertices)
 	{
 		vector<Vertex> output;
 		for (unsigned int i = 0; i < vertices.size(); i+=14)

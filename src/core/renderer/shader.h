@@ -13,7 +13,7 @@ using namespace glm;
 
 namespace Nata
 {
-	class Shader
+	class NShader
 	{
 	public:
 		unsigned int m_ID;
@@ -24,8 +24,8 @@ namespace Nata
 
 	public:
 		// Creates and loads
-		Shader();
-		Shader(const char* vertPath, const char* fragPath);
+		NShader();
+		NShader(const char* vertPath, const char* fragPath);
 
 		/// <summary>
 		/// Equivalent to glUseProgram(this)

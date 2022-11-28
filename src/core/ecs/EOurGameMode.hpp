@@ -4,9 +4,11 @@
 
 namespace Nata
 {
-	class OurGameMode : public NGameMode
+	class NOurGameMode : public NGameMode
 	{
 	public:
+		NOurGameMode(){}
+
 		void Begin()
 		{
 			std::cout << "Begin GameMode" << std::endl;

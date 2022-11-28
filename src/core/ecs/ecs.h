@@ -1,46 +1,106 @@
 #pragma once
 #include <vector>
 #include "core/glm_math.h"
+#include <chrono>
 
 using namespace std;
+
+using std::chrono::high_resolution_clock;
+using std::chrono::duration_cast;
+using std::chrono::duration;
+using std::chrono::milliseconds;
+
 
 namespace Nata
 {
 	class NGameMode;
 	class NWorld;
-	class NEntity;
-	class NComponent;
+	class NObject;
+	class EEntity;
+	class CComponent;
 
-	class NEntity
+	// Everything that is instanced, has ID and is serialized in engine
+	class NObject
 	{
-	private:
-		NWorld* m_World;
-		vector<NComponent*> m_Components;
+	public:
+		unsigned int ID;
+	};
+
+	// Entity components
+	class CComponent : public NObject
+	{
+	protected:
+		EEntity* m_Owner;
+
+		friend class EEntity;
 
 	public:
-		NEntity() {}
-
-		NEntity(NWorld* world)
+		CComponent()
 		{
-			m_World = world;
+			m_Owner = nullptr;
+		}
+
+		CComponent(EEntity* owner)
+		{
+			m_Owner = owner;
+		}
+
+		EEntity* GetOwner() { return m_Owner; }
+		void SetOwner(EEntity* owner) { m_Owner = owner; }
+
+		virtual void Begin() {};
+		virtual void Tick(float deltaTime) {};
+	};
+
+	class CTransform : public CComponent
+	{
+	public:
+		vec3 Position;
+		vec3 Scale;
+		vec3 Rotation;
+
+		CTransform()
+		{
+			Position = vec3(0.f, 0.f, 0.f);
+			Scale = vec3(1.f, 1.f, 1.f);
+			Rotation = vec3(0.f, 0.f, 0.f);
+		}
+	};
+
+	class EEntity : public NObject
+	{
+	public:
+		class CTransform* Transform;
+
+	protected:
+		NWorld* m_World;
+		vector<CComponent*> m_Components;
+		friend class NWorld;
+
+	public:
+		EEntity()
+		{
+			Transform = AddComponent<CTransform>();
+			m_World = nullptr;
 		}
 
 		NWorld* GetWorld() { return m_World; }
 		void SetWorld(NWorld* world) { m_World = world; }
 
-		template<typename T, class = typename std::enable_if<std::is_base_of<NComponent, T>::value>::type>
+		// Create and add component of type
+		template<typename T, class = typename std::enable_if<std::is_base_of<CComponent, T>::value>::type>
 		T* AddComponent()
 		{
-			T* newComp = new T();
-			newComp->m_Owner = this;
-			m_Components.push_back(newComp);
-			return newComp;
+			T* comp = new T();
+			comp->m_Owner = this;
+			m_Components.push_back(comp);
+			return comp;
 		}
 
 		template<typename T>
 		T* GetComponent()
 		{
-			for (NComponent* comp : m_Components)
+			for (CComponent* comp : m_Components)
 			{
 				if (typeid(*comp).name() == typeid(T).name())
 				{
@@ -49,88 +109,95 @@ namespace Nata
 			}
 		}
 
-		vector<NComponent*> GetALlComponents()
+		vector<CComponent*> GetAllComponents()
 		{
 			return m_Components;
 		}
 
-		virtual void Begin();
-		virtual void Tick();
-	};
-
-	class NComponent
-	{
-	private:
-		NEntity* m_Owner;
-
-		friend class NEntity;
-
-	public:
-		NComponent() {}
-
-		NComponent(NEntity* owner)
-		{
-			m_Owner = owner;
-		}
-
-		NEntity* GetOwner() { return m_Owner; }
-		void SetOwner(NEntity* owner) { m_Owner = owner; }
-
-		virtual void Begin();
-		virtual void Tick();
+		virtual void Begin(){};
+		virtual void Tick(float deltaTime){};
 	};
 
 	// behaviour in level lifetime
 	class NGameMode
 	{
-	private:
+	protected:
 		NWorld* m_World;
+		friend class NWorld;
 
 	public:
-		NGameMode(){}
+		NGameMode()
+		{
+			m_World = nullptr;
+		}
 
 		NWorld* GetWorld() { return m_World; }
 		void SetWorld(NWorld* world) { m_World = world; }
 
-		virtual void Begin();
-		virtual void Tick();
+		virtual void Begin(){};
+		virtual void Tick(float deltaTime){};
 	};
 
 	// behaviour in application lifetime
 	class NGameInstance
 	{
 	public:
-		virtual void Begin();
-		virtual void Tick();
+		virtual void Begin(){};
+		virtual void Tick(float deltaTime){};
 	};
 
+	// space where entities are inserted in
 	class NWorld
 	{
-	private:
+	protected:
 		NGameMode* m_GameMode;
-		vector<NEntity*> m_Entities;
+		vector<EEntity*> m_Entities;
 
 	public:
-		NWorld(){}
+		NWorld()
+		{
+			m_GameMode = nullptr;
+		}
 
-		vector<NEntity*> GetAllEntities() { return m_Entities; }
-		void SetGameMode(NGameMode* gameMode) { m_GameMode = gameMode; }
+		vector<EEntity*> GetAllEntities() { return m_Entities; }
+		void SetGameMode(NGameMode* gameMode) 
+		{
+			gameMode->m_World = this;
+			m_GameMode = gameMode; 
+		}
+
+		template<typename T, class = typename std::enable_if<std::is_base_of<EEntity, T>::value>::type>
+		T* Instantiate()
+		{
+			T* entity = new T();
+			m_Entities.push_back(entity);
+			entity->m_World = this;
+			return entity;
+		}
 
 		void Begin()
 		{
 			m_GameMode->Begin();
-			for (NEntity* entity : m_Entities)
+			for (EEntity* entity : m_Entities)
 			{
 				entity->Begin();
+				for (CComponent* comp : entity->m_Components)
+				{
+					comp->Begin();
+				}
 			}
 		}
 
-		void Tick()
+		void Tick(float deltaTime)
 		{
-			m_GameMode->Tick();
-			for (NEntity* entity : m_Entities)
+			m_GameMode->Tick(deltaTime);
+			for (EEntity* entity : m_Entities)
 			{
-				entity->Tick();
+				entity->Tick(deltaTime);
+				for (CComponent* comp : entity->m_Components)
+				{
+					comp->Tick(deltaTime);
+				}
 			}
 		}
 	};

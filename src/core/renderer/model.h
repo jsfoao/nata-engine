@@ -13,19 +13,19 @@
 using namespace std;
 namespace Nata
 {
-	class Model
+	class NModel
 	{
 	public:
-		vector<Mesh> Meshes;
+		vector<NMesh> Meshes;
 		string Directory;
-		vector<Texture> TexturesLoaded;
+		vector<NTexture> TexturesLoaded;
 
 		unsigned int VertexCount;
 		unsigned int TrisCount;
 
-		Model(string path);
-		void Draw(Shader shader);
-		void AddTexture(Texture texture)
+		NModel(string path);
+		void Draw(NShader shader);
+		void AddTexture(NTexture texture)
 		{
 			for (unsigned int i = 0; i < Meshes.size(); i++)
 			{
@@ -35,7 +35,7 @@ namespace Nata
 
 		void Load(string path);
 		void ProcessNode(aiNode* node, const aiScene* scene);
-		Mesh ProcessMesh(aiMesh* mesh, const aiScene* scene);
-		vector<Texture> LoadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName);
+		NMesh ProcessMesh(aiMesh* mesh, const aiScene* scene);
+		vector<NTexture> LoadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName);
 	};
 }

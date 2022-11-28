@@ -22,13 +22,13 @@ namespace Nata
 		vec3 Bitangent;
 	};
 
-	class Mesh
+	class NMesh
 	{
 	public:
 		//mesh data
 		vector<Vertex> vertices;
 		vector<unsigned int> indices;
-		vector<Texture> textures;
+		vector<NTexture> textures;
 
 	public:
 		VAO* m_VAO;
@@ -37,14 +37,14 @@ namespace Nata
 
 	public:
 
-		Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures);
-		Mesh(vector<Vertex> vertices, vector<Texture> textures);
-		Mesh(vector<float> vertices, vector<Texture> textures);
+		NMesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<NTexture> textures);
+		NMesh(vector<Vertex> vertices, vector<NTexture> textures);
+		NMesh(vector<float> vertices, vector<NTexture> textures);
 
-		void BindResources(Shader shader);
-		void Draw(Shader shader);
-		void DrawArrays(Shader shader);
-		void AddTexture(Texture texture)
+		void BindResources(NShader shader);
+		void Draw(NShader shader);
+		void DrawArrays(NShader shader);
+		void AddTexture(NTexture texture)
 		{
 			textures.push_back(texture);
 		}

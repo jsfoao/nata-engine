@@ -4,7 +4,7 @@ namespace Nata
 {
     Handles::Handles()
     {
-        shader = Shader("src\\shaders\\unlit.vert", "src\\shaders\\unlit.frag");
+        shader = NShader("src\\shaders\\unlit.vert", "src\\shaders\\unlit.frag");
         Init();
     }
 

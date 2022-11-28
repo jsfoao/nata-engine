@@ -534,7 +534,7 @@ namespace Nata
             Window* win = new Window("Nata Engine", 960, 540);
             Input* input = win->GetInput();
 
-            Shader* shader = new Shader("src\\shaders\\test.vert", "src\\shaders\\test.frag");
+            NShader* shader = new NShader("src\\shaders\\test.vert", "src\\shaders\\test.frag");
 
             // Data to render
             float vertices[] =
@@ -603,7 +603,7 @@ namespace Nata
 
             // build and compile our shader zprogram
             // ------------------------------------
-            Shader ourShader("src\\shaders\\test.vert", "src\\shaders\\test.frag");
+            NShader ourShader("src\\shaders\\test.vert", "src\\shaders\\test.frag");
 
             // set up vertex data (and buffer(s)) and configure vertex attributes
             // ------------------------------------------------------------------
@@ -752,7 +752,7 @@ namespace Nata
 
             // build and compile our shader zprogram
             // ------------------------------------
-            Shader ourShader("src\\shaders\\transform.vert", "src\\shaders\\transform.frag");
+            NShader ourShader("src\\shaders\\transform.vert", "src\\shaders\\transform.frag");
 
             // set up vertex data (and buffer(s)) and configure vertex attributes
             // ------------------------------------------------------------------
@@ -873,7 +873,7 @@ namespace Nata
             Window* win = new Window("OpenGL Studies", 700, 500);
             Input* input = win->GetInput();
 
-            Shader ourShader("src\\shaders\\coordinates.vert", "src\\shaders\\coordinates.frag");
+            NShader ourShader("src\\shaders\\coordinates.vert", "src\\shaders\\coordinates.frag");
 
             glm::vec3 cubePos[] = 
             {
@@ -1093,7 +1093,7 @@ namespace Nata
             Window* win = new Window("OpenGL Studies", 700, 500);
             Input* input = win->GetInput();
 
-            Shader ourShader("src\\shaders\\coordinates.vert", "src\\shaders\\coordinates.frag");
+            NShader ourShader("src\\shaders\\coordinates.vert", "src\\shaders\\coordinates.frag");
 
             glm::vec3 cubePos[] =
             {
@@ -1307,7 +1307,7 @@ namespace Nata
             Window* win = new Window("OpenGL Studies", 700, 500);
             Input* input = win->GetInput();
 
-            Shader ourShader("src\\shaders\\coordinates.vert", "src\\shaders\\coordinates.frag");
+            NShader ourShader("src\\shaders\\coordinates.vert", "src\\shaders\\coordinates.frag");
 
             glm::vec3 cubePos[] =
             {
@@ -1551,8 +1551,8 @@ namespace Nata
             Window* win = new Window("OpenGL Studies", 700, 500);
             Input* input = win->GetInput();
 
-            Shader shader("src\\shaders\\lighting.vert", "src\\shaders\\lighting.frag");
-            Shader lightShader("src\\shaders\\light_source.vert", "src\\shaders\\light_source.frag");
+            NShader shader("src\\shaders\\lighting.vert", "src\\shaders\\lighting.frag");
+            NShader lightShader("src\\shaders\\light_source.vert", "src\\shaders\\light_source.frag");
 
             float vertices[] =
             {
@@ -1753,8 +1753,8 @@ namespace Nata
             Window* win = new Window("OpenGL Studies", 700, 500);
             Input* input = win->GetInput();
 
-            Shader shader("src\\shaders\\lighting.vert", "src\\shaders\\lighting.frag");
-            Shader lightShader("src\\shaders\\unlit.vert", "src\\shaders\\unlit.frag");
+            NShader shader("src\\shaders\\lighting.vert", "src\\shaders\\lighting.frag");
+            NShader lightShader("src\\shaders\\unlit.vert", "src\\shaders\\unlit.frag");
 
             float vertices[] = 
             {
@@ -1821,8 +1821,8 @@ namespace Nata
             glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
             glEnableVertexAttribArray(2);
 
-            unsigned int diffuseTexture = Texture::LoadFromFile("container2.png", "res");
-            unsigned int specularTexture = Texture::LoadFromFile("container2_specular.png", "res");
+            unsigned int diffuseTexture = NTexture::LoadFromFile("container2.png", "res");
+            unsigned int specularTexture = NTexture::LoadFromFile("container2_specular.png", "res");
 
             shader.Enable();
             shader.SetUniform1i("material.diffuse", 0);
@@ -1963,8 +1963,8 @@ namespace Nata
             Input* input = win->GetInput();
 
             // build and compile shaders
-            Shader shader("src\\shaders\\lighting.vert", "src\\shaders\\lighting.frag");
-            Shader lightShader("src\\shaders\\light_source.vert", "src\\shaders\\light_source.frag");
+            NShader shader("src\\shaders\\lighting.vert", "src\\shaders\\lighting.frag");
+            NShader lightShader("src\\shaders\\light_source.vert", "src\\shaders\\light_source.frag");
 
             // configure global opengl state
             // -----------------------------
@@ -2069,8 +2069,8 @@ namespace Nata
 
             // load textures (we now use a utility function to keep the code more organized)
             // -----------------------------------------------------------------------------
-            unsigned int diffuseTexture = Texture::LoadFromFile("container2.png", "res");
-            unsigned int specularTexture = Texture::LoadFromFile("container2_specular.png", "res");
+            unsigned int diffuseTexture = NTexture::LoadFromFile("container2.png", "res");
+            unsigned int specularTexture = NTexture::LoadFromFile("container2_specular.png", "res");
 
             // shader configuration
             // --------------------
@@ -2197,8 +2197,8 @@ namespace Nata
             Window* win = new Window("OpenGL Studies", 700, 500);
             Input* input = win->GetInput();
 
-            Shader shader("src\\shaders\\lit.vert", "src\\shaders\\lit.frag");
-            Shader lightShader("src\\shaders\\unlit.vert", "src\\shaders\\unlit.frag");
+            NShader shader("src\\shaders\\lit.vert", "src\\shaders\\lit.frag");
+            NShader lightShader("src\\shaders\\unlit.vert", "src\\shaders\\unlit.frag");
 
             float vertices[] =
             {
@@ -2265,8 +2265,8 @@ namespace Nata
             glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
             glEnableVertexAttribArray(2);
 
-            unsigned int diffuseTexture = Texture::LoadFromFile("container2.png", "res");
-            unsigned int specularTexture = Texture::LoadFromFile("container2_specular.png", "res");
+            unsigned int diffuseTexture = NTexture::LoadFromFile("container2.png", "res");
+            unsigned int specularTexture = NTexture::LoadFromFile("container2_specular.png", "res");
 
             shader.Enable();
             shader.SetUniform1i("material.diffuse", 0);
@@ -2436,13 +2436,13 @@ namespace Nata
 
 
 
-            Shader shader("src\\shaders\\lit.vert", "src\\shaders\\lit.frag");
-            Shader lightShader("src\\shaders\\unlit.vert", "src\\shaders\\unlit.frag");
+            NShader shader("src\\shaders\\lit.vert", "src\\shaders\\lit.frag");
+            NShader lightShader("src\\shaders\\unlit.vert", "src\\shaders\\unlit.frag");
 
-            Model ourModel = Model("res\\models\\teapot.obj");
+            NModel ourModel = NModel("res\\models\\teapot.obj");
 
-            unsigned int diffuseTexture = Texture::LoadFromFile("container2.png", "res");
-            unsigned int specularTexture = Texture::LoadFromFile("container2_specular.png", "res");
+            unsigned int diffuseTexture = NTexture::LoadFromFile("container2.png", "res");
+            unsigned int specularTexture = NTexture::LoadFromFile("container2_specular.png", "res");
 
             shader.Enable();
             shader.SetUniform1i("material.diffuse", 0);
@@ -2595,11 +2595,11 @@ namespace Nata
             ImGui_ImplOpenGL3_Init("#version 330");
 
 
-            Shader shader("src\\shaders\\lit.vert", "src\\shaders\\lit.frag");
-            Model model = Model("res\\models\\teapot.obj");
+            NShader shader("src\\shaders\\lit.vert", "src\\shaders\\lit.frag");
+            NModel model = NModel("res\\models\\teapot.obj");
 
-            unsigned int diffuseTexture = Texture::LoadFromFile("container2.png", "res");
-            unsigned int specularTexture = Texture::LoadFromFile("container2_specular.png", "res");
+            unsigned int diffuseTexture = NTexture::LoadFromFile("container2.png", "res");
+            unsigned int specularTexture = NTexture::LoadFromFile("container2_specular.png", "res");
 
             shader.Enable();
             shader.SetUniform1i("material.diffuse", 0);
@@ -2775,9 +2775,9 @@ namespace Nata
                 -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  0.0f,   0.0f,  0.0f, 0.0f,  0.0f,  0.0f,  0.0f,
                 -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f,   0.0f,  0.0f, 1.0f,  0.0f,  0.0f,  1.0f
             };
-            Shader shader("src\\shaders\\unlit_textured.vert", "src\\shaders\\unlit_textured.frag");
-            Texture texture("container2.png", "res", TEXTURE_DIFFUSE);
-            Model ourModel("res\\models\\teapot.obj");
+            NShader shader("src\\shaders\\unlit_textured.vert", "src\\shaders\\unlit_textured.frag");
+            NTexture texture("container2.png", "res", TEXTURE_DIFFUSE);
+            NModel ourModel("res\\models\\teapot.obj");
             ourModel.AddTexture(texture);
 
             glEnable(GL_DEPTH_TEST);
@@ -2835,8 +2835,8 @@ namespace Nata
             Window* win = new Window("OpenGL Studies", 700, 500);
             Input* input = win->GetInput();
 
-            Shader shader("src\\shaders\\unlit_textured.vert", "src\\shaders\\unlit_textured.frag");
-            Model ourModel("res\\models\\teapot.obj");
+            NShader shader("src\\shaders\\unlit_textured.vert", "src\\shaders\\unlit_textured.frag");
+            NModel ourModel("res\\models\\teapot.obj");
 
             glEnable(GL_DEPTH_TEST);
 

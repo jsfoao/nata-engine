@@ -2,14 +2,14 @@
 
 namespace Nata
 {
-    Texture::Texture(const char* path, string directory, string type)
+    NTexture::NTexture(const char* path, string directory, string type)
     {
         this->m_ID = LoadFromFile(path, directory);
         this->Type = type;
         this->Path = path;
     }
 
-    int Texture::LoadFromFile(const char* path, string directory)
+    int NTexture::LoadFromFile(const char* path, string directory)
     {
         //Generate texture ID and load texture data
         string filename = string(path);

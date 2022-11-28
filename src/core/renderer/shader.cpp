@@ -2,9 +2,9 @@
 
 namespace Nata
 {
-	Shader::Shader(){}
+	NShader::NShader(){}
 
-	Shader::Shader(const char* vertPath, const char* fragPath)
+	NShader::NShader(const char* vertPath, const char* fragPath)
 	{
 		m_VertPath = vertPath;
 		m_FragPath = fragPath;
@@ -12,7 +12,7 @@ namespace Nata
 		m_ID = Load();
 	}
 
-	unsigned int Shader::Load()
+	unsigned int NShader::Load()
 	{
 		unsigned int program = glCreateProgram();
 
@@ -71,12 +71,12 @@ namespace Nata
 		return program;
 	}
 
-	unsigned int Shader::GetUniformLocation(const char* name)
+	unsigned int NShader::GetUniformLocation(const char* name)
 	{
 		return glGetUniformLocation(this->m_ID, name);
 	}
 
-	void Shader::Enable()
+	void NShader::Enable()
 	{
 		if (glIsProgram(this->m_ID))
 		{
@@ -91,52 +91,52 @@ namespace Nata
 		}
 	}
 
-	void Shader::Disable()
+	void NShader::Disable()
 	{
 		glUseProgram(NULL);
 	}
 
-	void Shader::SetUniform1f(const char* name, const float value)
+	void NShader::SetUniform1f(const char* name, const float value)
 	{
 		glUniform1f(GetUniformLocation(name), value);
 	}
 
-	void Shader::SetUniform1i(const char* name, const int value)
+	void NShader::SetUniform1i(const char* name, const int value)
 	{
 		glUniform1i(GetUniformLocation(name), value);
 	}
 
-	void Shader::SetUniform2f(const char* name, const vec2& v)
+	void NShader::SetUniform2f(const char* name, const vec2& v)
 	{
 		glUniform2f(GetUniformLocation(name), v.x, v.y);
 	}
 
-	void Shader::SetUniform3f(const char* name, const vec3& v)
+	void NShader::SetUniform3f(const char* name, const vec3& v)
 	{
 		glUniform3f(GetUniformLocation(name), v.x, v.y, v.z);
 	}
 
-	void Shader::SetUniform4f(const char* name, const vec4& v)
+	void NShader::SetUniform4f(const char* name, const vec4& v)
 	{
 		glUniform4f(GetUniformLocation(name), v.x, v.y, v.z, v.w);
 	}
 
-	void Shader::SetUniform2f(const char* name, float v0, float v1)
+	void NShader::SetUniform2f(const char* name, float v0, float v1)
 	{
 		glUniform2f(GetUniformLocation(name), v0, v1);
 	}
 
-	void Shader::SetUniform3f(const char* name, float v0, float v1, float v2)
+	void NShader::SetUniform3f(const char* name, float v0, float v1, float v2)
 	{
 		glUniform3f(GetUniformLocation(name), v0, v1, v2);
 	}
 
-	void Shader::SetUniform4f(const char* name, float v0, float v1, float v2, float v3)
+	void NShader::SetUniform4f(const char* name, float v0, float v1, float v2, float v3)
 	{
 		glUniform4f(GetUniformLocation(name), v0, v1, v2, v3);
 	}
 
-	void Shader::SetUniformMat4(const char* name, const mat4& matrix)
+	void NShader::SetUniformMat4(const char* name, const mat4& matrix)
 	{
 		glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, value_ptr(matrix));
 	}

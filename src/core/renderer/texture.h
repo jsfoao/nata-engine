@@ -13,7 +13,7 @@ namespace Nata
 #define TEXTURE_NORMAL "normal"
 #define TEXTURE_METAL "metal"
 
-	class Texture
+	class NTexture
 	{
 	public:
 		unsigned int m_ID;
@@ -21,7 +21,7 @@ namespace Nata
 		string Path;
 
 	public:
-		Texture(const char* path, string directory, string type = TEXTURE_DIFFUSE);
+		NTexture(const char* path, string directory, string type = TEXTURE_DIFFUSE);
 		static int LoadFromFile(const char* path, string directory);
 	};
 }

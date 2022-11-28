@@ -2,12 +2,12 @@
 
 namespace Nata
 {
-	Model::Model(string path)
+	NModel::NModel(string path)
 	{
 		Load(path);
 	}
 
-	void Model::Draw(Shader shader)
+	void NModel::Draw(NShader shader)
 	{
 		for (unsigned int i = 0; i < Meshes.size(); i++)
 		{
@@ -15,7 +15,7 @@ namespace Nata
 		}
 	}
 
-	void Model::Load(string path)
+	void NModel::Load(string path)
 	{
 		Assimp::Importer importer;
 		const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
@@ -28,7 +28,7 @@ namespace Nata
 		ProcessNode(scene->mRootNode, scene);
 	}
 
-	void Model::ProcessNode(aiNode* node, const aiScene* scene)
+	void NModel::ProcessNode(aiNode* node, const aiScene* scene)
 	{
 		for (unsigned int i = 0; i < node->mNumMeshes; i++)
 		{
@@ -42,11 +42,11 @@ namespace Nata
 		}
 	}
 
-	Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
+	NMesh NModel::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 	{
 		vector<Vertex> vertices;
 		vector<unsigned int> indices;
-		vector<Texture> textures;
+		vector<NTexture> textures;
 
 		// process vertices
 		for (unsigned int i = 0; i < mesh->mNumVertices; i++)
@@ -121,22 +121,22 @@ namespace Nata
 			// Diffuse: texture_diffuseN
 			// Specular: texture_specularN
 
-			vector<Texture> diffuseMaps = this->LoadMaterialTextures(material, aiTextureType_DIFFUSE, TEXTURE_DIFFUSE);
+			vector<NTexture> diffuseMaps = this->LoadMaterialTextures(material, aiTextureType_DIFFUSE, TEXTURE_DIFFUSE);
 			textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 
 			// Specular maps
-			vector<Texture> specularMaps = this->LoadMaterialTextures(material, aiTextureType_SPECULAR, TEXTURE_SPECULAR);
+			vector<NTexture> specularMaps = this->LoadMaterialTextures(material, aiTextureType_SPECULAR, TEXTURE_SPECULAR);
 			textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 		}
 
 		this->VertexCount = vertices.size();
 		this->TrisCount = indices.size() / 3;
 
-		return Mesh(vertices, indices, textures);
+		return NMesh(vertices, indices, textures);
 	}
-	vector<Texture> Model::LoadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName)
+	vector<NTexture> NModel::LoadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName)
 	{
-		vector<Texture> textures;
+		vector<NTexture> textures;
 		for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
 		{
 			aiString str;
@@ -155,7 +155,7 @@ namespace Nata
 			if (!skip)
 			{
 				// if textures hasnt been loaded already, load it
-				Texture texture(str.C_Str(), Directory, typeName);
+				NTexture texture(str.C_Str(), Directory, typeName);
 				textures.push_back(texture);
 				TexturesLoaded.push_back(texture);
 			}

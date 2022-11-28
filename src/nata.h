@@ -28,3 +28,4 @@
 #include "core/renderer/mesh.h"
 #include "core/renderer/model.h"
 #include "core/editor/editor.h"
+#include "core/ecs/ecs.h"

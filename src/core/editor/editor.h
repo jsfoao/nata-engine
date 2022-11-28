@@ -10,7 +10,7 @@ namespace Nata
 	class Handles
 	{
 	public:
-		Shader shader;
+		NShader shader;
 		mat4 view;
 		mat4 projection;
 
