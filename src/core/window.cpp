@@ -2,7 +2,7 @@
 
 namespace Nata
 {
-	Window::Window(const char* title, int width, int height)
+	NWindow::NWindow(const char* title, int width, int height)
 	{
 		m_Renderer = new NRenderer();
 		m_Title = title;
@@ -16,12 +16,12 @@ namespace Nata
 		LOG("Start Window");
 	}
 
-	Window::~Window()
+	NWindow::~NWindow()
 	{
 		glfwTerminate();
 	}
 
-	bool Window::Init()
+	bool NWindow::Init()
 	{
 		if (!glfwInit())
 		{
@@ -64,18 +64,18 @@ namespace Nata
 		return true;
 	}
 
-	void Window::Clear() const
+	void NWindow::Clear() const
 	{
 		glClearColor(.15f, .15f, .15f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
-	bool Window::Closed() const
+	bool NWindow::Closed() const
 	{
 		return glfwWindowShouldClose(m_Window);
 	}
 
-	void Window::Update()
+	void NWindow::Update()
 	{
 		m_Renderer->Flush();
 		GLenum error = glGetError();
@@ -100,19 +100,19 @@ namespace Nata
 
 	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
-		Window* win = (Window*)glfwGetWindowUserPointer(window);
+		NWindow* win = (NWindow*)glfwGetWindowUserPointer(window);
 		win->GetInput()->SetKeyState(key, action != GLFW_RELEASE);
 	}
 
 	void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 	{
-		Window* win = (Window*)glfwGetWindowUserPointer(window);
+		NWindow* win = (NWindow*)glfwGetWindowUserPointer(window);
 		win->GetInput()->SetMouseState(button, action != GLFW_RELEASE);
 	}
 
 	void cursor_pos_callback(GLFWwindow* window, double xpos, double ypos)
 	{
-		Window* win = (Window*)glfwGetWindowUserPointer(window);
+		NWindow* win = (NWindow*)glfwGetWindowUserPointer(window);
 		win->GetInput()->SetCursorPos(xpos, ypos);
 	}
 }

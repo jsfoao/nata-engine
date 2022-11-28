@@ -8,7 +8,7 @@
 
 namespace Nata
 {
-	class Window
+	class NWindow
 	{
 	private:
 		const char* m_Title;
@@ -19,8 +19,8 @@ namespace Nata
 		NRenderer* m_Renderer;
 
 	public:
-		Window(const char* name, int width, int height);
-		~Window();
+		NWindow(const char* name, int width, int height);
+		~NWindow();
 		void Update();
 		bool Closed() const;
 		void Clear() const;

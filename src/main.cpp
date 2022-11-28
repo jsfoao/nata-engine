@@ -19,6 +19,8 @@ namespace Nata
 
     float NTime::Time = 0.f;
     float NTime::DeltaTime = 0.f;
+
+    static NWindow* Window = nullptr;
 }
 
 
@@ -29,7 +31,8 @@ int main(int argc, char** argv)
     world->SetGameMode(gameMode);
     EOurObject* entity = world->Instantiate<EOurObject>();
 
-    Window* win = new Window("OpenGL Studies", 700, 500);
+    NWindow* win = new NWindow("OpenGL Studies", 700, 500);
+    Window = win;
     NRenderer* renderer = win->GetRenderer();
     Input* input = win->GetInput();
 
