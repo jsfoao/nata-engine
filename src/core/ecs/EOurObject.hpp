@@ -9,6 +9,7 @@ namespace Nata
 	{
 	public:
 		CModelRenderer* MeshRenderer;
+		bool Offset;
 
 	public:
 		EOurObject() : EEntity()
@@ -19,16 +20,31 @@ namespace Nata
 			MeshRenderer->Shader = shader;
 			MeshRenderer->Model = model;
 			MeshRenderer->Model->Shader = shader;
+
+			Offset = false;
 		}
 
 		void Begin() override
 		{
-			std::cout << "Begin from base" << std::endl;
 		}
 
 		void Tick(float dt) override
 		{
-			Transform->Position.y = sin(NTime::Time) * 2.f;
+			if (Offset == true)
+			{
+				Transform->Position.y = sin(NTime::Time) * 3.f;
+				Transform->Position.x = -2.f;
+				MeshRenderer->Shader->Enable();
+				MeshRenderer->Shader->SetUniform3f("color", vec3(1.f, 0.5f, 1.f));
+				MeshRenderer->Shader->Disable();
+			}
+			else
+			{
+				Transform->Position.y = sin(NTime::Time) * 2.f;
+				MeshRenderer->Shader->Enable();
+				MeshRenderer->Shader->SetUniform3f("color", vec3(1.f, sin(NTime::Time), 1.f));
+				MeshRenderer->Shader->Disable();
+			}
 		}
 	};
 }

@@ -2,6 +2,7 @@
 #include <vector>
 #include "core/glm_math.h"
 #include <chrono>
+#include <iostream>
 
 using namespace std;
 
@@ -82,6 +83,14 @@ namespace Nata
 		{
 			Transform = AddComponent<CTransform>();
 			m_World = nullptr;
+		}
+
+		~EEntity()
+		{
+			for (CComponent* component : m_Components)
+			{
+				delete component;
+			}
 		}
 
 		NWorld* GetWorld() { return m_World; }
@@ -172,7 +181,43 @@ namespace Nata
 			T* entity = new T();
 			m_Entities.push_back(entity);
 			entity->m_World = this;
+			entity->Transform->Position = vec3(0.f);
 			return entity;
+		}
+
+		template<typename T, class = typename std::enable_if<std::is_base_of<EEntity, T>::value>::type>
+		T* Instantiate(vec3 position)
+		{
+			T* entity = new T();
+			m_Entities.push_back(entity);
+			entity->m_World = this;
+			entity->Transform->Position = position;
+			entity->Transform->Rotation = vec3(0.f);
+			return entity;
+		}
+
+		template<typename T, class = typename std::enable_if<std::is_base_of<EEntity, T>::value>::type>
+		T* Instantiate(vec3 position, vec3 rotation)
+		{
+			T* entity = new T();
+			m_Entities.push_back(entity);
+			entity->m_World = this;
+			entity->Transform->Position = position;
+			entity->Transform->Rotation = rotation;
+			return entity;
+		}
+
+		void Destroy(EEntity* entity)
+		{
+			for (unsigned int i = 0; i < m_Entities.size(); i++)
+			{
+				if (m_Entities[i] == entity) 
+				{
+					m_Entities.erase(m_Entities.begin() + i);
+					return;
+				}
+			}
+			std::cout << "WARNING::DESTROY: OBJECT IS NOT INSTANTIATED" << std::endl;
 		}
 
 		void Begin()

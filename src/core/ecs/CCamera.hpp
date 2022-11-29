@@ -1,4 +1,5 @@
 #pragma once
+#include "core/core.h"
 #include "ecs.h"
 #include "core/glm_math.h"
 

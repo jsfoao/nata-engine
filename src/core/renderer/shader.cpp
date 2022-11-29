@@ -33,7 +33,6 @@ namespace Nata
 			glGetShaderiv(vertex, GL_INFO_LOG_LENGTH, &length);
 			std::vector<char> error(length);
 			glGetShaderInfoLog(vertex, length, &length, &error[0]);
-			LOG("Failed to compile vertex shader!");
 			glDeleteShader(vertex);
 			return 0;
 		}
@@ -54,7 +53,6 @@ namespace Nata
 			glGetShaderiv(fragment, GL_INFO_LOG_LENGTH, &length);
 			std::vector<char> error(length);
 			glGetShaderInfoLog(fragment, length, &length, &error[0]);
-			LOG("Failed to compile fragment shader!");
 			glDeleteShader(fragment);
 			return 0;
 		}

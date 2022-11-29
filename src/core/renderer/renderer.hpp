@@ -25,7 +25,6 @@ namespace Nata
 				NRenderable* renderable = m_RenderQueue.front();
 				NShader* shader = renderable->Shader;
 				shader->Enable();
-				shader->SetUniform3f("color", vec3(1.f, 1.f, 1.f));
 				shader->SetUniformMat4("view", NEngine::ActiveCamera->GetViewMatrix());
 				shader->SetUniformMat4("projection", NEngine::ActiveCamera->GetProjectionMatrix());
 				renderable->Draw();

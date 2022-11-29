@@ -13,7 +13,6 @@ namespace Nata
 		{
 			glfwTerminate();
 		}
-		LOG("Start Window");
 	}
 
 	NWindow::~NWindow()
@@ -25,24 +24,24 @@ namespace Nata
 	{
 		if (!glfwInit())
 		{
-			LOG("Failed to initialize GLFW!");
+			std::cout << "Failed to initialize GLFW!" << std::endl;
 			return false;
 		}
-		LOG(glfwGetVersionString());
+		std::cout << glfwGetVersionString() << std::endl;
 
 		m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, NULL, NULL);
 
 		if (!m_Window)
 		{
 			glfwTerminate();
-			LOG("Failed to created window!");
+			std::cout << "Failed to created window!" << std::endl;
 			return false;
 		}
 		glfwMakeContextCurrent(m_Window);
 
 		if (glewInit() != GLEW_OK)
 		{
-			LOG("Failed to initialize GLEW!");
+			std::cout << "Failed to initialize GLEW!" << std::endl;
 			return false;
 		}
 
@@ -58,7 +57,7 @@ namespace Nata
 
 		if (!m_Input)
 		{
-			LOG("Failed to create input!");
+			std::cout << "Failed to create input!" << std::endl;
 		}
 
 		return true;

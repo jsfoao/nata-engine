@@ -1,8 +1,6 @@
 #pragma once
-#define LOG(x) std::cout << x << std::endl
-#define LOGVEC2(x, y) std::cout << "(" << x << ", " << y << ")" << std::endl
-#define LOGVEC3(x, y, z) std::cout << "(" << x << ", " << y << ", " << z << ")" << std::endl
-#define LOGVEC4(x, y, z, w) std::cout << "(" << x << ", " << y << ", " << z << ", " << w << ")" << std::endl
+#include "core/ecs/ecs.h"
+#include "core/glm_math.h"
 
 namespace Nata
 {
@@ -22,4 +20,27 @@ namespace Nata
         static float WindowSizeX;
         static float WindowSizeY;
     };
+
+    template<typename T, class = typename std::enable_if<std::is_base_of<EEntity, T>::value>::type>
+    T* Instantiate(NWorld* world)
+    {
+        return world->Instantiate<T>();
+    }
+
+    template<typename T, class = typename std::enable_if<std::is_base_of<EEntity, T>::value>::type>
+    T* Instantiate(NWorld* world, vec3 position)
+    {
+        return world->Instantiate<T>(position);
+    }
+
+    template<typename T, class = typename std::enable_if<std::is_base_of<EEntity, T>::value>::type>
+    T* Instantiate(NWorld* world, vec3 position, vec3 rotation)
+    {
+        return world->Instantiate<T>(position, rotation);
+    }
+
+    void Destroy(NWorld* world, EEntity* entity)
+    {
+        world->Destroy(entity);
+    }
 }

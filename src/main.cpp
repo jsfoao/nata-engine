@@ -17,7 +17,6 @@ CCamera* NEngine::ActiveCamera = nullptr;
 float NEngine::WindowSizeX = 700.f;
 float NEngine::WindowSizeY = 500.f;
 
-
 int main(int argc, char** argv)
 {
     NWindow* win = new NWindow("OpenGL Studies", NEngine::WindowSizeX, NEngine::WindowSizeY);
