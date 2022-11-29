@@ -2,7 +2,7 @@
 
 namespace Nata
 {
-	Input::Input()
+	NInput::NInput()
 	{
 		m_Mx = 0;
 		m_My = 0;
@@ -20,11 +20,19 @@ namespace Nata
 		}
 	}
 
-	void Input::Init()
+	NInput::~NInput()
 	{
 	}
 
-	bool Input::GetKeyDown(int code) const
+	void NInput::Init()
+	{
+	}
+
+	void NInput::Clear()
+	{
+	}
+
+	bool NInput::GetKeyDown(int code) const
 	{
 		if (code >= GLFW_KEY_LAST)
 			return false;
@@ -33,7 +41,7 @@ namespace Nata
 	}
 
 
-	bool Input::GetMouseDown(int code) const
+	bool NInput::GetMouseDown(int code) const
 	{
 		if (code >= MAX_MOUSE_BUTTONS)
 			return false;
@@ -41,23 +49,23 @@ namespace Nata
 		return m_MouseBtns[code].current;
 	}
 
-	vec2 Input::GetMousePos()
+	vec2 NInput::GetMousePos()
 	{
 		return vec2(m_Mx, m_My);
 	}
 
-	void Input::SetKeyState(int code, bool state)
+	void NInput::SetKeyState(int code, bool state)
 	{
 		m_Keys[code].previous = m_Keys[code].current;
 		m_Keys[code].current = state;
 	}
 
-	void Input::SetMouseState(int code, bool state)
+	void NInput::SetMouseState(int code, bool state)
 	{
 		m_Keys[code].previous = m_Keys[code].current;
 		m_MouseBtns[code].current = state;
 	}
-	void Input::SetCursorPos(double x, double y)
+	void NInput::SetCursorPos(double x, double y)
 	{
 		m_Mx = x;
 		m_My = y;

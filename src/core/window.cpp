@@ -54,7 +54,7 @@ namespace Nata
 		glfwSetMouseButtonCallback(m_Window, mouse_button_callback);
 		glfwSetCursorPosCallback(m_Window, cursor_pos_callback);
 
-		m_Input = new Input();
+		m_Input = new NInput();
 
 		if (!m_Input)
 		{

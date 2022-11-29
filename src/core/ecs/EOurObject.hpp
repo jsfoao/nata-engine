@@ -8,12 +8,17 @@ namespace Nata
 	class EOurObject : public EEntity
 	{
 	public:
-		CMeshRenderer* MeshRenderer;
+		CModelRenderer* MeshRenderer;
 
 	public:
 		EOurObject() : EEntity()
 		{
-			MeshRenderer = AddComponent<CMeshRenderer>();
+			MeshRenderer = AddComponent<CModelRenderer>();
+			NShader* shader = new NShader("src\\shaders\\unlit.vert", "src\\shaders\\unlit.frag");
+			NModel* model = new NModel("res\\models\\teapot.obj");
+			MeshRenderer->Shader = shader;
+			MeshRenderer->Model = model;
+			MeshRenderer->Model->Shader = shader;
 		}
 
 		void Begin() override
@@ -21,9 +26,9 @@ namespace Nata
 			std::cout << "Begin from base" << std::endl;
 		}
 
-		void Tick(float deltaTime) override
+		void Tick(float dt) override
 		{
-
+			Transform->Position.y = sin(NTime::Time) * 2.f;
 		}
 	};
 }

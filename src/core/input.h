@@ -16,7 +16,7 @@ namespace Nata
 		bool previous;
 	};
 
-	class Input
+	class NInput
 	{
 	public:
 		ActionState m_Keys[GLFW_KEY_LAST];
@@ -25,8 +25,8 @@ namespace Nata
 		double m_My;
 
 	public:
-		Input();
-		~Input();
+		NInput();
+		~NInput();
 		void Init();
 		void Clear();
 
@@ -41,5 +41,5 @@ namespace Nata
 		vec2 GetMousePos();
 	};
 
-	extern Input* input;
+	extern NInput* input;
 }

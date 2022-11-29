@@ -3,7 +3,8 @@
 
 namespace Nata
 {
-	class CMeshRenderer : public CComponent
+	class NWindow;
+	class CModelRenderer : public CComponent
 	{
 	public:
 		NShader* Shader;
@@ -11,10 +12,12 @@ namespace Nata
 		NModel* Model;
 
 	public:
-		void Tick(float deltaTime) override
+		void Tick(float dt) override
 		{
 			Model->Position = m_Owner->Transform->Position;
-			Window->GetRenderer()->Submit(Model);
+			Model->Rotation = m_Owner->Transform->Rotation;
+			NWindow* window = NEngine::Window;
+			window->GetRenderer()->Submit(Model);
 		}
 	};
 }

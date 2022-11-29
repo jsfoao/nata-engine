@@ -42,7 +42,7 @@ namespace Nata
 		if (this->textures.size() == 0)
 			return;
 
-		Shader.Enable();
+		Shader->Enable();
 
 		unsigned int diffuseNr = 0;
 		unsigned int specularNr = 0;
@@ -65,18 +65,21 @@ namespace Nata
 			{
 				continue;
 			}
-			Shader.SetUniform1i((name + number).c_str(), i);
+			Shader->SetUniform1i((name + number).c_str(), i);
 			glBindTexture(GL_TEXTURE_2D, this->textures[i].m_ID);
 		}
 	}
 
 	void NMesh::Draw()
 	{
-		Shader.Enable();
+		Shader->Enable();
 		BindResources();
 		mat4 model = mat4(1.f);
 		model = translate(model, Position);
-		Shader.SetUniformMat4("model", model);
+		model = rotate(model, radians(Rotation.x), vec3(1.f, 0.f, 0.f));
+		model = rotate(model, radians(Rotation.y), vec3(0.f, 1.f, 0.f));
+		model = rotate(model, radians(Rotation.z), vec3(0.f, 0.f, 1.f));
+		Shader->SetUniformMat4("model", model);
 
 		m_VAO->Bind();
 		m_IBO->Bind();
@@ -87,14 +90,14 @@ namespace Nata
 
 	void NMesh::DrawArrays()
 	{
-		Shader.Enable();
+		Shader->Enable();
 		BindResources();
 		m_VAO->Bind();
 
 		glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 		m_VAO->Unbind();
 		
-		Shader.Disable();
+		Shader->Disable();
 	}
 
 	void NMesh::SetupMesh()

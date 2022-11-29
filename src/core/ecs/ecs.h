@@ -49,7 +49,7 @@ namespace Nata
 		void SetOwner(EEntity* owner) { m_Owner = owner; }
 
 		virtual void Begin() {};
-		virtual void Tick(float deltaTime) {};
+		virtual void Tick(float dt) {};
 	};
 
 	class CTransform : public CComponent
@@ -115,7 +115,7 @@ namespace Nata
 		}
 
 		virtual void Begin(){};
-		virtual void Tick(float deltaTime){};
+		virtual void Tick(float dt){};
 	};
 
 	// behaviour in level lifetime
@@ -135,7 +135,7 @@ namespace Nata
 		void SetWorld(NWorld* world) { m_World = world; }
 
 		virtual void Begin(){};
-		virtual void Tick(float deltaTime){};
+		virtual void Tick(float dt){};
 	};
 
 	// behaviour in application lifetime
@@ -143,7 +143,7 @@ namespace Nata
 	{
 	public:
 		virtual void Begin(){};
-		virtual void Tick(float deltaTime){};
+		virtual void Tick(float dt){};
 	};
 
 	// space where entities are inserted in
@@ -188,15 +188,15 @@ namespace Nata
 			}
 		}
 
-		void Tick(float deltaTime)
+		void Tick(float dt)
 		{
-			m_GameMode->Tick(deltaTime);
+			m_GameMode->Tick(dt);
 			for (EEntity* entity : m_Entities)
 			{
-				entity->Tick(deltaTime);
+				entity->Tick(dt);
 				for (CComponent* comp : entity->m_Components)
 				{
-					comp->Tick(deltaTime);
+					comp->Tick(dt);
 				}
 			}
 		}

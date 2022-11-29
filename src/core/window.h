@@ -14,7 +14,7 @@ namespace Nata
 		const char* m_Title;
 		int m_Width, m_Height;
 		GLFWwindow* m_Window;
-		Input* m_Input;
+		NInput* m_Input;
 		bool m_Closed;
 		NRenderer* m_Renderer;
 
@@ -28,7 +28,7 @@ namespace Nata
 		inline int GetWidth() const { return m_Width;  }
 		inline int GetHeight() const { return m_Height;  }
 		inline GLFWwindow* GetWindow() const { return m_Window; }
-		inline Input* GetInput() const { return m_Input; }
+		inline NInput* GetInput() const { return m_Input; }
 		inline NRenderer* GetRenderer() const { return m_Renderer; }
 
 	public:
