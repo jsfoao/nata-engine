@@ -99,14 +99,10 @@
     <ClCompile Include="include\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="include\imgui\imgui_tables.cpp" />
     <ClCompile Include="include\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="src\core\editor\editor.cpp" />
     <ClCompile Include="src\core\input.cpp" />
     <ClCompile Include="src\core\renderer\buffer.cpp" />
-    <ClCompile Include="src\core\renderer\camera.cpp" />
     <ClCompile Include="src\core\renderer\mesh.cpp" />
     <ClCompile Include="src\core\renderer\model.cpp" />
-    <ClCompile Include="src\core\renderer\renderable.cpp" />
-    <ClCompile Include="src\core\renderer\renderer.cpp" />
     <ClCompile Include="src\core\stb_image.cpp" />
     <ClCompile Include="src\core\renderer\texture.cpp" />
     <ClCompile Include="src\core\window.cpp" />
@@ -1073,6 +1069,11 @@
     <ClInclude Include="include\imgui\imstb_truetype.h" />
     <ClInclude Include="include\stb_image.h" />
     <ClInclude Include="src\core\core.h" />
+    <ClInclude Include="src\core\ecs\CCamera.hpp" />
+    <ClInclude Include="src\core\ecs\CMeshRenderer.hpp" />
+    <ClInclude Include="src\core\ecs\ECamera.hpp" />
+    <ClInclude Include="src\core\ecs\EOurGameMode.hpp" />
+    <ClInclude Include="src\core\ecs\EOurObject.hpp" />
     <ClInclude Include="src\core\ecs\test_entity.hpp" />
     <ClInclude Include="src\core\ecs\test_gamemode.hpp" />
     <ClInclude Include="src\core\ecs\transform_comp.hpp" />
@@ -1089,7 +1090,9 @@
     <ClInclude Include="src\core\renderer\mesh.h" />
     <ClInclude Include="src\core\renderer\model.h" />
     <ClInclude Include="src\core\renderer\renderable.h" />
+    <ClInclude Include="src\core\renderer\renderable.hpp" />
     <ClInclude Include="src\core\renderer\renderer.h" />
+    <ClInclude Include="src\core\renderer\renderer.hpp" />
     <ClInclude Include="src\core\renderer\texture.h" />
     <ClInclude Include="src\core\window.h" />
     <ClInclude Include="src\exercises\exercises.hpp" />
