@@ -1,9 +1,9 @@
 #pragma once
-#include "shader.h"
 #include "core/glm_math.h"
 
 namespace Nata
 {
+	class NShader;
 	class NRenderable
 	{
 	public:
@@ -13,13 +13,7 @@ namespace Nata
 		vec3 Scale;
 
 	public:
-		NRenderable()
-		{
-			Position = vec3(0.f);
-			Rotation = vec3(0.f);
-			Scale = vec3(1.f);
-		}
-
+		NRenderable();
 		virtual void Draw(){};
 	};
 }

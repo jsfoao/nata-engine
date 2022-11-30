@@ -1,6 +1,5 @@
 #pragma once
 #include "nata.h"
-#include "core/ecs/ecs.h"
 
 #include "core/ecs/ECamera.hpp"
 #include "core/ecs/EOurObject.hpp"

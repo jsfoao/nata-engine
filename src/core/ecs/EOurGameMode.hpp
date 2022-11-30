@@ -1,10 +1,13 @@
 #pragma once
+#include "core/core.h"
 #include "ecs.h"
 #include <iostream>
 #include "EOurObject.hpp"
 
 namespace Nata
 {
+	class EOurObject;
+
 	class NOurGameMode : public NGameMode
 	{
 	public:
@@ -16,7 +19,7 @@ namespace Nata
 
 		void Begin() override
 		{
-			object1 = Instantiate<EOurObject>(GetWorld());
+			Instantiate<EOurObject>(GetWorld());
 		}
 
 		void Tick(float dt) override 

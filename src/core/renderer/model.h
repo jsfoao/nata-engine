@@ -1,5 +1,5 @@
 #pragma once
-#include "renderable.hpp"
+#include "renderable.h"
 #include "core/glm_math.h"
 #include <vector>
 #include "texture.h"

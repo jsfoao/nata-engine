@@ -20,11 +20,14 @@
 
 // Nata
 #include "core/core.h"
+#include "core/ecs/ecs.h"
 #include "core/window.h"
+
+// Nata :: Renderer
 #include "core/renderer/shader.h"
 #include "core/renderer/texture.h"
 #include "core/renderer/buffer.h"
 #include "core/renderer/mesh.h"
 #include "core/renderer/model.h"
-#include "core/renderer/renderer.hpp"
-#include "core/ecs/ecs.h"
+#include "core/renderer/renderable.h"
+#include "core/renderer/renderer.h"

@@ -101,8 +101,11 @@
     <ClCompile Include="include\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\core\input.cpp" />
     <ClCompile Include="src\core\renderer\buffer.cpp" />
+    <ClCompile Include="src\core\core.cpp" />
     <ClCompile Include="src\core\renderer\mesh.cpp" />
     <ClCompile Include="src\core\renderer\model.cpp" />
+    <ClCompile Include="src\core\renderer\renderable.cpp" />
+    <ClCompile Include="src\core\renderer\renderer.cpp" />
     <ClCompile Include="src\core\stb_image.cpp" />
     <ClCompile Include="src\core\renderer\texture.cpp" />
     <ClCompile Include="src\core\window.cpp" />
@@ -1090,9 +1093,9 @@
     <ClInclude Include="src\core\renderer\mesh.h" />
     <ClInclude Include="src\core\renderer\model.h" />
     <ClInclude Include="src\core\renderer\renderable.h" />
-    <ClInclude Include="src\core\renderer\renderable.hpp" />
+    <ClInclude Include="src\core\renderer\renderable.h" />
     <ClInclude Include="src\core\renderer\renderer.h" />
-    <ClInclude Include="src\core\renderer\renderer.hpp" />
+    <ClInclude Include="src\core\renderer\renderer.h" />
     <ClInclude Include="src\core\renderer\texture.h" />
     <ClInclude Include="src\core\window.h" />
     <ClInclude Include="src\exercises\exercises.hpp" />

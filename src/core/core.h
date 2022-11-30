@@ -39,8 +39,5 @@ namespace Nata
         return world->Instantiate<T>(position, rotation);
     }
 
-    void Destroy(NWorld* world, EEntity* entity)
-    {
-        world->Destroy(entity);
-    }
+    void Destroy(NWorld* world, EEntity* entity);
 }

@@ -1,12 +1,14 @@
 #pragma once
+#include <iostream>
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
-#include <iostream>
 #include "core/input.h"
-#include "renderer/renderer.hpp"
+#include "renderer/renderer.h"
 
 namespace Nata
 {
+	class NRenderer;
+
 	class NWindow
 	{
 	private:

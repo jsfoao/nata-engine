@@ -1,10 +1,10 @@
 #pragma once
-#include "renderable.hpp"
-#include "core/glm_math.h"
 #include <vector>
+#include "core/glm_math.h"
 #include "texture.h"
 #include "shader.h"
 #include "buffer.h"
+#include "renderable.h"
 
 #define N_DRAW_ELEMENTS 0
 #define N_DRAW_ARRAYS 1
