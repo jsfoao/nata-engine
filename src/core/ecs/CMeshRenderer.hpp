@@ -15,6 +15,7 @@ namespace Nata
 		void Tick(float dt) override
 		{
 			Model->Position = m_Owner->Transform->Position;
+			Model->Scale = m_Owner->Transform->Scale;
 			Model->Rotation = m_Owner->Transform->Rotation;
 			NWindow* window = NEngine::Window;
 			window->GetRenderer()->Submit(Model);

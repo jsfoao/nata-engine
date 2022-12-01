@@ -76,6 +76,7 @@ namespace Nata
 		BindResources();
 		mat4 model = mat4(1.f);
 		model = translate(model, Position);
+		model = scale(model, Scale);
 		model = rotate(model, radians(Rotation.x), vec3(1.f, 0.f, 0.f));
 		model = rotate(model, radians(Rotation.y), vec3(0.f, 1.f, 0.f));
 		model = rotate(model, radians(Rotation.z), vec3(0.f, 0.f, 1.f));

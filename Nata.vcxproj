@@ -110,7 +110,9 @@
     <ClCompile Include="src\core\renderer\texture.cpp" />
     <ClCompile Include="src\core\window.cpp" />
     <ClCompile Include="src\core\renderer\shader.cpp" />
+    <ClCompile Include="src\editor.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\editor.h" />
     <ClCompile Include="src\utils\fileutils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -1075,7 +1077,7 @@
     <ClInclude Include="src\core\ecs\CCamera.hpp" />
     <ClInclude Include="src\core\ecs\CMeshRenderer.hpp" />
     <ClInclude Include="src\core\ecs\ECamera.hpp" />
-    <ClInclude Include="src\core\ecs\EOurGameMode.hpp" />
+    <ClInclude Include="src\core\ecs\NOurGameMode.hpp" />
     <ClInclude Include="src\core\ecs\EOurObject.hpp" />
     <ClInclude Include="src\core\ecs\test_entity.hpp" />
     <ClInclude Include="src\core\ecs\test_gamemode.hpp" />

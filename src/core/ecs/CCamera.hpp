@@ -30,7 +30,7 @@ namespace Nata
 			vec3 camRotation = m_Owner->Transform->Rotation;
 
 			// view and projection matrices
-			m_Projection = perspective(radians(m_Fov), NEngine::WindowSizeX / NEngine::WindowSizeY, m_Near, m_Far);
+			m_Projection = perspective(radians(m_Fov), (float)NEngine::WindowSizeX / (float)NEngine::WindowSizeY, m_Near, m_Far);
 
 			// camera
 			vec3 camForward;

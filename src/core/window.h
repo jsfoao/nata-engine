@@ -23,17 +23,20 @@ namespace Nata
 		NWindow(const char* name, int width, int height);
 		~NWindow();
 		void Update();
-		bool Closed() const;
-		void Clear() const;
+		bool Closed();
+		void Clear();
 
 		inline int GetWidth() const { return m_Width;  }
 		inline int GetHeight() const { return m_Height;  }
 		inline GLFWwindow* GetWindow() const { return m_Window; }
 		inline NInput* GetInput() const { return m_Input; }
 		inline NRenderer* GetRenderer() const { return m_Renderer; }
+		inline void SetInput(NInput* input) { m_Input = input; }
 
-	public:
 		bool Init();
+
+	protected:
+		void Bind();
 	};
 
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);

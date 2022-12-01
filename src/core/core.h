@@ -16,9 +16,12 @@ namespace Nata
     public:
         static class NWindow* Window;
         static class NInput* Input;
-        static class CCamera* ActiveCamera;
-        static float WindowSizeX;
-        static float WindowSizeY;
+        // Active camera component
+        static class CCamera* Camera;
+        // Active world
+        static class NWorld* World;
+        static int WindowSizeX;
+        static int WindowSizeY;
     };
 
     template<typename T, class = typename std::enable_if<std::is_base_of<EEntity, T>::value>::type>

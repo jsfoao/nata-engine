@@ -12,6 +12,7 @@ namespace Nata
 		for (unsigned int i = 0; i < Meshes.size(); i++)
 		{
 			Meshes[i].Position = Position;
+			Meshes[i].Scale = Scale;
 			Meshes[i].Rotation = Rotation;
 			Meshes[i].Shader = Shader;
 			Meshes[i].Draw();

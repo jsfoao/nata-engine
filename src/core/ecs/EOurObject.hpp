@@ -21,7 +21,9 @@ namespace Nata
 			MeshRenderer->Model = model;
 			MeshRenderer->Model->Shader = shader;
 
-			Offset = false;
+			MeshRenderer->Shader->Enable();
+			MeshRenderer->Shader->SetUniform3f("color", vec3(1.f, 0.5f, 1.f));
+			MeshRenderer->Shader->Disable();
 		}
 
 		void Begin() override
@@ -30,21 +32,6 @@ namespace Nata
 
 		void Tick(float dt) override
 		{
-			if (Offset == true)
-			{
-				Transform->Position.y = sin(NTime::Time) * 3.f;
-				Transform->Position.x = -2.f;
-				MeshRenderer->Shader->Enable();
-				MeshRenderer->Shader->SetUniform3f("color", vec3(1.f, 0.5f, 1.f));
-				MeshRenderer->Shader->Disable();
-			}
-			else
-			{
-				Transform->Position.y = sin(NTime::Time) * 2.f;
-				MeshRenderer->Shader->Enable();
-				MeshRenderer->Shader->SetUniform3f("color", vec3(1.f, sin(NTime::Time), 1.f));
-				MeshRenderer->Shader->Disable();
-			}
 		}
 	};
 }

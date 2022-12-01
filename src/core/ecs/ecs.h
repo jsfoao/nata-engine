@@ -59,12 +59,40 @@ namespace Nata
 		vec3 Position;
 		vec3 Scale;
 		vec3 Rotation;
+		vec3 LocalPosition;
+		CTransform* Parent;
+		vector<CTransform*> Children;
+		bool IsParented;
 
 		CTransform()
 		{
-			Position = vec3(0.f, 0.f, 0.f);
+			Position = vec3(0.f);
 			Scale = vec3(1.f, 1.f, 1.f);
-			Rotation = vec3(0.f, 0.f, 0.f);
+			Rotation = vec3(0.f);
+			LocalPosition = vec3(0.f);
+			Parent = nullptr;
+			IsParented = false;
+		}
+
+		void SetParent(CTransform* parent)
+		{
+			if (parent == nullptr)
+			{
+				std::cout << "WARNING::CTRANSFORM : INVALID PARENT" << std::endl;
+				return;
+			}
+			IsParented = true;
+			Parent = parent;
+			LocalPosition = parent->Position - Position;
+			parent->Children.push_back(this);
+		}
+
+		void Tick(float dt) override
+		{
+			if (IsParented)
+			{
+				Position = Parent->Position + LocalPosition;
+			}
 		}
 	};
 

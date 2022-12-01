@@ -9,10 +9,10 @@ namespace Nata
 		m_Width = width;
 		m_Height = height;
 
-		if (!Init())
-		{
-			glfwTerminate();
-		}
+		//if (!Init())
+		//{
+		//	glfwTerminate();
+		//}
 	}
 
 	NWindow::~NWindow()
@@ -37,8 +37,9 @@ namespace Nata
 			std::cout << "Failed to created window!" << std::endl;
 			return false;
 		}
-		glfwMakeContextCurrent(m_Window);
 
+		glfwSetWindowUserPointer(m_Window, this);
+		Bind();
 		if (glewInit() != GLEW_OK)
 		{
 			std::cout << "Failed to initialize GLEW!" << std::endl;
@@ -46,12 +47,7 @@ namespace Nata
 		}
 
 		glViewport(0, 0, m_Width, m_Height);
-		glfwSetWindowUserPointer(m_Window, this);
 
-		// Callbacks
-		glfwSetKeyCallback(m_Window, key_callback); 
-		glfwSetMouseButtonCallback(m_Window, mouse_button_callback);
-		glfwSetCursorPosCallback(m_Window, cursor_pos_callback);
 
 		m_Input = new NInput();
 
@@ -60,16 +56,26 @@ namespace Nata
 			std::cout << "Failed to create input!" << std::endl;
 		}
 
+		//// Callbacks
+		//glfwSetKeyCallback(m_Window, key_callback); 
+		//glfwSetMouseButtonCallback(m_Window, mouse_button_callback);
+		//glfwSetCursorPosCallback(m_Window, cursor_pos_callback);
 		return true;
 	}
 
-	void NWindow::Clear() const
+	void NWindow::Clear()
 	{
+		Bind();
 		glClearColor(.15f, .15f, .15f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
-	bool NWindow::Closed() const
+	void NWindow::Bind()
+	{
+		glfwMakeContextCurrent(m_Window);
+	}
+
+	bool NWindow::Closed()
 	{
 		return glfwWindowShouldClose(m_Window);
 	}
@@ -83,7 +89,7 @@ namespace Nata
 			std::cout << "OpenGL error: " << error << std::endl;
 		}
 
-		// Checks if any events are triggered (keyboard input or mouse inpit)
+		// Checks if any events are triggered (keyboard input or mouse input)
 		glfwPollEvents();
 		glfwGetFramebufferSize(m_Window, &m_Width, &m_Height);
 		glfwSwapBuffers(m_Window);
