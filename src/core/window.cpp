@@ -2,6 +2,7 @@
 
 namespace Nata
 {
+	NWindow* NWindow::CurrentWindow = nullptr;
 	NWindow::NWindow(const char* title, int width, int height)
 	{
 		m_Renderer = new NRenderer();
@@ -9,10 +10,10 @@ namespace Nata
 		m_Width = width;
 		m_Height = height;
 
-		//if (!Init())
-		//{
-		//	glfwTerminate();
-		//}
+		if (!Init())
+		{
+			glfwTerminate();
+		}
 	}
 
 	NWindow::~NWindow()
@@ -30,6 +31,7 @@ namespace Nata
 		std::cout << glfwGetVersionString() << std::endl;
 
 		m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, NULL, NULL);
+		glfwMakeContextCurrent(m_Window);
 
 		if (!m_Window)
 		{
@@ -38,16 +40,23 @@ namespace Nata
 			return false;
 		}
 
-		glfwSetWindowUserPointer(m_Window, this);
-		Bind();
 		if (glewInit() != GLEW_OK)
 		{
 			std::cout << "Failed to initialize GLEW!" << std::endl;
 			return false;
 		}
 
-		glViewport(0, 0, m_Width, m_Height);
+		if (NWindow::CurrentWindow == nullptr)
+		{
+			NWindow::CurrentWindow = this;
+		}
+		else
+		{
+			std::cout << "ERROR::WINDOW : Multiple windows not supported!" << std::endl;
+			exit(0);
+		}
 
+		glViewport(0, 0, m_Width, m_Height);
 
 		m_Input = new NInput();
 
@@ -57,15 +66,15 @@ namespace Nata
 		}
 
 		//// Callbacks
-		//glfwSetKeyCallback(m_Window, key_callback); 
-		//glfwSetMouseButtonCallback(m_Window, mouse_button_callback);
-		//glfwSetCursorPosCallback(m_Window, cursor_pos_callback);
+		glfwSetWindowFocusCallback(m_Window, window_focus_callback);
+		glfwSetKeyCallback(m_Window, key_callback); 
+		glfwSetMouseButtonCallback(m_Window, mouse_button_callback);
+		glfwSetCursorPosCallback(m_Window, cursor_pos_callback);
 		return true;
 	}
 
 	void NWindow::Clear()
 	{
-		Bind();
 		glClearColor(.15f, .15f, .15f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
@@ -96,8 +105,13 @@ namespace Nata
 	}
 
 	//
-	// CALLBACKS
+	// WINDOW CALLBACKS
 	//
+	void window_focus_callback(GLFWwindow* window, int focused)
+	{
+
+	}
+
 	void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	{
 		glViewport(0, 0, width, height);
@@ -105,19 +119,20 @@ namespace Nata
 
 	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
-		NWindow* win = (NWindow*)glfwGetWindowUserPointer(window);
-		win->GetInput()->SetKeyState(key, action != GLFW_RELEASE);
+		//NWindow* win = (NWindow*)glfwGetWindowUserPointer(window);
+		
+		NWindow::CurrentWindow->GetInput()->SetKeyState(key, action != GLFW_RELEASE);
 	}
 
 	void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 	{
-		NWindow* win = (NWindow*)glfwGetWindowUserPointer(window);
-		win->GetInput()->SetMouseState(button, action != GLFW_RELEASE);
+		//NWindow* win = (NWindow*)glfwGetWindowUserPointer(window);
+		NWindow::CurrentWindow->GetInput()->SetMouseState(button, action != GLFW_RELEASE);
 	}
 
 	void cursor_pos_callback(GLFWwindow* window, double xpos, double ypos)
 	{
-		NWindow* win = (NWindow*)glfwGetWindowUserPointer(window);
-		win->GetInput()->SetCursorPos(xpos, ypos);
+		//NWindow* win = (NWindow*)glfwGetWindowUserPointer(window);
+		NWindow::CurrentWindow->GetInput()->SetCursorPos(xpos, ypos);
 	}
 }

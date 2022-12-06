@@ -24,15 +24,11 @@ void Execute()
 
 int main(int argc, char** argv)
 {
-    NWindow* win = new NWindow("Game", NEngine::WindowSizeX, NEngine::WindowSizeY);
-    win->Init();    
+    NWindow* window = new NWindow("Game", NEngine::WindowSizeX, NEngine::WindowSizeY);
     
-    NWindow* otherWin = new NWindow("Editor", NEngine::WindowSizeX, NEngine::WindowSizeY);
-    otherWin->Init();
-    
-    NRenderer* renderer = win->GetRenderer();
-    NEngine::Window = win;
-    //NEngine::Input = input;
+    NRenderer* renderer = window->GetRenderer();
+    NEngine::Window = window;
+    NEngine::Input = window->GetInput();
 
     glEnable(GL_DEPTH_TEST);
 
@@ -52,13 +48,9 @@ int main(int argc, char** argv)
 
     NWorld* world = NEngine::World;
     world->Begin();
-    while (!win->Closed())
-    {
-        otherWin->Clear();
-
-        otherWin->Update();
-
-        win->Clear();
+    while (!window->Closed())
+    {   
+        window->Clear();
         double currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
@@ -66,6 +58,6 @@ int main(int argc, char** argv)
         NTime::DeltaTime = deltaTime;
 
         world->Tick(deltaTime);
-        win->Update();
+        window->Update();
     }
 }

@@ -25,7 +25,10 @@ namespace Nata
 		void Update();
 		bool Closed();
 		void Clear();
+		bool Init();
+		void Bind();
 
+		inline const char* GetTitle() const { return m_Title; }
 		inline int GetWidth() const { return m_Width;  }
 		inline int GetHeight() const { return m_Height;  }
 		inline GLFWwindow* GetWindow() const { return m_Window; }
@@ -33,12 +36,10 @@ namespace Nata
 		inline NRenderer* GetRenderer() const { return m_Renderer; }
 		inline void SetInput(NInput* input) { m_Input = input; }
 
-		bool Init();
-
-	protected:
-		void Bind();
+		static NWindow* CurrentWindow;
 	};
 
+	static void window_focus_callback(GLFWwindow* window, int focused);
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 	static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 	static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
