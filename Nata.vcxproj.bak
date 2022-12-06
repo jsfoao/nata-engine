@@ -91,7 +91,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="include\glm\detail.cpp" />
+    <ClCompile Include="include\glm\detail\glm.cpp" />
     <ClCompile Include="include\imgui\imgui.cpp" />
     <ClCompile Include="include\imgui\imgui_demo.cpp" />
     <ClCompile Include="include\imgui\imgui_draw.cpp" />
@@ -1095,6 +1095,8 @@
     <ClInclude Include="src\core\renderer\mesh.h" />
     <ClInclude Include="src\core\renderer\model.h" />
     <ClInclude Include="src\core\renderer\renderable.h" />
+    <ClInclude Include="src\core\renderer\renderable.h" />
+    <ClInclude Include="src\core\renderer\renderer.h" />
     <ClInclude Include="src\core\renderer\renderer.h" />
     <ClInclude Include="src\core\renderer\texture.h" />
     <ClInclude Include="src\core\window.h" />
