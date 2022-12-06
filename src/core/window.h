@@ -29,14 +29,15 @@ namespace Nata
 		void Bind();
 
 		inline const char* GetTitle() const { return m_Title; }
-		inline int GetWidth() const { return m_Width;  }
-		inline int GetHeight() const { return m_Height;  }
+		inline int GetWidth() const { return m_Width; }
+		inline int GetHeight() const { return m_Height; }
 		inline GLFWwindow* GetWindow() const { return m_Window; }
 		inline NInput* GetInput() const { return m_Input; }
 		inline NRenderer* GetRenderer() const { return m_Renderer; }
 		inline void SetInput(NInput* input) { m_Input = input; }
 
 		static NWindow* CurrentWindow;
+		static void SpaceCallback();
 	};
 
 	static void window_focus_callback(GLFWwindow* window, int focused);

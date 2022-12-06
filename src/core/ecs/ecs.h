@@ -151,8 +151,8 @@ namespace Nata
 			return m_Components;
 		}
 
-		virtual void Begin(){};
-		virtual void Tick(float dt){};
+		virtual void Begin() {};
+		virtual void Tick(float dt) {};
 	};
 
 	// behaviour in level lifetime

@@ -67,7 +67,7 @@ namespace Nata
 
 		//// Callbacks
 		glfwSetWindowFocusCallback(m_Window, window_focus_callback);
-		glfwSetKeyCallback(m_Window, key_callback); 
+		glfwSetKeyCallback(m_Window, key_callback);
 		glfwSetMouseButtonCallback(m_Window, mouse_button_callback);
 		glfwSetCursorPosCallback(m_Window, cursor_pos_callback);
 		return true;
@@ -82,6 +82,11 @@ namespace Nata
 	void NWindow::Bind()
 	{
 		glfwMakeContextCurrent(m_Window);
+	}
+
+	void NWindow::SpaceCallback()
+	{
+		key_callback(NWindow::CurrentWindow->GetWindow(), GLFW_KEY_SPACE, 57, GLFW_PRESS, 0);
 	}
 
 	bool NWindow::Closed()
@@ -119,20 +124,16 @@ namespace Nata
 
 	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
-		//NWindow* win = (NWindow*)glfwGetWindowUserPointer(window);
-		
 		NWindow::CurrentWindow->GetInput()->SetKeyState(key, action != GLFW_RELEASE);
 	}
 
 	void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 	{
-		//NWindow* win = (NWindow*)glfwGetWindowUserPointer(window);
 		NWindow::CurrentWindow->GetInput()->SetMouseState(button, action != GLFW_RELEASE);
 	}
 
 	void cursor_pos_callback(GLFWwindow* window, double xpos, double ypos)
 	{
-		//NWindow* win = (NWindow*)glfwGetWindowUserPointer(window);
 		NWindow::CurrentWindow->GetInput()->SetCursorPos(xpos, ypos);
 	}
 }

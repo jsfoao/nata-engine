@@ -8,11 +8,11 @@
 namespace Nata
 {
 #define MAX_MOUSE_BUTTONS 32
-	
+
 	struct ActionState
 	{
-		bool current;
-		bool previous;
+		bool Current;
+		bool Previous;
 	};
 
 	class NInput
@@ -28,8 +28,11 @@ namespace Nata
 		~NInput();
 		void Init();
 		void Clear();
+		void Tick();
 
+		bool GetKeyHold(int key) const;
 		bool GetKeyDown(int key) const;
+		bool GetKeyUp(int key) const;
 
 		bool GetMouseDown(int button) const;
 
@@ -38,6 +41,9 @@ namespace Nata
 		void SetCursorPos(double x, double y);
 
 		vec2 GetMousePos();
+
+	protected:
+
 	};
 
 	extern NInput* input;

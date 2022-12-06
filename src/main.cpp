@@ -8,56 +8,57 @@ using namespace glm;
 
 void Execute()
 {
-    NWorld* world = new NWorld();
-    NEngine::World = world;
-    NOurGameMode* gameMode = new NOurGameMode();
-    world->SetGameMode(gameMode);
+	NWorld* world = new NWorld();
+	NEngine::World = world;
+	NOurGameMode* gameMode = new NOurGameMode();
+	world->SetGameMode(gameMode);
 
-    ECamera* camera = Instantiate<ECamera>(world);
-    NEngine::Camera = camera->Camera;
+	ECamera* camera = Instantiate<ECamera>(world);
+	NEngine::Camera = camera->Camera;
 
-    EOurObject* object1 = Instantiate<EOurObject>(world);
-    EOurObject* object2 = Instantiate<EOurObject>(world, vec3(2.f, 0.f, 0.f));
+	EOurObject* object1 = Instantiate<EOurObject>(world);
+	//EOurObject* object2 = Instantiate<EOurObject>(world, vec3(2.f, 0.f, 0.f));
 
-    object2->Transform->SetParent(object1->Transform);
+	//object2->Transform->SetParent(object1->Transform);
 }
 
 int main(int argc, char** argv)
 {
-    NWindow* window = new NWindow("Game", NEngine::WindowSizeX, NEngine::WindowSizeY);
-    
-    NRenderer* renderer = window->GetRenderer();
-    NEngine::Window = window;
-    NEngine::Input = window->GetInput();
+	NWindow* window = new NWindow("Game", NEngine::WindowSizeX, NEngine::WindowSizeY);
 
-    glEnable(GL_DEPTH_TEST);
+	NRenderer* renderer = window->GetRenderer();
+	NEngine::Window = window;
+	NEngine::Input = window->GetInput();
 
-    Execute();
-    if (NEngine::World == nullptr)
-    {
-        std::cout << "ERROR::WORLD : INVALID WORLD" << std::endl;
-        return 0;
-    }
-    if (NEngine::Camera == nullptr)
-    {
-        std::cout << "WARNING::CAMERA : INVALID CAMERA" << std::endl;
-    }
+	glEnable(GL_DEPTH_TEST);
 
-    float deltaTime = 0.f;
-    double lastFrame = 0.f;
+	Execute();
+	if (NEngine::World == nullptr)
+	{
+		std::cout << "ERROR::WORLD : INVALID WORLD" << std::endl;
+		return 0;
+	}
+	if (NEngine::Camera == nullptr)
+	{
+		std::cout << "WARNING::CAMERA : INVALID CAMERA" << std::endl;
+	}
 
-    NWorld* world = NEngine::World;
-    world->Begin();
-    while (!window->Closed())
-    {   
-        window->Clear();
-        double currentFrame = glfwGetTime();
-        deltaTime = currentFrame - lastFrame;
-        lastFrame = currentFrame;
-        NTime::Time = (float)glfwGetTime();
-        NTime::DeltaTime = deltaTime;
+	float deltaTime = 0.f;
+	double lastFrame = 0.f;
 
-        world->Tick(deltaTime);
-        window->Update();
-    }
+	NWorld* world = NEngine::World;
+	world->Begin();
+	while (!window->Closed())
+	{
+		window->Clear();
+		double currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+		NTime::Time = (float)glfwGetTime();
+		NTime::DeltaTime = deltaTime;
+
+		NEngine::Input->Tick();
+		world->Tick(deltaTime);
+		window->Update();
+	}
 }

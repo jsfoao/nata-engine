@@ -32,6 +32,14 @@ namespace Nata
 
 		void Tick(float dt) override
 		{
+			if (NEngine::Input->GetKeyDown(GLFW_KEY_SPACE))
+			{
+				std::cout << "Down" << std::endl;
+			}
+			//if (NEngine::Input->GetKeyHold(GLFW_KEY_SPACE))
+			//{
+			//	std::cout << "Hold" << std::endl;
+			//}
 		}
 	};
 }
