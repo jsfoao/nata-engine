@@ -34,6 +34,7 @@ namespace Nata
 
 	void NInput::Tick()
 	{
+
 		std::cout << "------" << std::endl;
 		std::cout << "Previous: " << m_Keys[32].Previous << std::endl;
 		std::cout << "Current: " << m_Keys[32].Current << std::endl;
