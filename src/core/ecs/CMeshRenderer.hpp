@@ -6,19 +6,32 @@ namespace Nata
 	class NWindow;
 	class CModelRenderer : public CComponent
 	{
-	public:
-		NShader* Shader;
-		NTexture* Texture;
-		NModel* Model;
+	protected:
+		NShader* m_Shader;
+		NTexture* m_Texture;
+		NModel* m_Model;
 
 	public:
+		void SetAll(NShader* shader, NModel* model, NTexture* texture = nullptr)
+		{
+			m_Shader = shader;
+			m_Texture = texture;
+			m_Model = model;
+			model->Shader = m_Shader;
+		}
+
+		NShader* GetShader()
+		{
+			return m_Shader;
+		}
+		
 		void Tick(float dt) override
 		{
-			Model->Position = m_Owner->Transform->Position;
-			Model->Scale = m_Owner->Transform->Scale;
-			Model->Rotation = m_Owner->Transform->Rotation;
+			m_Model->Position = m_Owner->Transform->Position;
+			m_Model->Scale = m_Owner->Transform->Scale;
+			m_Model->Rotation = m_Owner->Transform->Rotation;
 			NWindow* window = NEngine::Window;
-			window->GetRenderer()->Submit(Model);
+			window->GetRenderer()->Submit(m_Model);
 		}
 	};
 }

@@ -17,13 +17,11 @@ namespace Nata
 			MeshRenderer = AddComponent<CModelRenderer>();
 			NShader* shader = new NShader("src\\shaders\\unlit.vert", "src\\shaders\\unlit.frag");
 			NModel* model = new NModel("res\\models\\teapot.obj");
-			MeshRenderer->Shader = shader;
-			MeshRenderer->Model = model;
-			MeshRenderer->Model->Shader = shader;
-
-			MeshRenderer->Shader->Enable();
-			MeshRenderer->Shader->SetUniform3f("color", vec3(1.f, 0.5f, 1.f));
-			MeshRenderer->Shader->Disable();
+			MeshRenderer->SetAll(shader, model);
+			
+			MeshRenderer->GetShader()->Enable();
+			MeshRenderer->GetShader()->SetUniform3f("color", vec3(1.f, 0.5f, 1.f));
+			MeshRenderer->GetShader()->Disable();
 		}
 
 		void Begin() override
