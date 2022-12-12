@@ -4,22 +4,29 @@
 #include "GLFW/glfw3.h"
 #include "key.h"
 #include "core/glm_math.h"
+#include <vector>
 
 namespace Nata
 {
 #define MAX_MOUSE_BUTTONS 32
 
-	struct ActionState
+	enum KeyState
+	{
+		None, Down, Hold, Up
+	};
+
+	struct KeyAction
 	{
 		bool Current;
 		bool Previous;
+		KeyState State;
 	};
 
 	class NInput
 	{
-	public:
-		ActionState m_Keys[GLFW_KEY_LAST];
-		ActionState m_MouseBtns[MAX_MOUSE_BUTTONS];
+	protected:
+		KeyAction m_Keys[GLFW_KEY_LAST];
+		KeyAction m_MouseBtns[MAX_MOUSE_BUTTONS];
 		double m_Mx;
 		double m_My;
 
@@ -43,7 +50,7 @@ namespace Nata
 		vec2 GetMousePos();
 
 	protected:
-
+		void EvaluateKeyActions(KeyAction data[], int size);
 	};
 
 	extern NInput* input;

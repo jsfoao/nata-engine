@@ -36,10 +36,10 @@ namespace Nata
 			{
 				std::cout << "Down" << std::endl;
 			}
-			//if (NEngine::Input->GetKeyHold(GLFW_KEY_SPACE))
-			//{
-			//	std::cout << "Hold" << std::endl;
-			//}
+			if (NEngine::Input->GetKeyUp(GLFW_KEY_SPACE))
+			{
+				std::cout << "Up" << std::endl;
+			}
 		}
 	};
 }

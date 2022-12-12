@@ -37,7 +37,6 @@ namespace Nata
 		inline void SetInput(NInput* input) { m_Input = input; }
 
 		static NWindow* CurrentWindow;
-		static void SpaceCallback();
 	};
 
 	static void window_focus_callback(GLFWwindow* window, int focused);

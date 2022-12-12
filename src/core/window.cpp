@@ -84,11 +84,6 @@ namespace Nata
 		glfwMakeContextCurrent(m_Window);
 	}
 
-	void NWindow::SpaceCallback()
-	{
-		key_callback(NWindow::CurrentWindow->GetWindow(), GLFW_KEY_SPACE, 57, GLFW_PRESS, 0);
-	}
-
 	bool NWindow::Closed()
 	{
 		return glfwWindowShouldClose(m_Window);
