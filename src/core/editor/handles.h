@@ -7,9 +7,11 @@ namespace Nata
 	{
 	public:
 		static NShader* Shader;
+		static bool m_Enabled;
 
 	public:
 		static bool Init();
+		static void SetEnable(bool enabled);
 
 		static void DrawLine(const vec3& start, const vec3& end, const vec3& color);
 		static void DrawWireCube(const vec3& pos, const vec3& size, const vec3& color);

@@ -56,5 +56,20 @@ namespace Nata
         return entities;
     }
 
+    template<typename T, class = typename std::enable_if<std::is_base_of<CComponent>::value>::type>
+    std::vector<T*> GetComponentsOfType(NWorld* world)
+    {
+        std::vector<T*> components;
+        for (EEntity* entity : NEngine::World->GetAllEntities())
+        {
+            CComponent* component = entity->GetComponent<T>();
+            if (component != nullptr)
+            {
+                components.push_back(component);
+            }
+        }
+        return components;
+    }
+
     void Destroy(NWorld* world, EEntity* entity);
 }

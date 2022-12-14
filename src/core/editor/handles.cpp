@@ -3,9 +3,14 @@
 namespace Nata
 {
     NShader* Handles::Shader = nullptr;
+    bool Handles::m_Enabled = false;
 
     void Handles::DrawLine(const vec3& start, const vec3& end, const vec3& color)
     {
+        if (!m_Enabled)
+        {
+            return;
+        }
         vector<float> vertices =
         {
             // positions               // normals        // t coords  // tangent         // bitangent
@@ -13,18 +18,22 @@ namespace Nata
             end.x  , end.y  , end.z  , 0.0f, 0.0f, 0.0f, 0.0f,  0.0f, 0.0f,  0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
         };
 
-        NMesh* mesh = new NMesh(vertices);
-        mesh->DrawArrays = true;
-        mesh->DrawMode = GL_LINES;
-        mesh->Shader = Shader;
-        mesh->Position = vec3(0.f);
+        NMesh mesh = NMesh(vertices);
+        mesh.DrawArrays = true;
+        mesh.DrawMode = GL_LINES;
+        mesh.Shader = Shader;
+        mesh.Position = vec3(0.f);
         Shader->Enable();
         Shader->SetUniform3f("color", color);
-        NEngine::Window->GetRenderer()->Submit(mesh, true);
+        NEngine::Window->GetRenderer()->Submit(&mesh, true);
     }
 
     void Handles::DrawWireCube(const vec3& pos, const vec3& size, const vec3& color)
     {
+        if (!m_Enabled)
+        {
+            return;
+        }
         vec3 hsize = size / 2.f;
         vec3 v0 = vec3(pos.x - hsize.x, pos.y - hsize.y, pos.z - hsize.z);
         vec3 v1 = vec3(pos.x + hsize.x, pos.y - hsize.y, pos.z - hsize.z);
@@ -61,6 +70,10 @@ namespace Nata
 
     void Handles::DrawWireSphere(const vec3& pos, const float radius, const vec3& color)
     {
+        if (!m_Enabled)
+        {
+            return;
+        }
         DrawCircle(pos, 2.f, vec3(1.f, 0.f, 0.f), color);
         DrawCircle(pos, 2.f, vec3(0.f, 1.f, 0.f), color);
         DrawCircle(pos, 2.f, vec3(0.f, 0.f, 1.f), color);
@@ -68,6 +81,10 @@ namespace Nata
 
     void Handles::DrawCircle(const vec3& pos, const float radius, const vec3& normal, const vec3& color, const int segments)
     {
+        if (!m_Enabled)
+        {
+            return;
+        }
         vec3 vec = vec3(0.f);
         if (normal == vec3(1.f, 0.f, 0.f))
         {
@@ -109,7 +126,13 @@ namespace Nata
 
     bool Handles::Init()
     {
+        SetEnable(true);
         Shader = new NShader("src\\shaders\\unlit.vert", "src\\shaders\\unlit.frag");
         return Shader != nullptr;
+    }
+
+    void Handles::SetEnable(bool enabled)
+    {
+        m_Enabled = enabled;
     }
 }

@@ -34,6 +34,7 @@ namespace Nata
 		
 		void Tick(float dt) override
 		{
+			SuperTick(dt);
 			if (!m_IsVisible)
 			{
 				return;

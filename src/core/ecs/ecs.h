@@ -32,6 +32,7 @@ namespace Nata
 	{
 	protected:
 		EEntity* m_Owner;
+		bool m_Enabled;
 
 		friend class EEntity;
 
@@ -39,18 +40,35 @@ namespace Nata
 		CComponent()
 		{
 			m_Owner = nullptr;
+			m_Enabled = true;
 		}
 
 		CComponent(EEntity* owner)
 		{
 			m_Owner = owner;
+			m_Enabled = true;
 		}
 
 		EEntity* GetOwner() { return m_Owner; }
 		void SetOwner(EEntity* owner) { m_Owner = owner; }
+		void SetEnabled(bool enabled) { m_Enabled = enabled; }
 
 		virtual void Begin() {};
 		virtual void Tick(float dt) {};
+		void SuperBegin()
+		{
+			if (!m_Enabled)
+			{
+				return;
+			}
+		}
+		void SuperTick(float dt)
+		{
+			if (!m_Enabled)
+			{
+				return;
+			}
+		}
 	};
 
 	class CTransform : public CComponent
