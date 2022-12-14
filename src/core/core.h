@@ -42,5 +42,19 @@ namespace Nata
         return world->Instantiate<T>(position, rotation);
     }
 
+    template<typename T, class = typename std::enable_if<std::is_base_of<EEntity, T>::value>::type>
+    std::vector<T*> GetEntitiesOfType(NWorld* world)
+    {
+        std::vector<T*> entities;
+        for (EEntity* entity : NEngine::World->GetAllEntities())
+        {
+            if (typeid(*entity).name() == typeid(T).name())
+            {
+                entities.push_back(entity);
+            }
+        }
+        return entities;
+    }
+
     void Destroy(NWorld* world, EEntity* entity);
 }

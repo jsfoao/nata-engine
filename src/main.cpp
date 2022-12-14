@@ -1,26 +1,7 @@
 #pragma once
 #include "nata.h"
-#include "editor.h"
 #include "core/window.h"
-
-using namespace Nata;
-using namespace glm;
-
-void Execute()
-{
-	NWorld* world = new NWorld();
-	NEngine::World = world;
-	NOurGameMode* gameMode = new NOurGameMode();
-	world->SetGameMode(gameMode);
-
-	ECamera* camera = Instantiate<ECamera>(world);
-	NEngine::Camera = camera->Camera;
-
-	EOurObject* object1 = Instantiate<EOurObject>(world);
-	//EOurObject* object2 = Instantiate<EOurObject>(world, vec3(2.f, 0.f, 0.f));
-
-	//object2->Transform->SetParent(object1->Transform);
-}
+#include "app.cpp"
 
 int main(int argc, char** argv)
 {
@@ -29,10 +10,12 @@ int main(int argc, char** argv)
 	NRenderer* renderer = window->GetRenderer();
 	NEngine::Window = window;
 	NEngine::Input = window->GetInput();
+	Handles::Init();
 
 	glEnable(GL_DEPTH_TEST);
 
-	Execute();
+	App::Begin();
+
 	if (NEngine::World == nullptr)
 	{
 		std::cout << "ERROR::WORLD : INVALID WORLD" << std::endl;
@@ -58,6 +41,7 @@ int main(int argc, char** argv)
 		NTime::DeltaTime = deltaTime;
 
 		NEngine::Input->Tick();
+		App::Tick(deltaTime);
 		world->Tick(deltaTime);
 		window->Update();
 	}

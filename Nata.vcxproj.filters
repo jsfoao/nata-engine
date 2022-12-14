@@ -33,9 +33,6 @@
     <ClCompile Include="src\core\stb_image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="include\glm\detail\glm.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\renderer\texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -66,9 +63,6 @@
     <ClCompile Include="src\core\renderer\model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\editor\editor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\renderer\buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -78,7 +72,10 @@
     <ClCompile Include="src\core\renderer\renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\renderer\camera.cpp">
+    <ClCompile Include="src\core\core.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\editor\handles.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -3035,17 +3032,20 @@
     <ClInclude Include="src\core\ecs\CMeshRenderer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\ecs\EOurObject.hpp">
+    <ClInclude Include="res\scripts\EOurObject.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\ecs\EOurGameMode.hpp">
+    <ClInclude Include="res\scripts\NShooterGameMode.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\renderer\renderable.hpp">
+    <ClInclude Include="res\scripts\EPlayer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\renderer\renderer.hpp">
+    <ClInclude Include="src\core\editor\handles.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\app.cpp">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

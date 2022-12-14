@@ -2,7 +2,7 @@
 
 namespace Nata
 {
-	NMesh::NMesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<NTexture> textures)
+	NMesh::NMesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<NTexture> textures, bool drawArrays, int drawMode)
 	{
 		this->vertices = vertices;
 		this->indices = indices;
@@ -12,10 +12,13 @@ namespace Nata
 		m_VBO = new VBO(&this->vertices[0], this->vertices.size() * sizeof(Vertex));
 		m_IBO = new IBO(&this->indices[0], this->indices.size());
 
+		DrawArrays = drawArrays;
+		DrawMode = drawMode;
+
 		this->SetupMesh();
 	}
 
-	NMesh::NMesh(vector<Vertex> vertices, vector<NTexture> textures)
+	NMesh::NMesh(vector<Vertex> vertices, vector<NTexture> textures, bool drawArrays, int drawMode)
 	{
 		this->vertices = vertices;
 		this->textures = textures;
@@ -23,16 +26,35 @@ namespace Nata
 		m_VAO = new VAO();
 		m_VBO = new VBO(&this->vertices[0], this->vertices.size() * sizeof(Vertex));
 
+		DrawArrays = drawArrays;
+		DrawMode = drawMode;
+
 		this->SetupMesh();
 	}
 
-	NMesh::NMesh(vector<float> vertices, vector<NTexture> textures)
+	NMesh::NMesh(vector<float> vertices, vector<NTexture> textures, bool drawArrays, int drawMode)
 	{
 		this->vertices = ToVertexData(vertices);
 		this->textures = textures;
 
 		m_VAO = new VAO();
 		m_VBO = new VBO(&this->vertices[0], this->vertices.size() * sizeof(Vertex));
+
+		DrawArrays = drawArrays;
+		DrawMode = drawMode;
+
+		this->SetupMesh();
+	}
+
+	NMesh::NMesh(vector<float> vertices, bool drawArrays, int drawMode)
+	{
+		this->vertices = ToVertexData(vertices);
+
+		m_VAO = new VAO();
+		m_VBO = new VBO(&this->vertices[0], this->vertices.size() * sizeof(Vertex));
+
+		DrawArrays = drawArrays;
+		DrawMode = drawMode;
 
 		this->SetupMesh();
 	}
@@ -72,6 +94,11 @@ namespace Nata
 
 	void NMesh::Draw()
 	{
+		if (DrawArrays)
+		{
+			DrawArr();
+			return;
+		}
 		Shader->Enable();
 		BindResources();
 		mat4 model = mat4(1.f);
@@ -89,16 +116,21 @@ namespace Nata
 		m_IBO->Unbind();
 	}
 
-	void NMesh::DrawArrays()
+	void NMesh::DrawArr()
 	{
 		Shader->Enable();
 		BindResources();
-		m_VAO->Bind();
+		mat4 model = mat4(1.f);
+		model = translate(model, Position);
+		model = scale(model, Scale);
+		model = rotate(model, radians(Rotation.x), vec3(1.f, 0.f, 0.f));
+		model = rotate(model, radians(Rotation.y), vec3(0.f, 1.f, 0.f));
+		model = rotate(model, radians(Rotation.z), vec3(0.f, 0.f, 1.f));
+		Shader->SetUniformMat4("model", model);
 
-		glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+		m_VAO->Bind();
+		glDrawArrays(DrawMode, 0, vertices.size());
 		m_VAO->Unbind();
-		
-		Shader->Disable();
 	}
 
 	void NMesh::SetupMesh()

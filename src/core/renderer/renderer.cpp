@@ -2,8 +2,17 @@
 
 namespace Nata
 {
-	void NRenderer::Submit(NRenderable* renderable)
+	void NRenderer::Submit(NRenderable* renderable, bool flush)
 	{
+		if (flush)
+		{
+			NShader* shader = renderable->Shader;
+			shader->Enable();
+			shader->SetUniformMat4("view", NEngine::Camera->GetViewMatrix());
+			shader->SetUniformMat4("projection", NEngine::Camera->GetProjectionMatrix());
+			renderable->Draw();
+			return;
+		}
 		m_RenderQueue.push_back(renderable);
 	}
 

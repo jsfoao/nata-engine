@@ -60,6 +60,11 @@ namespace Nata
 		vec3 Scale;
 		vec3 Rotation;
 		vec3 LocalPosition;
+
+		vec3 Forward;
+		vec3 Right;
+		vec3 Up;
+		
 		CTransform* Parent;
 		vector<CTransform*> Children;
 		bool IsParented;
@@ -70,6 +75,9 @@ namespace Nata
 			Scale = vec3(1.f, 1.f, 1.f);
 			Rotation = vec3(0.f);
 			LocalPosition = vec3(0.f);
+			Forward = vec3(0.f);
+			Right = vec3(0.f);
+			Up = vec3(0.f);
 			Parent = nullptr;
 			IsParented = false;
 		}
@@ -89,6 +97,13 @@ namespace Nata
 
 		void Tick(float dt) override
 		{
+			Right.x = cos(radians(Rotation.y)) * cos(radians(Rotation.x));
+			Right.y = sin(radians(Rotation.x));
+			Right.z = sin(radians(Rotation.y)) * cos(radians(Rotation.x));
+			Right = normalize(Right);
+			Forward = -normalize(cross(vec3(0.f, 1.f, 0.f), Right));
+			Up = cross(Right, -Forward);
+
 			if (IsParented)
 			{
 				Position = Parent->Position + LocalPosition;

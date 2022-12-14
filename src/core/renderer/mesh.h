@@ -31,6 +31,9 @@ namespace Nata
 		vector<unsigned int> indices;
 		vector<NTexture> textures;
 
+		bool DrawArrays;
+		int DrawMode;
+
 	public:
 		VAO* m_VAO;
 		VBO* m_VBO;
@@ -38,13 +41,15 @@ namespace Nata
 
 	public:
 
-		NMesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<NTexture> textures);
-		NMesh(vector<Vertex> vertices, vector<NTexture> textures);
-		NMesh(vector<float> vertices, vector<NTexture> textures);
+		NMesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<NTexture> textures, bool drawArrays = false, int drawMode = GL_TRIANGLES);
+		NMesh(vector<Vertex> vertices, vector<NTexture> textures, bool drawArrays = false, int drawMode = GL_TRIANGLES);
+		NMesh(vector<float> vertices, vector<NTexture> textures, bool drawArrays = false, int drawMode = GL_TRIANGLES);
+		NMesh(vector<float> vertices, bool drawArrays = false, int drawMode = GL_TRIANGLES);
 
 		void BindResources();
 		void Draw() override;
-		void DrawArrays();
+		// GL_TRIANGLES, GL_LINES
+		void DrawArr();
 		void AddTexture(NTexture texture)
 		{
 			textures.push_back(texture);

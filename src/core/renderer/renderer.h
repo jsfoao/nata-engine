@@ -12,7 +12,7 @@ namespace Nata
 		std::deque<NRenderable*> m_RenderQueue;
 
 	public:
-		void Submit(NRenderable* renderable);
+		void Submit(NRenderable* renderable, bool flush = false);
 		void Flush();
 	};
 }

@@ -57,7 +57,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NT_PLATFORM_WINDOWS;GLEW_STATIC;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)src;$(SolutionDir)res\scripts;$(SolutionDir)res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -98,6 +98,8 @@
     <ClCompile Include="include\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="include\imgui\imgui_tables.cpp" />
     <ClCompile Include="include\imgui\imgui_widgets.cpp" />
+    <ClInclude Include="src\app.cpp" />
+    <ClCompile Include="src\core\editor\handles.cpp" />
     <ClCompile Include="src\core\input.cpp" />
     <ClCompile Include="src\core\renderer\buffer.cpp" />
     <ClCompile Include="src\core\core.cpp" />
@@ -109,9 +111,7 @@
     <ClCompile Include="src\core\renderer\texture.cpp" />
     <ClCompile Include="src\core\window.cpp" />
     <ClCompile Include="src\core\renderer\shader.cpp" />
-    <ClCompile Include="src\editor.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\editor.h" />
     <ClCompile Include="src\utils\fileutils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -1072,12 +1072,13 @@
     <ClInclude Include="include\imgui\imstb_textedit.h" />
     <ClInclude Include="include\imgui\imstb_truetype.h" />
     <ClInclude Include="include\stb_image.h" />
+    <ClInclude Include="res\scripts\EPlayer.hpp" />
     <ClInclude Include="src\core\core.h" />
     <ClInclude Include="src\core\ecs\CCamera.hpp" />
     <ClInclude Include="src\core\ecs\CMeshRenderer.hpp" />
     <ClInclude Include="src\core\ecs\ECamera.hpp" />
-    <ClInclude Include="src\core\ecs\NOurGameMode.hpp" />
-    <ClInclude Include="src\core\ecs\EOurObject.hpp" />
+    <ClInclude Include="res\scripts\NShooterGameMode.hpp" />
+    <ClInclude Include="res\scripts\EOurObject.hpp" />
     <ClInclude Include="src\core\ecs\test_entity.hpp" />
     <ClInclude Include="src\core\ecs\test_gamemode.hpp" />
     <ClInclude Include="src\core\ecs\transform_comp.hpp" />
@@ -1086,6 +1087,7 @@
     <ClInclude Include="src\core\ecs\entity.hpp" />
     <ClInclude Include="src\core\ecs\world.hpp" />
     <ClInclude Include="src\core\editor\editor.h" />
+    <ClInclude Include="src\core\editor\handles.h" />
     <ClInclude Include="src\core\glm_math.h" />
     <ClInclude Include="src\core\input.h" />
     <ClInclude Include="src\core\key.h" />

@@ -31,3 +31,6 @@
 #include "core/renderer/model.h"
 #include "core/renderer/renderable.h"
 #include "core/renderer/renderer.h"
+
+using namespace Nata;
+using namespace glm;
