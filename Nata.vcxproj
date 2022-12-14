@@ -1073,6 +1073,7 @@
     <ClInclude Include="include\imgui\imstb_truetype.h" />
     <ClInclude Include="include\stb_image.h" />
     <ClInclude Include="res\scripts\EPlayer.hpp" />
+    <ClInclude Include="src\core\comp\CBoxCollider.hpp" />
     <ClInclude Include="src\core\core.h" />
     <ClInclude Include="src\core\ecs\CCamera.hpp" />
     <ClInclude Include="src\core\ecs\CMeshRenderer.hpp" />
