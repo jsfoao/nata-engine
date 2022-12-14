@@ -17,7 +17,7 @@ namespace Nata
 		{
 			MeshRenderer = AddComponent<CModelRenderer>();
 			NShader* shader = new NShader("src\\shaders\\unlit.vert", "src\\shaders\\unlit.frag");
-			NModel* model = new NModel("res\\models\\teapot.obj");
+			NModel* model = new NModel("res\\models\\cube.obj");
 			MeshRenderer->Init(shader, model);
 
 			MeshRenderer->GetShader()->Enable();
