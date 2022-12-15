@@ -20,7 +20,11 @@ namespace Nata
 			ECamera* camera = Instantiate<ECamera>(world);
 			NEngine::Camera = camera->Camera;
 
-			EPlayer* player = Instantiate<EPlayer>(world);
+			camera->Transform->Position = vec3(0.f, 0.f, 20.f);
+
+			EPlayer* player1 = Instantiate<EPlayer>(world);
+			//EPlayer* player2 = Instantiate<EPlayer>(world);
+			//player2->InputEnabled = false;
 		}
 
 		// runs before world tick

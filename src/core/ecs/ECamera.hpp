@@ -15,11 +15,11 @@ namespace Nata
 		{
 			Camera = AddComponent<CCamera>();
 			Transform->Rotation = vec3(0.f, -90.f, 0.f);
+			Transform->Position = vec3(0.f, 0.f, 10.f);
 		}
 
 		void Tick(float dt) override
 		{
-			Transform->Position = vec3(0.f, 0.f, 10.f);
 		}
 	};
 }

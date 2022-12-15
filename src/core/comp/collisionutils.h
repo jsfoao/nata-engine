@@ -26,6 +26,8 @@ namespace Nata
 		NRange RangeY;
 		NRange RangeZ;
 
+		NBox() {}
+
 		NBox(NRange rangeX, NRange rangeY, NRange rangeZ)
 		{
 			RangeX = rangeX;
@@ -37,9 +39,9 @@ namespace Nata
 	struct NSphere
 	{
 		vec3 Position;
-		vec3 Radius;
+		float Radius;
 
-		NSphere(vec3 position, vec3 radius)
+		NSphere(vec3 position, float radius)
 		{
 			Position = position;
 			Radius = radius;
@@ -59,7 +61,7 @@ namespace Nata
 
 	bool IsPointInsideSphere(vec3 point, NSphere sphere)
 	{
-		float dir = point - sphere.Position;
+		vec3 dir = point - sphere.Position;
 		float dist = glm::sqrt(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z);
 		return dist < sphere.Radius;
 	}
@@ -76,20 +78,20 @@ namespace Nata
 
 	}
 
-	bool Intersect(NSphere a, NSphere b)
-	{
-		float dir = a.Position - b.Position;
-		float dist = glm::sqrt(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z);
-		return dist < a.Radius + b.Radius;
-	}
+	//bool Intersect(NSphere a, NSphere b)
+	//{
+	//	float dir = a.Position - b.Position;
+	//	float dist = glm::sqrt(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z);
+	//	return dist < a.Radius + b.Radius;
+	//}
 
-	bool Intersect(NSphere s, NSphere b)
-	{
-		float x = glm::max(b.RangeX.Min, glm::min(s.Position.x, b.RangeX.Max));
-		float y = glm::max(b.RangeY.Min, glm::min(s.Position.Y, b.RangeY.Max));
-		float z = glm::max(b.RangeZ.Min, glm::min(s.Position.Z, b.RangeZ.Max));
-		float dir = vec3(x, y, z) - s.Position;
-		float dist = glm::sqrt(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z);
-		return dist < s.Radius;
-	}
+	//bool Intersect(NSphere s, NSphere b)
+	//{
+	//	float x = glm::max(b.RangeX.Min, glm::min(s.Position.x, b.RangeX.Max));
+	//	float y = glm::max(b.RangeY.Min, glm::min(s.Position.Y, b.RangeY.Max));
+	//	float z = glm::max(b.RangeZ.Min, glm::min(s.Position.Z, b.RangeZ.Max));
+	//	float dir = vec3(x, y, z) - s.Position;
+	//	float dist = glm::sqrt(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z);
+	//	return dist < s.Radius;
+	//}
 }

@@ -53,10 +53,10 @@ namespace Nata
                 entities.push_back(entity);
             }
         }
-        return entities;
+        return (T*)entities;
     }
 
-    template<typename T, class = typename std::enable_if<std::is_base_of<CComponent>::value>::type>
+    template<typename T, class = typename std::enable_if<std::is_base_of<CComponent, T>::value>::type>
     std::vector<T*> GetComponentsOfType(NWorld* world)
     {
         std::vector<T*> components;

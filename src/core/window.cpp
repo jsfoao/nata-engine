@@ -95,7 +95,7 @@ namespace Nata
 		GLenum error = glGetError();
 		if (error != GL_NO_ERROR)
 		{
-			std::cout << "OpenGL error: " << error << std::endl;
+			std::cout << "WINDOW::UPDATE : Error" << error << std::endl;
 		}
 
 		// Checks if any events are triggered (keyboard input or mouse input)

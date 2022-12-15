@@ -32,5 +32,8 @@
 #include "core/renderer/renderable.h"
 #include "core/renderer/renderer.h"
 
+// Nata :: Editor
+#include "core/editor/handles.h"
+
 using namespace Nata;
 using namespace glm;
