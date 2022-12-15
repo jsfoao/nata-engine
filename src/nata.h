@@ -26,6 +26,7 @@
 // Nata :: Renderer
 #include "core/renderer/shader.h"
 #include "core/renderer/texture.h"
+#include "core/renderer/propertyblock.h"
 #include "core/renderer/buffer.h"
 #include "core/renderer/mesh.h"
 #include "core/renderer/model.h"

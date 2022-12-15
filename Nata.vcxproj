@@ -105,6 +105,7 @@
     <ClCompile Include="src\core\core.cpp" />
     <ClCompile Include="src\core\renderer\mesh.cpp" />
     <ClCompile Include="src\core\renderer\model.cpp" />
+    <ClCompile Include="src\core\renderer\propertyblock.cpp" />
     <ClCompile Include="src\core\renderer\renderable.cpp" />
     <ClCompile Include="src\core\renderer\renderer.cpp" />
     <ClCompile Include="src\core\stb_image.cpp" />
@@ -1096,6 +1097,7 @@
     <ClInclude Include="src\core\renderer\camera.h" />
     <ClInclude Include="src\core\renderer\mesh.h" />
     <ClInclude Include="src\core\renderer\model.h" />
+    <ClInclude Include="src\core\renderer\propertyblock.h" />
     <ClInclude Include="src\core\renderer\renderable.h" />
     <ClInclude Include="src\core\renderer\renderer.h" />
     <ClInclude Include="src\core\renderer\texture.h" />

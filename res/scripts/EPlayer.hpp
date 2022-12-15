@@ -1,8 +1,6 @@
 #pragma once
-#include "core/ecs/ecs.h"
+#include "nata.h"
 #include "core/ecs/CMeshRenderer.hpp"
-#include "core/editor/handles.h"
-#include <iostream>
 
 namespace Nata
 {
@@ -10,15 +8,21 @@ namespace Nata
 	{
 	public:
 		CModelRenderer* MeshRenderer;
+		NModel* Model;
 		bool flipflop;
+		vec3* Color;
 
 	public:
 		EPlayer() : EEntity()
 		{
 			MeshRenderer = AddComponent<CModelRenderer>();
 			NShader* shader = new NShader("src\\shaders\\unlit.vert", "src\\shaders\\unlit.frag");
-			NModel* model = new NModel("res\\models\\cube.obj");
-			MeshRenderer->Init(shader, model);
+			Model = new NModel("res\\models\\cube.obj");
+			MeshRenderer->Init(shader, Model);
+			Color = new vec3(0.f, 1.f, 0.f);
+			Model->PropertyLayout.Bind(shader);
+			//Model->PropertyLayout.AddVec3(NVec3Property("color", Color));
+			//Model->SetPropertyCallback(ModelPropertyCallback);
 
 			flipflop = true;
 			MeshRenderer->SetVisibility(flipflop);
@@ -30,9 +34,7 @@ namespace Nata
 
 		void Tick(float dt) override
 		{
-			MeshRenderer->GetShader()->Enable();
-			MeshRenderer->GetShader()->SetUniform3f("color", vec3(1.f, 0.5f, 1.f));
-			MeshRenderer->GetShader()->Disable();
+			Color = new vec3(1.f, 0.f, 0.f);
 
 			vec2 input = vec2(0.f);
 			float speed = 1.f;
@@ -66,5 +68,10 @@ namespace Nata
 
 			Handles::DrawWireCube(Transform->Position, vec3(4.f), vec3(1.f, 0.f, 0.f));
 		}
+
+		//static void ModelPropertyCallback(NShader* shader)
+		//{
+		//	shader->SetUniform3f("color", vec3(1.f, 0.5f, 1.f));
+		//}
 	};
 }
