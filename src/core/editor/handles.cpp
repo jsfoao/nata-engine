@@ -4,6 +4,8 @@ namespace Nata
 {
     NShader* Handles::Shader = nullptr;
     bool Handles::m_Enabled = false;
+    NMesh* Handles::m_LineMesh = nullptr;
+    std::vector<float> Handles::m_LineVertices;
 
     void Handles::DrawLine(const vec3& start, const vec3& end, const vec3& color)
     {
@@ -11,21 +13,27 @@ namespace Nata
         {
             return;
         }
-        vector<float> vertices =
+        std::vector<float> data =
         {
             // positions               // normals        // t coords  // tangent         // bitangent
             start.x, start.y, start.z, 0.0f, 0.0f, 0.0f, 0.0f,  0.0f, 0.0f,  0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-            end.x  , end.y  , end.z  , 0.0f, 0.0f, 0.0f, 0.0f,  0.0f, 0.0f,  0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+            end.x,   end.y,   end.z  , 0.0f, 0.0f, 0.0f, 0.0f,  0.0f, 0.0f,  0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
         };
 
-        NMesh mesh = NMesh(vertices);
-        mesh.DrawArrays = true;
-        mesh.DrawMode = GL_LINES;
-        mesh.Shader = Shader;
-        mesh.Position = vec3(0.f);
+
         Shader->Enable();
         Shader->SetUniform3f("color", color);
-        NEngine::Window->GetRenderer()->Submit(&mesh, true);
+        Shader->SetUniformMat4("view", NEngine::Camera->GetViewMatrix());
+        Shader->SetUniformMat4("projection", NEngine::Camera->GetProjectionMatrix());
+        Shader->SetUniformMat4("model", mat4(1.f));
+
+        glBegin(GL_LINES);
+        glColor3f(color.x, color.y, color.z);       
+        glVertex3f(start.x, start.y, start.z);
+        glVertex3f(end.x, end.y, end.z);
+        glEnd();
+
+        //NEngine::Window->GetRenderer()->Submit(m_LineMesh, true);
     }
 
     void Handles::DrawWireCube(const vec3& pos, const vec3& size, const vec3& color)

@@ -20,10 +20,6 @@ namespace Nata
 			NModel* model = new NModel("res\\models\\cube.obj");
 			MeshRenderer->Init(shader, model);
 
-			MeshRenderer->GetShader()->Enable();
-			MeshRenderer->GetShader()->SetUniform3f("color", vec3(1.f, 0.5f, 1.f));
-			MeshRenderer->GetShader()->Disable();
-
 			flipflop = true;
 			MeshRenderer->SetVisibility(flipflop);
 		}
@@ -34,6 +30,10 @@ namespace Nata
 
 		void Tick(float dt) override
 		{
+			MeshRenderer->GetShader()->Enable();
+			MeshRenderer->GetShader()->SetUniform3f("color", vec3(1.f, 0.5f, 1.f));
+			MeshRenderer->GetShader()->Disable();
+
 			vec2 input = vec2(0.f);
 			float speed = 1.f;
 			if (NEngine::Input->GetKeyHold(GLFW_KEY_LEFT))
@@ -55,7 +55,6 @@ namespace Nata
 			Transform->Position.x += input.x * speed * dt;
 			Transform->Position.y += input.y * speed * dt;
 
-			//std::vector<EPlayer*> players = GetEntitiesOfType<EPlayer>(GetWorld());
 			if (NEngine::Input->GetKeyDown(GLFW_KEY_SPACE))
 			{
 				flipflop = !flipflop;
@@ -64,8 +63,8 @@ namespace Nata
 
 			//Transform->Rotation.y += 0.1f;
 			const float size = 2.f;
-			Handles::DrawHandles(Transform, vec3(2.f));
-			Handles::DrawWireSphere(Transform->Position, 2.f, vec3(1.f, 0.f, 0.f));
+
+			Handles::DrawWireCube(Transform->Position, vec3(4.f), vec3(1.f, 0.f, 0.f));
 		}
 	};
 }

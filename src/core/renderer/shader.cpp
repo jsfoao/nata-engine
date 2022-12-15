@@ -85,7 +85,6 @@ namespace Nata
 		if (error != GL_NO_ERROR)
 		{
 			std::cout << "OpenGL::ERROR::SHADER::GLUSEPROGRAM: " << error << std::endl;
-			exit(0);
 		}
 	}
 

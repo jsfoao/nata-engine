@@ -54,6 +54,19 @@ namespace Nata
 		{
 			textures.push_back(texture);
 		}
+
+		void SetVAO(VAO* vao)
+		{
+			m_VAO = vao;
+		}
+		void SetVBO(VBO* vbo)
+		{
+			m_VBO = vbo;
+		}
+		void SetIBO(IBO* ibo)
+		{
+			m_IBO = ibo;
+		}
 		
 
 	private:

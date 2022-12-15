@@ -1,5 +1,7 @@
 #pragma once
 #include "nata.h"
+#include "core/renderer/mesh.h"
+#include "core/renderer/buffer.h"
 
 namespace Nata
 {
@@ -8,6 +10,10 @@ namespace Nata
 	public:
 		static NShader* Shader;
 		static bool m_Enabled;
+
+	protected:
+		static NMesh* m_LineMesh;
+		static std::vector<float> m_LineVertices;
 
 	public:
 		static bool Init();
