@@ -96,12 +96,18 @@ namespace Nata
 			}
 			Transform->Position.x += input.x * speed * dt;
 			Transform->Position.y += input.y * speed * dt;
+			Transform->Rotation = Lerp(Transform->Rotation, vec3(0.f, 0.f, -input.x * 20.f), 5.f * dt);
 
 			if (NEngine::Input->GetKeyDown(GLFW_KEY_SPACE))
 			{
 				flipflop = !flipflop;
 				MeshRenderer->SetVisibility(flipflop);
 			}
+		}
+
+		vec3 Lerp(vec3 start, vec3 end, float a)
+		{
+			return (start + a * (end - start));
 		}
 	};
 }
