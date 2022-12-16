@@ -10,19 +10,19 @@ namespace Nata
 		CModelRenderer* MeshRenderer;
 		NModel* Model;
 		bool flipflop;
-		vec3* Color;
+		vec3 Color;
+		bool InputEnabled;
 
 	public:
 		EPlayer() : EEntity()
 		{
+			InputEnabled = true;
 			MeshRenderer = AddComponent<CModelRenderer>();
 			NShader* shader = new NShader("src\\shaders\\unlit.vert", "src\\shaders\\unlit.frag");
 			Model = new NModel("res\\models\\cube.obj");
 			MeshRenderer->Init(shader, Model);
-			Color = new vec3(0.f, 1.f, 0.f);
-			Model->PropertyLayout.Bind(shader);
-			//Model->PropertyLayout.AddVec3(NVec3Property("color", Color));
-			//Model->SetPropertyCallback(ModelPropertyCallback);
+			
+			Model->PropertyLayout.AddVec3("color");
 
 			flipflop = true;
 			MeshRenderer->SetVisibility(flipflop);
@@ -34,8 +34,22 @@ namespace Nata
 
 		void Tick(float dt) override
 		{
-			Color = new vec3(1.f, 0.f, 0.f);
+			Movement(dt);
+			Model->PropertyLayout.SetVec3("color", Color);
 
+			//Transform->Rotation.y += 0.1f;
+			const float size = 2.f;
+			Handles::DrawWireCube(Transform->Position, vec3(4.f), vec3(1.f, 0.f, 0.f));
+
+			//std::vector<EPlayer*> entities = GetEntitiesOfType<EPlayer>(GetWorld());
+		}
+
+		void Movement(float dt)
+		{
+			if (!InputEnabled)
+			{
+				return;
+			}
 			vec2 input = vec2(0.f);
 			float speed = 1.f;
 			if (NEngine::Input->GetKeyHold(GLFW_KEY_LEFT))
@@ -62,16 +76,6 @@ namespace Nata
 				flipflop = !flipflop;
 				MeshRenderer->SetVisibility(flipflop);
 			}
-
-			//Transform->Rotation.y += 0.1f;
-			const float size = 2.f;
-
-			Handles::DrawWireCube(Transform->Position, vec3(4.f), vec3(1.f, 0.f, 0.f));
 		}
-
-		//static void ModelPropertyCallback(NShader* shader)
-		//{
-		//	shader->SetUniform3f("color", vec3(1.f, 0.5f, 1.f));
-		//}
 	};
 }

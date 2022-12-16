@@ -23,8 +23,10 @@ namespace Nata
 			camera->Transform->Position = vec3(0.f, 0.f, 20.f);
 
 			EPlayer* player1 = Instantiate<EPlayer>(world);
-			//EPlayer* player2 = Instantiate<EPlayer>(world);
-			//player2->InputEnabled = false;
+			player1->Color = vec3(1.f, 0.f, 0.f);
+			EPlayer* player2 = Instantiate<EPlayer>(world);
+			player2->Color = vec3(0.f, 1.f, 0.f);
+			player2->InputEnabled = false;
 		}
 
 		// runs before world tick

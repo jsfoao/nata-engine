@@ -19,6 +19,7 @@ namespace Nata
 			m_Texture = texture;
 			m_Model = model;
 			model->Shader = m_Shader;
+			model->PropertyLayout.Bind(m_Shader);
 			m_IsVisible = true;
 		}
 
