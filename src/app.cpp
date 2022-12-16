@@ -27,6 +27,8 @@ namespace Nata
 			EPlayer* player2 = Instantiate<EPlayer>(world);
 			player2->Color = vec3(0.f, 1.f, 0.f);
 			player2->InputEnabled = false;
+			player1->Target = player2;
+			player2->Target = player1;
 		}
 
 		// runs before world tick

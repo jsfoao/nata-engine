@@ -1,6 +1,7 @@
 #pragma once
 #include "nata.h"
 #include "core/ecs/CMeshRenderer.hpp"
+#include "core/comp/CBoxCollider.hpp"
 
 namespace Nata
 {
@@ -8,24 +9,29 @@ namespace Nata
 	{
 	public:
 		CModelRenderer* MeshRenderer;
+		CBoxCollider* BoxCollider;
 		NModel* Model;
 		bool flipflop;
 		vec3 Color;
 		bool InputEnabled;
+		EPlayer* Target;
 
 	public:
 		EPlayer() : EEntity()
 		{
-			InputEnabled = true;
 			MeshRenderer = AddComponent<CModelRenderer>();
+			BoxCollider = AddComponent<CBoxCollider>();
+
 			NShader* shader = new NShader("src\\shaders\\unlit.vert", "src\\shaders\\unlit.frag");
 			Model = new NModel("res\\models\\cube.obj");
 			MeshRenderer->Init(shader, Model);
-			
-			Model->PropertyLayout.AddVec3("color");
 
+			Color = vec3(0.f);
+			InputEnabled = true;
 			flipflop = true;
+
 			MeshRenderer->SetVisibility(flipflop);
+			Model->PropertyLayout.AddVec3("color");
 		}
 
 		void Begin() override
@@ -37,11 +43,31 @@ namespace Nata
 			Movement(dt);
 			Model->PropertyLayout.SetVec3("color", Color);
 
-			//Transform->Rotation.y += 0.1f;
-			const float size = 2.f;
-			Handles::DrawWireCube(Transform->Position, vec3(4.f), vec3(1.f, 0.f, 0.f));
+			vec3 hBound = BoxCollider->Bounds / 2.f;
+			BoxCollider->Position = Transform->Position;
+			BoxCollider->Box = NBox(
+				NRange(BoxCollider->Position.x - hBound.x, BoxCollider->Position.x + hBound.x),
+				NRange(BoxCollider->Position.y - hBound.y, BoxCollider->Position.y + hBound.y),
+				NRange(BoxCollider->Position.z - hBound.z, BoxCollider->Position.z + hBound.z)
+			);
 
-			//std::vector<EPlayer*> entities = GetEntitiesOfType<EPlayer>(GetWorld());
+
+			if (Target == nullptr)
+			{
+				Handles::DrawWireCube(BoxCollider->Position, BoxCollider->Bounds, vec3(1.f, 1.f, 1.f));
+				return;
+			}
+
+			bool intersecting = Intersect(BoxCollider->Box, Target->BoxCollider->Box);
+
+			if (intersecting)
+			{
+				Handles::DrawWireCube(BoxCollider->Position, BoxCollider->Bounds, vec3(0.f, 1.f, 0.f));
+			}
+			else
+			{
+				Handles::DrawWireCube(BoxCollider->Position, BoxCollider->Bounds, vec3(1.f, 1.f, 1.f));
+			}
 		}
 
 		void Movement(float dt)
