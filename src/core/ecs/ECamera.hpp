@@ -1,6 +1,6 @@
 #pragma once
 #include "ecs.h"
-#include "CCamera.hpp"
+#include "core/comp/CCamera.h"
 #include "core/glm_math.h"
 
 namespace Nata

@@ -2,7 +2,7 @@
 #include <deque>
 #include "renderable.h"
 #include "core/renderer/shader.h"
-#include "core/ecs/CCamera.hpp"
+#include "core/comp/CCamera.h"
 
 namespace Nata
 {

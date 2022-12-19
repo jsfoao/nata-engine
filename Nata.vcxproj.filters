@@ -84,6 +84,24 @@
     <ClCompile Include="src\core\ecs\ecs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\comp\CBoxCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\comp\CSphereCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\comp\collisionutils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\comp\CModelRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\comp\CCamera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\comp\CCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\nata.h">
@@ -3032,10 +3050,10 @@
     <ClInclude Include="src\core\ecs\ECamera.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\ecs\CCamera.hpp">
+    <ClInclude Include="src\core\comp\CCamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\ecs\CMeshRenderer.hpp">
+    <ClInclude Include="src\core\comp\CModelRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="res\scripts\EOurObject.hpp">
@@ -3053,10 +3071,19 @@
     <ClInclude Include="src\app.cpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\comp\CBoxCollider.hpp">
+    <ClInclude Include="src\core\comp\CBoxCollider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\core\renderer\propertyblock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\comp\CCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\comp\CSphereCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\comp\collisionutils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

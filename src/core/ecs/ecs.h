@@ -22,9 +22,9 @@ namespace Nata
 
 	// 0 is reserved to CTransform
 	static unsigned int CComponentID = 1;
-#define GENERATE_COMPONENT public: static unsigned int TypeID;
-#define INIT_COMPONENT(T) unsigned int T::TypeID = CComponentID++;
-#define INIT_ID m_TypeID = TypeID;
+#define GENERATE_COMPONENT public: static unsigned int TypeID
+#define INIT_COMPONENT(T) unsigned int T::TypeID = 0;
+#define INIT_ID(T) m_TypeID = TypeID
 
 	// Everything that is instanced, has ID and is serialized in engine
 	class NObject
@@ -58,9 +58,31 @@ namespace Nata
 		void SuperTick(float dt);
 	};
 
+	//std::vector<CComponent> CompRegistry;
+	//template<typename T>
+	//void CompRegister()
+	//{
+	//	if (CompRegistry.size() == 0) 
+	//	{
+	//		CompRegistry.push_back(T);
+	//		T::TypeID = CComponentID;
+	//		return;
+	//	}
+	//	for (unsigned int i = 0; i < CompRegistry.size(); i++)
+	//	{
+	//		if (typeid(T).name == typeid(CompRegistry[i]).name)
+	//		{
+	//			return;
+	//		}
+	//	}
+	//	CompRegistry.push_back(T);
+	//	T::TypeID = CComponentID;
+	//	CComponentID++;
+	//}
+
 	class CTransform : public CComponent
 	{
-		GENERATE_COMPONENT
+		GENERATE_COMPONENT;
 	public:
 		vec3 Position;
 		vec3 Scale;
@@ -113,11 +135,16 @@ namespace Nata
 		{
 			for (CComponent* comp : m_Components)
 			{
-				if (comp->GetTypeID() == T::TypeID)
+				if (typeid(*comp).name() == typeid(T).name())
 				{
 					return (T*)comp;
 				}
+				//if (comp->GetTypeID() == T::TypeID)
+				//{
+				//	return (T*)comp;
+				//}
 			}
+			return nullptr;
 		}
 
 		vector<CComponent*> GetAllComponents()

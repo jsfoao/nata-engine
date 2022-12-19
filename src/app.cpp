@@ -30,10 +30,10 @@ namespace Nata
 			player2->InputEnabled = false;
 			player2->Transform->Position = vec3(4.f, 0.f, 0.f);
 
-			//EPlayer* player3 = Instantiate<EPlayer>(world);
-			//player3->Color = vec3(0.f, 0.f, 1.f);
-			//player3->InputEnabled = false;
-			//player3->Transform->Position = vec3(-4.f, 0.f, 0.f);
+			EPlayer* player3 = Instantiate<EPlayer>(world);
+			player3->Color = vec3(0.f, 0.f, 1.f);
+			player3->InputEnabled = false;
+			player3->Transform->Position = vec3(-4.f, 0.f, 0.f);
 		}
 
 		// runs before world tick

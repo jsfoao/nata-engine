@@ -1,7 +1,7 @@
 #pragma once
 #include "nata.h"
-#include "core/ecs/CMeshRenderer.hpp"
-#include "core/comp/CBoxCollider.hpp"
+#include "core/comp/CModelRenderer.h"
+#include "core/comp/CBoxCollider.h"
 
 namespace Nata
 {
@@ -19,9 +19,7 @@ namespace Nata
 		EPlayer() : EEntity()
 		{
 			MeshRenderer = AddComponent<CModelRenderer>();
-			AddComponent<CBoxCollider>();
-
-			BoxCollider = GetComponent<CBoxCollider>();
+			BoxCollider = AddComponent<CBoxCollider>();
 
 			NShader* shader = new NShader("src\\shaders\\unlit.vert", "src\\shaders\\unlit.frag");
 			Model = new NModel("res\\models\\cube.obj");
@@ -33,6 +31,8 @@ namespace Nata
 
 			MeshRenderer->SetVisibility(flipflop);
 			Model->PropertyLayout.AddVec3("color");
+
+			BoxCollider->Bounds = vec3(3.f);
 		}
 
 		void Begin() override
@@ -45,35 +45,6 @@ namespace Nata
 
 			Movement(dt);
 			Model->PropertyLayout.SetVec3("color", Color);
-
-			vec3 hBound = BoxCollider->Bounds / 2.f;
-			BoxCollider->Position = Transform->Position;
-			BoxCollider->Box = NBox(
-				NRange(BoxCollider->Position.x - hBound.x, BoxCollider->Position.x + hBound.x),
-				NRange(BoxCollider->Position.y - hBound.y, BoxCollider->Position.y + hBound.y),
-				NRange(BoxCollider->Position.z - hBound.z, BoxCollider->Position.z + hBound.z)
-			);
-
-
-			//std::vector<CBoxCollider*> cols = GetAllComponentsOfType<CBoxCollider>(GetWorld());
-			//bool intersecting = false;
-			//for (CBoxCollider* col : cols)
-			//{
-			//	if (col == BoxCollider)
-			//	{
-			//		continue;
-			//	}
-			//	intersecting = Intersect(BoxCollider->Box, col->Box);
-			//}
-
-			//if (intersecting)
-			//{
-			//	Handles::DrawWireCube(BoxCollider->Position, BoxCollider->Bounds, vec3(0.f, 1.f, 0.f));
-			//}
-			//else
-			//{
-			//	Handles::DrawWireCube(BoxCollider->Position, BoxCollider->Bounds, vec3(1.f, 1.f, 1.f));
-			//}
 		}
 
 		void Movement(float dt)
@@ -102,7 +73,6 @@ namespace Nata
 			}
 			Transform->Position.x += input.x * speed * dt;
 			Transform->Position.y += input.y * speed * dt;
-			Transform->Rotation = Lerp(Transform->Rotation, vec3(0.f, 0.f, -input.x * 20.f), 5.f * dt);
 
 			if (NEngine::Input->GetKeyDown(GLFW_KEY_SPACE))
 			{
