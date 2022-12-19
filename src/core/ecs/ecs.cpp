@@ -1,8 +1,6 @@
 #include "ecs.h"
 namespace Nata
 {
-	INIT_COMPONENT(CTransform)
-
 	CComponent::CComponent()
 	{
 		m_Owner = nullptr;
@@ -99,4 +97,48 @@ namespace Nata
 			}
 		}
 	}
+
+	CTransform::CTransform()
+	{
+		m_TypeID = 0;
+		Position = vec3(0.f);
+		Scale = vec3(1.f, 1.f, 1.f);
+		Rotation = vec3(0.f);
+		LocalPosition = vec3(0.f);
+		Forward = vec3(0.f);
+		Right = vec3(0.f);
+		Up = vec3(0.f);
+		Parent = nullptr;
+		IsParented = false;
+	}
+
+	void CTransform::SetParent(CTransform* parent)
+	{
+		if (parent == nullptr)
+		{
+			std::cout << "WARNING::CTRANSFORM : INVALID PARENT" << std::endl;
+			return;
+		}
+		IsParented = true;
+		Parent = parent;
+		LocalPosition = parent->Position - Position;
+		parent->Children.push_back(this);
+	}
+
+	void CTransform::Tick(float dt)
+	{
+		Right.x = cos(radians(Rotation.y)) * cos(radians(Rotation.x));
+		Right.y = sin(radians(Rotation.x));
+		Right.z = sin(radians(Rotation.y)) * cos(radians(Rotation.x));
+		Right = normalize(Right);
+		Forward = -normalize(cross(vec3(0.f, 1.f, 0.f), Right));
+		Up = cross(Right, -Forward);
+
+		if (IsParented)
+		{
+			Position = Parent->Position + LocalPosition;
+		}
+	}
+
+	unsigned int CTransform::TypeID = 0;
 }

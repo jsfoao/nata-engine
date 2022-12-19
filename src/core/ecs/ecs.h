@@ -20,7 +20,8 @@ namespace Nata
 	class EEntity;
 	class CComponent;
 
-	static unsigned int CComponentID = 0;
+	// 0 is reserved to CTransform
+	static unsigned int CComponentID = 1;
 #define GENERATE_COMPONENT public: static unsigned int TypeID;
 #define INIT_COMPONENT(T) unsigned int T::TypeID = CComponentID++;
 #define INIT_ID m_TypeID = TypeID;
@@ -74,47 +75,10 @@ namespace Nata
 		vector<CTransform*> Children;
 		bool IsParented;
 
-		CTransform()
-		{
-			INIT_ID
-			Position = vec3(0.f);
-			Scale = vec3(1.f, 1.f, 1.f);
-			Rotation = vec3(0.f);
-			LocalPosition = vec3(0.f);
-			Forward = vec3(0.f);
-			Right = vec3(0.f);
-			Up = vec3(0.f);
-			Parent = nullptr;
-			IsParented = false;
-		}
-
-		void SetParent(CTransform* parent)
-		{
-			if (parent == nullptr)
-			{
-				std::cout << "WARNING::CTRANSFORM : INVALID PARENT" << std::endl;
-				return;
-			}
-			IsParented = true;
-			Parent = parent;
-			LocalPosition = parent->Position - Position;
-			parent->Children.push_back(this);
-		}
-
-		void Tick(float dt) override
-		{
-			Right.x = cos(radians(Rotation.y)) * cos(radians(Rotation.x));
-			Right.y = sin(radians(Rotation.x));
-			Right.z = sin(radians(Rotation.y)) * cos(radians(Rotation.x));
-			Right = normalize(Right);
-			Forward = -normalize(cross(vec3(0.f, 1.f, 0.f), Right));
-			Up = cross(Right, -Forward);
-
-			if (IsParented)
-			{
-				Position = Parent->Position + LocalPosition;
-			}
-		}
+	public:
+		CTransform();
+		void SetParent(CTransform* parent);
+		void Tick(float dt) override;
 	};
 
 	class EEntity : public NObject
