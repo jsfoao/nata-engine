@@ -14,13 +14,14 @@ namespace Nata
 		bool flipflop;
 		vec3 Color;
 		bool InputEnabled;
-		EPlayer* Target;
 
 	public:
 		EPlayer() : EEntity()
 		{
 			MeshRenderer = AddComponent<CModelRenderer>();
-			BoxCollider = AddComponent<CBoxCollider>();
+			AddComponent<CBoxCollider>();
+
+			BoxCollider = GetComponent<CBoxCollider>();
 
 			NShader* shader = new NShader("src\\shaders\\unlit.vert", "src\\shaders\\unlit.frag");
 			Model = new NModel("res\\models\\cube.obj");
@@ -40,6 +41,8 @@ namespace Nata
 
 		void Tick(float dt) override
 		{
+			Handles::DrawHandles(Transform, vec3(2.f));
+
 			Movement(dt);
 			Model->PropertyLayout.SetVec3("color", Color);
 
@@ -52,22 +55,25 @@ namespace Nata
 			);
 
 
-			if (Target == nullptr)
-			{
-				Handles::DrawWireCube(BoxCollider->Position, BoxCollider->Bounds, vec3(1.f, 1.f, 1.f));
-				return;
-			}
+			//std::vector<CBoxCollider*> cols = GetAllComponentsOfType<CBoxCollider>(GetWorld());
+			//bool intersecting = false;
+			//for (CBoxCollider* col : cols)
+			//{
+			//	if (col == BoxCollider)
+			//	{
+			//		continue;
+			//	}
+			//	intersecting = Intersect(BoxCollider->Box, col->Box);
+			//}
 
-			bool intersecting = Intersect(BoxCollider->Box, Target->BoxCollider->Box);
-
-			if (intersecting)
-			{
-				Handles::DrawWireCube(BoxCollider->Position, BoxCollider->Bounds, vec3(0.f, 1.f, 0.f));
-			}
-			else
-			{
-				Handles::DrawWireCube(BoxCollider->Position, BoxCollider->Bounds, vec3(1.f, 1.f, 1.f));
-			}
+			//if (intersecting)
+			//{
+			//	Handles::DrawWireCube(BoxCollider->Position, BoxCollider->Bounds, vec3(0.f, 1.f, 0.f));
+			//}
+			//else
+			//{
+			//	Handles::DrawWireCube(BoxCollider->Position, BoxCollider->Bounds, vec3(1.f, 1.f, 1.f));
+			//}
 		}
 
 		void Movement(float dt)

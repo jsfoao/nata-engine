@@ -43,7 +43,7 @@ namespace Nata
     }
 
     template<typename T, class = typename std::enable_if<std::is_base_of<EEntity, T>::value>::type>
-    std::vector<T*> GetEntitiesOfType(NWorld* world)
+    std::vector<T*> GetAllEntitiesOfType(NWorld* world)
     {
         std::vector<T*> entities;
         for (EEntity* entity : NEngine::World->GetAllEntities())
@@ -57,12 +57,12 @@ namespace Nata
     }
 
     template<typename T, class = typename std::enable_if<std::is_base_of<CComponent, T>::value>::type>
-    std::vector<T*> GetComponentsOfType(NWorld* world)
+    std::vector<T*> GetAllComponentsOfType(NWorld* world)
     {
         std::vector<T*> components;
         for (EEntity* entity : NEngine::World->GetAllEntities())
         {
-            CComponent* component = entity->GetComponent<T>();
+            T* component = entity->GetComponent<T>();
             if (component != nullptr)
             {
                 components.push_back(component);

@@ -6,6 +6,7 @@ namespace Nata
 	class NWindow;
 	class CModelRenderer : public CComponent
 	{
+		GENERATE_COMPONENT
 	protected:
 		NShader* m_Shader;
 		NTexture* m_Texture;
@@ -13,6 +14,11 @@ namespace Nata
 		bool m_IsVisible;
 
 	public:
+		CModelRenderer() : CComponent()
+		{
+			INIT_ID
+		}
+
 		void Init(NShader* shader, NModel* model, NTexture* texture = nullptr)
 		{
 			m_Shader = shader;
@@ -46,4 +52,5 @@ namespace Nata
 			NEngine::Window->GetRenderer()->Submit(m_Model);
 		}
 	};
+	INIT_COMPONENT(CModelRenderer)
 }

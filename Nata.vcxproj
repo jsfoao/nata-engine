@@ -99,6 +99,7 @@
     <ClCompile Include="include\imgui\imgui_tables.cpp" />
     <ClCompile Include="include\imgui\imgui_widgets.cpp" />
     <ClInclude Include="src\app.cpp" />
+    <ClCompile Include="src\core\ecs\ecs.cpp" />
     <ClCompile Include="src\core\editor\handles.cpp" />
     <ClCompile Include="src\core\input.cpp" />
     <ClCompile Include="src\core\renderer\buffer.cpp" />

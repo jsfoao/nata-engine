@@ -20,6 +20,11 @@ namespace Nata
 	class EEntity;
 	class CComponent;
 
+	static unsigned int CComponentID = 0;
+#define GENERATE_COMPONENT public: static unsigned int TypeID;
+#define INIT_COMPONENT(T) unsigned int T::TypeID = CComponentID++;
+#define INIT_ID m_TypeID = TypeID;
+
 	// Everything that is instanced, has ID and is serialized in engine
 	class NObject
 	{
@@ -33,46 +38,28 @@ namespace Nata
 	protected:
 		EEntity* m_Owner;
 		bool m_Enabled;
+		unsigned int m_TypeID = 0;
 
 		friend class EEntity;
 
 	public:
-		CComponent()
-		{
-			m_Owner = nullptr;
-			m_Enabled = true;
-		}
+		CComponent();
+		CComponent(EEntity* owner);
 
-		CComponent(EEntity* owner)
-		{
-			m_Owner = owner;
-			m_Enabled = true;
-		}
-
-		EEntity* GetOwner() { return m_Owner; }
-		void SetOwner(EEntity* owner) { m_Owner = owner; }
-		void SetEnabled(bool enabled) { m_Enabled = enabled; }
+		inline unsigned int GetTypeID() { return m_TypeID; }
+		inline EEntity* GetOwner() { return m_Owner; }
+		inline void SetOwner(EEntity* owner) { m_Owner = owner; }
+		inline void SetEnabled(bool enabled) { m_Enabled = enabled; }
 
 		virtual void Begin() {};
 		virtual void Tick(float dt) {};
-		void SuperBegin()
-		{
-			if (!m_Enabled)
-			{
-				return;
-			}
-		}
-		void SuperTick(float dt)
-		{
-			if (!m_Enabled)
-			{
-				return;
-			}
-		}
+		void SuperBegin();
+		void SuperTick(float dt);
 	};
 
 	class CTransform : public CComponent
 	{
+		GENERATE_COMPONENT
 	public:
 		vec3 Position;
 		vec3 Scale;
@@ -89,6 +76,7 @@ namespace Nata
 
 		CTransform()
 		{
+			INIT_ID
 			Position = vec3(0.f);
 			Scale = vec3(1.f, 1.f, 1.f);
 			Rotation = vec3(0.f);
@@ -140,22 +128,11 @@ namespace Nata
 		friend class NWorld;
 
 	public:
-		EEntity()
-		{
-			Transform = AddComponent<CTransform>();
-			m_World = nullptr;
-		}
+		EEntity();
+		~EEntity();
 
-		~EEntity()
-		{
-			for (CComponent* component : m_Components)
-			{
-				delete component;
-			}
-		}
-
-		NWorld* GetWorld() { return m_World; }
-		void SetWorld(NWorld* world) { m_World = world; }
+		inline NWorld* GetWorld() { return m_World; }
+		inline void SetWorld(NWorld* world) { m_World = world; }
 
 		// Create and add component of type
 		template<typename T, class = typename std::enable_if<std::is_base_of<CComponent, T>::value>::type>
@@ -172,7 +149,7 @@ namespace Nata
 		{
 			for (CComponent* comp : m_Components)
 			{
-				if (typeid(*comp).name() == typeid(T).name())
+				if (comp->GetTypeID() == T::TypeID)
 				{
 					return (T*)comp;
 				}
@@ -196,13 +173,10 @@ namespace Nata
 		friend class NWorld;
 
 	public:
-		NGameMode()
-		{
-			m_World = nullptr;
-		}
+		NGameMode();
 
-		NWorld* GetWorld() { return m_World; }
-		void SetWorld(NWorld* world) { m_World = world; }
+		inline NWorld* GetWorld() { return m_World; }
+		inline void SetWorld(NWorld* world) { m_World = world; }
 
 		virtual void Begin(){};
 		virtual void Tick(float dt){};
@@ -224,17 +198,14 @@ namespace Nata
 		vector<EEntity*> m_Entities;
 
 	public:
-		NWorld()
-		{
-			m_GameMode = nullptr;
-		}
+		NWorld();
 
-		vector<EEntity*> GetAllEntities() { return m_Entities; }
-		void SetGameMode(NGameMode* gameMode) 
-		{
-			gameMode->m_World = this;
-			m_GameMode = gameMode; 
-		}
+		void Destroy(EEntity* entity);
+		void Begin();
+		void Tick(float dt);
+
+		inline vector<EEntity*> GetAllEntities() { return m_Entities; }
+		void SetGameMode(NGameMode* gameMode);
 
 		template<typename T, class = typename std::enable_if<std::is_base_of<EEntity, T>::value>::type>
 		T* Instantiate()
@@ -266,45 +237,6 @@ namespace Nata
 			entity->Transform->Position = position;
 			entity->Transform->Rotation = rotation;
 			return entity;
-		}
-
-		void Destroy(EEntity* entity)
-		{
-			for (unsigned int i = 0; i < m_Entities.size(); i++)
-			{
-				if (m_Entities[i] == entity) 
-				{
-					m_Entities.erase(m_Entities.begin() + i);
-					return;
-				}
-			}
-			std::cout << "WARNING::DESTROY: OBJECT IS NOT INSTANTIATED" << std::endl;
-		}
-
-		void Begin()
-		{
-			m_GameMode->Begin();
-			for (EEntity* entity : m_Entities)
-			{
-				entity->Begin();
-				for (CComponent* comp : entity->m_Components)
-				{
-					comp->Begin();
-				}
-			}
-		}
-
-		void Tick(float dt)
-		{
-			m_GameMode->Tick(dt);
-			for (EEntity* entity : m_Entities)
-			{
-				entity->Tick(dt);
-				for (CComponent* comp : entity->m_Components)
-				{
-					comp->Tick(dt);
-				}
-			}
 		}
 	};
 } 

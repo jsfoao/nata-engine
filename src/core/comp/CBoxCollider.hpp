@@ -6,6 +6,8 @@ namespace Nata
 {
 	class CBoxCollider: public CComponent
 	{
+		GENERATE_COMPONENT
+
 	public:
 		vec3 Position;
 		vec3 Bounds;
@@ -14,6 +16,7 @@ namespace Nata
 	public:
 		CBoxCollider() : CComponent()
 		{
+			INIT_ID
 			Position = vec3(0.f);
 			Bounds = vec3(3.f);
 		}
@@ -62,4 +65,5 @@ namespace Nata
 			////}
 		}
 	};
+	INIT_COMPONENT(CBoxCollider)
 }
