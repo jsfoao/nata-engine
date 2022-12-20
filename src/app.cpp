@@ -28,7 +28,7 @@ namespace Nata
 			EPlayer* player2 = Instantiate<EPlayer>(world);
 			player2->Color = vec3(0.f, 1.f, 0.f);
 			player2->InputEnabled = false;
-			player2->Transform->Position = vec3(4.f, 0.f, 0.f);
+			player2->Transform->Position = vec3(1.f, 0.f, 0.f);
 
 			EPlayer* player3 = Instantiate<EPlayer>(world);
 			player3->Color = vec3(0.f, 0.f, 1.f);
