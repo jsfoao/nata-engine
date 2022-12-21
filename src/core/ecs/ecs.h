@@ -14,7 +14,7 @@ using std::chrono::milliseconds;
 
 namespace Nata
 {
-	class NGameMode;
+	class GGameMode;
 	class NWorld;
 	class NObject;
 	class EEntity;
@@ -157,14 +157,14 @@ namespace Nata
 	};
 
 	// behaviour in level lifetime
-	class NGameMode
+	class GGameMode
 	{
 	protected:
 		NWorld* m_World;
 		friend class NWorld;
 
 	public:
-		NGameMode();
+		GGameMode();
 
 		inline NWorld* GetWorld() { return m_World; }
 		inline void SetWorld(NWorld* world) { m_World = world; }
@@ -185,7 +185,7 @@ namespace Nata
 	class NWorld
 	{
 	protected:
-		NGameMode* m_GameMode;
+		GGameMode* m_GameMode;
 		vector<EEntity*> m_Entities;
 
 	public:
@@ -196,15 +196,15 @@ namespace Nata
 		void Tick(float dt);
 
 		inline vector<EEntity*> GetAllEntities() { return m_Entities; }
-		void SetGameMode(NGameMode* gameMode);
+		void SetGameMode(GGameMode* gameMode);
 
 		template<typename T, class = typename std::enable_if<std::is_base_of<EEntity, T>::value>::type>
 		T* Instantiate()
 		{
 			T* entity = new T();
-			m_Entities.push_back(entity);
 			entity->m_World = this;
 			entity->Transform->Position = vec3(0.f);
+			m_Entities.push_back(entity);
 			return entity;
 		}
 
@@ -212,10 +212,10 @@ namespace Nata
 		T* Instantiate(vec3 position)
 		{
 			T* entity = new T();
-			m_Entities.push_back(entity);
 			entity->m_World = this;
 			entity->Transform->Position = position;
 			entity->Transform->Rotation = vec3(0.f);
+			m_Entities.push_back(entity);
 			return entity;
 		}
 
@@ -223,10 +223,10 @@ namespace Nata
 		T* Instantiate(vec3 position, vec3 rotation)
 		{
 			T* entity = new T();
-			m_Entities.push_back(entity);
 			entity->m_World = this;
 			entity->Transform->Position = position;
 			entity->Transform->Rotation = rotation;
+			m_Entities.push_back(entity);
 			return entity;
 		}
 	};

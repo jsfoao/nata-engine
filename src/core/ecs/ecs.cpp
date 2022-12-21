@@ -66,6 +66,7 @@ namespace Nata
 			if (m_Entities[i] == entity)
 			{
 				m_Entities.erase(m_Entities.begin() + i);
+				delete entity;
 				return;
 			}
 		}
@@ -88,16 +89,14 @@ namespace Nata
 	void NWorld::Tick(float dt)
 	{
 		m_GameMode->Tick(dt);
-		for (EEntity* entity : m_Entities)
+		for (int e = m_Entities.size() - 1; e >= 0; e--)
 		{
-			if (entity == nullptr)
-			{
-				continue;
-			}
+			EEntity* entity = m_Entities[e];
 			entity->Tick(dt);
-			for (CComponent* comp : entity->m_Components)
+			for (int c = entity->m_Components.size() - 1; c >= 0; c--)
 			{
-				comp->Tick(dt);
+				CComponent* component = m_Entities[e]->m_Components[c];
+				component->Tick(dt);
 			}
 		}
 	}
