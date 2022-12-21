@@ -98,11 +98,19 @@
     <ClCompile Include="include\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="include\imgui\imgui_tables.cpp" />
     <ClCompile Include="include\imgui\imgui_widgets.cpp" />
+    <ClInclude Include="res\scripts\EAsteroid.h" />
+    <ClInclude Include="res\scripts\EEnemy.h" />
+    <ClInclude Include="res\scripts\EFollowCamera.h" />
     <ClInclude Include="res\scripts\EProjectile.h" />
     <ClInclude Include="res\scripts\EShip.h" />
+    <ClInclude Include="res\scripts\GSpaceShooter.h" />
     <ClInclude Include="src\app.cpp" />
+    <ClCompile Include="res\scripts\EAsteroid.cpp" />
+    <ClCompile Include="res\scripts\EEnemy.cpp" />
+    <ClCompile Include="res\scripts\EFollowCamera.cpp" />
     <ClCompile Include="res\scripts\EProjectile.cpp" />
     <ClCompile Include="res\scripts\EShip.cpp" />
+    <ClCompile Include="res\scripts\GSpaceShooter.cpp" />
     <ClCompile Include="src\core\comp\CBoxCollider.cpp" />
     <ClCompile Include="src\core\comp\CCamera.cpp" />
     <ClCompile Include="src\core\comp\CCollider.cpp" />
@@ -111,6 +119,7 @@
     <ClCompile Include="src\core\comp\CSphereCollider.cpp" />
     <ClCompile Include="src\core\ecs\ecs.cpp" />
     <ClCompile Include="src\core\editor\handles.cpp" />
+    <ClCompile Include="src\core\glm_math.cpp" />
     <ClCompile Include="src\core\input.cpp" />
     <ClCompile Include="src\core\renderer\buffer.cpp" />
     <ClCompile Include="src\core\core.cpp" />
@@ -124,6 +133,7 @@
     <ClCompile Include="src\core\window.cpp" />
     <ClCompile Include="src\core\renderer\shader.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\utils\EEntityTemplate.cpp" />
     <ClCompile Include="src\utils\fileutils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -1106,6 +1116,7 @@
     <ClInclude Include="src\core\editor\handles.h" />
     <ClInclude Include="src\core\glm_math.h" />
     <ClInclude Include="src\core\input.h" />
+    <ClInclude Include="src\core\item_pool.h" />
     <ClInclude Include="src\core\key.h" />
     <ClInclude Include="src\core\renderer\buffer.h" />
     <ClInclude Include="src\core\renderer\camera.h" />
@@ -1119,6 +1130,7 @@
     <ClInclude Include="src\exercises\exercises.hpp" />
     <ClInclude Include="src\core\renderer\shader.h" />
     <ClInclude Include="src\nata.h" />
+    <ClInclude Include="src\utils\EEntityTemplate.h" />
     <ClInclude Include="src\utils\fileutils.h" />
   </ItemGroup>
   <ItemGroup>

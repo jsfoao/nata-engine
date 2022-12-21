@@ -24,5 +24,6 @@ namespace Nata
 		static void DrawHandles(const CTransform* transform, const float size);
 		static void DrawWireSphere(const vec3& pos, const float radius, const vec3& color);
 		static void DrawCircle(const vec3& pos, const float radius, const vec3& normal, const vec3& color, const int segments = 16);
+		static void DrawSquare(const vec3& pos, const vec2& size, const vec3& normal, const vec3& color);
 	};
 }

@@ -43,7 +43,7 @@ namespace Nata
 		}
 	}
 
-	NGameMode::NGameMode()
+	GGameMode::GGameMode()
 	{
 		m_World = nullptr;
 	}
@@ -53,7 +53,7 @@ namespace Nata
 		m_GameMode = nullptr;
 	}
 
-	void NWorld::SetGameMode(NGameMode* gameMode)
+	void NWorld::SetGameMode(GGameMode* gameMode)
 	{
 		gameMode->m_World = this;
 		m_GameMode = gameMode;

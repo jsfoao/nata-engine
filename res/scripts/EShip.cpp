@@ -20,8 +20,8 @@ namespace Nata
 
 		Input = vec3(0.f);
 		Velocity = vec3(0.f);
-		MaxSpeed = 2.f;
-		Acceleration = 0.25f;
+		MaxSpeed = 1.f;
+		Acceleration = 0.15f;
 		Transform->Scale = vec3(1.f);
 	}
 
@@ -37,15 +37,16 @@ namespace Nata
 			Shoot();
 		}
 
-		Velocity.x = MoveTowards(Velocity.x, Input.x * MaxSpeed, Acceleration * dt);
-		Velocity.y = MoveTowards(Velocity.y, Input.y * MaxSpeed, Acceleration * dt);
+		Velocity.x = Math::MoveTowards(Velocity.x, Input.x * MaxSpeed, Acceleration * dt);
+		Velocity.y = Math::MoveTowards(Velocity.y, Input.y * MaxSpeed, Acceleration * dt);
 		Transform->Rotation.z = Velocity.x * 120.f;
 		Transform->Rotation.x = Velocity.y * 120.f;
 		Transform->Rotation.y = -Velocity.x * 120.f;
 		Transform->Position += Velocity;
 
+
 		Handles::DrawHandles(Transform, 5.f);
-		Handles::DrawLine(Transform->Position, Transform->Position + Transform->Forward * 100.f, vec3(0.f, 0.f, 1.f));
+		Handles::DrawLine(Transform->Position, Transform->Position - Transform->Forward * 100.f, vec3(1.f));
 	}
 
 	void EShip::ProcessInput()
@@ -60,7 +61,9 @@ namespace Nata
 
 	void EShip::Shoot()
 	{
-		Instantiate<EProjectile>(GetWorld(), Transform->Position + Transform->Forward * 1.f);
-		//projectile->Direction = Transform->Forward;
+		vec3 posRight = Transform->Position - Transform->Forward * 1.f + Transform->Right * 1.f;
+		vec3 posLeft = Transform->Position - Transform->Forward * 1.f - Transform->Right * 1.f;
+		Instantiate<EProjectile>(GetWorld(), posRight)->Direction = -Transform->Forward;
+		Instantiate<EProjectile>(GetWorld(), posLeft)->Direction = -Transform->Forward;
 	}
 }

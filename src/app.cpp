@@ -1,9 +1,8 @@
 #pragma once 
 #include "nata.h"
-#include "EPlayer.hpp"
 #include "EShip.h"
 #include "core/ecs/ECamera.hpp"
-#include "NShooterGameMode.hpp"
+#include "scripts/GSpaceShooter.h"
 
 namespace Nata
 {
@@ -15,29 +14,8 @@ namespace Nata
 		{
 			NWorld* world = new NWorld();
 			NEngine::World = world;
-			NShooterGameMode* gameMode = new NShooterGameMode();
+			GSpaceShooter* gameMode = new GSpaceShooter();
 			world->SetGameMode(gameMode);
-
-			ECamera* camera = Instantiate<ECamera>(world);
-			NEngine::Camera = camera->Camera;
-
-			camera->Transform->Position = vec3(0.f, 0.f, 20.f);
-
-			EShip* ship = Instantiate<EShip>(world);
-			//ship->Model->Shader->SetUniform3f("viewPos", camera->Transform->Position);
-
-			//EPlayer* player1 = Instantiate<EPlayer>(world);
-			//player1->Color = vec3(1.f, 0.f, 0.f);
-
-			//EPlayer* player2 = Instantiate<EPlayer>(world);
-			//player2->Color = vec3(0.f, 1.f, 0.f);
-			//player2->InputEnabled = false;
-			//player2->Transform->Position = vec3(1.f, 0.f, 0.f);
-
-			//EPlayer* player3 = Instantiate<EPlayer>(world);
-			//player3->Color = vec3(0.f, 0.f, 1.f);
-			//player3->InputEnabled = false;
-			//player3->Transform->Position = vec3(-4.f, 0.f, 0.f);
 		}
 
 		// runs before world tick

@@ -1,26 +1,27 @@
 #pragma once
 #include "nata.h"
 #include "core/comp/CModelRenderer.h"
-#include "core/comp/CBoxCollider.h"
+#include <core/comp/CBoxCollider.h>
+#include "EProjectile.h"
+
 
 namespace Nata
 {
-	class EProjectile : public EEntity
+	class EEnemy : public EEntity
 	{
 	public:
-		CModelRenderer* MeshRenderer;
+		CModelRenderer* ModelRenderer;
 		CBoxCollider* BoxCollider;
 		NModel* Model;
-		vec3 Direction;
+		NShader* Shader;
 		float Speed;
-		float LifeTime;
+		float Zlimit;
 
 	public:
-		EProjectile();
+		EEnemy();
 		void Begin() override;
 		void Tick(float dt) override;
 
 		static void OnCollisionEnter(CCollider* owner, CCollider* other);
-		static void OnCollisionExit(CCollider* owner, CCollider* other);
 	};
 }

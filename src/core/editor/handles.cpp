@@ -132,6 +132,45 @@ namespace Nata
         }
     }
 
+    void Handles::DrawSquare(const vec3& pos, const vec2& size, const vec3& normal, const vec3& color)
+    {
+        if (!m_Enabled)
+        {
+            return;
+        }
+        vec3 vec = vec3(0.f);
+        if (normal == vec3(1.f, 0.f, 0.f))
+        {
+            vec = vec3(0.f, 1.f, 0.f);
+        }
+        else if (normal == vec3(0.f, 1.f, 0.f))
+        {
+            vec = vec3(1.f, 0.f, 0.f);
+        }
+        else if (normal == vec3(0.f, 0.f, 1.f))
+        {
+            vec = vec3(1.f, 0.f, 0.f);
+        }
+        else
+        {
+            vec = vec3(1.f, 0.f, 0.f);
+        }
+
+        const vec3 tangent = normalize(cross(normal, vec));
+        const vec3 bitangent = normalize(cross(normal, tangent));
+
+        vec2 hSize = size / 2.f;
+        vec3 pos0 = pos + (-tangent * hSize.y) + (bitangent * hSize.x);
+        vec3 pos1 = pos + (tangent * hSize.y) + (bitangent * hSize.x);
+        vec3 pos2 = pos + (tangent * hSize.y) + (-bitangent * hSize.x);
+        vec3 pos3 = pos + (-tangent * hSize.y) + (-bitangent * hSize.x);
+        
+        DrawLine(pos0, pos1, color);
+        DrawLine(pos1, pos2, color);
+        DrawLine(pos2, pos3, color);
+        DrawLine(pos3, pos0, color);
+    }
+
     bool Handles::Init()
     {
         SetEnable(true);

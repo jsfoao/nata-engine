@@ -2,25 +2,32 @@
 #include "nata.h"
 #include "core/comp/CModelRenderer.h"
 #include "core/comp/CBoxCollider.h"
+#include "EProjectile.h"
 
 namespace Nata
 {
-	class EProjectile : public EEntity
+	class EAsteroid : public EEntity
 	{
 	public:
-		CModelRenderer* MeshRenderer;
-		CBoxCollider* BoxCollider;
+		CModelRenderer* ModelRendererComp;
+		CBoxCollider* BoxColliderComp;
 		NModel* Model;
-		vec3 Direction;
-		float Speed;
-		float LifeTime;
+		NShader* Shader;
+
+		// rotation
+		float BaseSpeed;
+		float RotationSpeed;
+		vec3 RotationAxis;
+
+		// movement
+		float MoveSpeed;
+		float Zlimit;
 
 	public:
-		EProjectile();
+		EAsteroid();
 		void Begin() override;
 		void Tick(float dt) override;
 
 		static void OnCollisionEnter(CCollider* owner, CCollider* other);
-		static void OnCollisionExit(CCollider* owner, CCollider* other);
 	};
 }
