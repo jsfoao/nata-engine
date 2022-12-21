@@ -74,7 +74,10 @@ namespace Nata
 			}
 		}
 
-		Handles::DrawWireCube(Position, Bounds, HandlesColor);
+		if (DrawHandles)
+		{
+			Handles::DrawWireCube(Position, Bounds, HandlesColor);
+		}
 	}
 
 	void CBoxCollider::OnCollision(CCollider* owner, CCollider* other)

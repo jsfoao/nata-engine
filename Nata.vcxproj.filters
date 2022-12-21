@@ -102,6 +102,12 @@
     <ClCompile Include="src\core\comp\CCollider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="res\scripts\EShip.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="res\scripts\EProjectile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\nata.h">
@@ -3086,6 +3092,12 @@
     <ClInclude Include="src\core\comp\collisionutils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="res\scripts\EShip.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="res\scripts\EProjectile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\glew32.lib" />
@@ -3536,5 +3548,7 @@
     <None Include="bin\assimp-vc143-mtd.dll" />
     <None Include="src\shaders\unlit_textured.frag" />
     <None Include="src\shaders\unlit_textured.vert" />
+    <None Include="src\shaders\diffuse.frag" />
+    <None Include="src\shaders\diffuse.vert" />
   </ItemGroup>
 </Project>

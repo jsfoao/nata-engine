@@ -10,6 +10,7 @@ namespace Nata
 		Position = vec3(0.f);
 		LockOwner = true;
 		HandlesColor = vec3(1.f, 0.f, 0.f);
+		DrawHandles = true;
 	}
 
 	void CCollider::CallOnCollisionCallback(CCollider* owner, CCollider* other)

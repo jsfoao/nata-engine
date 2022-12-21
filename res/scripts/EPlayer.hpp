@@ -41,7 +41,7 @@ namespace Nata
 
 		void Tick(float dt) override
 		{
-			Handles::DrawHandles(Transform, vec3(2.f));
+			Handles::DrawHandles(Transform, 2.f);
 
 			Movement(dt);
 			Model->PropertyLayout.SetVec3("color", Color);

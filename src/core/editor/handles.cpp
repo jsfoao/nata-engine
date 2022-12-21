@@ -69,7 +69,7 @@ namespace Nata
         DrawLine(v3, v7, color);
     }
 
-    void Handles::DrawHandles(const CTransform* transform, const vec3& size)
+    void Handles::DrawHandles(const CTransform* transform, const float size)
     {
         Handles::DrawLine(transform->Position, transform->Position + transform->Right * size, vec3(1.f, 0.f, 0.f));
         Handles::DrawLine(transform->Position, transform->Position + transform->Up * size, vec3(0.f, 1.f, 0.f));

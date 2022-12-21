@@ -90,6 +90,10 @@ namespace Nata
 		m_GameMode->Tick(dt);
 		for (EEntity* entity : m_Entities)
 		{
+			if (entity == nullptr)
+			{
+				continue;
+			}
 			entity->Tick(dt);
 			for (CComponent* comp : entity->m_Components)
 			{
@@ -127,12 +131,15 @@ namespace Nata
 
 	void CTransform::Tick(float dt)
 	{
-		Right.x = cos(radians(Rotation.y)) * cos(radians(Rotation.x));
-		Right.y = sin(radians(Rotation.x));
-		Right.z = sin(radians(Rotation.y)) * cos(radians(Rotation.x));
+		mat4 model = mat4(1.f);
+		model = rotate(model, radians(Rotation.x), vec3(-1.f, 0.f, 0.f));
+		model = rotate(model, radians(Rotation.y), vec3(0.f, -1.f, 0.f));
+		model = rotate(model, radians(Rotation.z), vec3(0.f, 0.f, 1.f));
+		Forward = vec4(0.f, 0.f, 1.f, 0.f) * model;
+		Right = vec4(1.f, 0.f, 0.f, 0.f) * model;
 		Right = normalize(Right);
-		Forward = -normalize(cross(vec3(0.f, 1.f, 0.f), Right));
-		Up = cross(Right, -Forward);
+		Forward = normalize(Forward);
+		Up = -cross(Right, Forward);
 
 		if (IsParented)
 		{

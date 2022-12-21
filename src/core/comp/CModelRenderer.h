@@ -7,6 +7,10 @@ namespace Nata
 	class CModelRenderer : public CComponent
 	{
 		GENERATE_COMPONENT;
+	public:
+		vec3 Rotation;
+		vec3 Scale;
+		vec3 Position;
 	protected:
 		NShader* m_Shader;
 		NTexture* m_Texture;

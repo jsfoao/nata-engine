@@ -16,6 +16,7 @@ namespace Nata
 		// sets position to be the same as the owner
 		bool LockOwner;
 		vec3 HandlesColor;
+		bool DrawHandles;
 
 	protected:
 		std::vector<void(*)(CCollider*, CCollider*)> m_OnCollisionCallbacks;

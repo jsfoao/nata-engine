@@ -11,6 +11,9 @@ namespace Nata
 		m_Texture = nullptr;
 		m_Model = nullptr;
 		m_IsVisible = true;
+		Position = vec3(0.f);
+		Rotation = vec3(0.f);
+		Scale = vec3(0.f);
 	}
 
 	void CModelRenderer::Init(NShader* shader, NModel* model, NTexture* texture)
@@ -30,9 +33,9 @@ namespace Nata
 		{
 			return;
 		}
-		m_Model->Position = m_Owner->Transform->Position;
-		m_Model->Scale = m_Owner->Transform->Scale;
-		m_Model->Rotation = m_Owner->Transform->Rotation;
+		m_Model->Position = m_Owner->Transform->Position + Position;
+		m_Model->Scale = m_Owner->Transform->Scale + Scale;
+		m_Model->Rotation = m_Owner->Transform->Rotation + Rotation;
 		NEngine::Window->GetRenderer()->Submit(m_Model);
 	}
 }
