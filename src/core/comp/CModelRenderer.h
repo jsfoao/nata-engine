@@ -22,6 +22,7 @@ namespace Nata
 		void Init(NShader* shader, NModel* model, NTexture* texture = nullptr);
 		inline void SetVisibility(bool visibility) { m_IsVisible = visibility; }
 		inline NShader* GetShader() { return m_Shader; }
+		inline NModel* GetModel() { return m_Model; }
 		
 		void Tick(float dt) override;
 	};

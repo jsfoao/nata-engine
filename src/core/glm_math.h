@@ -13,5 +13,8 @@ namespace Math
 
 	vec3 MoveTowards(vec3 start, vec3 end, float maxDelta);
 	float MoveTowards(float start, float end, float maxDelta);
+
 	float Random(float min, float max);
+	vec3 Random(vec3 min, vec3 max);
+	vec2 Random(vec2 min, vec2 max);
 }

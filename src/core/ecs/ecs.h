@@ -205,6 +205,7 @@ namespace Nata
 			entity->m_World = this;
 			entity->Transform->Position = vec3(0.f);
 			m_Entities.push_back(entity);
+			entity->Begin();
 			return entity;
 		}
 
@@ -216,6 +217,7 @@ namespace Nata
 			entity->Transform->Position = position;
 			entity->Transform->Rotation = vec3(0.f);
 			m_Entities.push_back(entity);
+			entity->Begin();
 			return entity;
 		}
 
@@ -227,6 +229,7 @@ namespace Nata
 			entity->Transform->Position = position;
 			entity->Transform->Rotation = rotation;
 			m_Entities.push_back(entity);
+			entity->Begin();
 			return entity;
 		}
 	};

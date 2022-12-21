@@ -49,4 +49,11 @@ namespace Math
 		float fz = min.z + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (max.z - min.z)));
 		return vec3(fx, fy, fz);
 	}
+
+	vec2 Random(vec2 min, vec2 max)
+	{
+		float fx = min.x + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (max.x - min.x)));
+		float fy = min.y + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (max.y - min.y)));
+		return vec2(fx, fy);
+	}
 }
