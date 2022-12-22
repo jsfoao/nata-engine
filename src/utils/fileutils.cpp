@@ -36,4 +36,18 @@ namespace Nata
         delete[] data;
         return result;
     }
+
+    std::string FileUtils::GetFileExtension(std::string filePath)
+    {
+        std::string ext = "";
+        bool read = false;
+        for (char c : filePath)
+        {
+            read = c == '.';
+            if (!read)
+                continue;
+            ext += c;
+        }
+        return ext;
+    }
 }

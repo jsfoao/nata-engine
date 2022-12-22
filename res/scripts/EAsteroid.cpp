@@ -9,6 +9,7 @@ namespace Nata
 
 		Model = NAssetLoader::Get<NModel>("res\\models\\rock_by_dommk.obj");
 		Shader = NAssetLoader::Get<NShader>("src\\shaders\\diffuse.vert");
+
 		ModelRendererComp->SetRenderableAndShader(Model, Shader);
 		ModelRendererComp->PropertyLayout.AddVec3("color");
 
@@ -34,7 +35,7 @@ namespace Nata
 	void EAsteroid::Tick(float dt)
 	{
 		Transform->Rotation += RotationAxis * RotationSpeed * dt;
-		//Transform->Position += vec3(0.f, 0.f, 1.f) * MoveSpeed * dt;
+		Transform->Position += vec3(0.f, 0.f, 1.f) * MoveSpeed * dt;
 
 		if (Transform->Position.z >= Zlimit)
 		{

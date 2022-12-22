@@ -7,9 +7,11 @@ namespace Nata
 		MeshRenderer = AddComponent<CModelRenderer>();
 		BoxCollider = AddComponent<CBoxCollider>();
 
-		NShader* shader = new NShader("src\\shaders\\diffuse.vert", "src\\shaders\\diffuse.frag");
-		Model = new NModel("res\\models\\LowPolyFiatUNO.obj");
+		NShader* shader = NAssetLoader::Get<NShader>("src\\shaders\\diffuse.vert");
+		Model = NAssetLoader::Get<NModel>("res\\models\\LowPolyFiatUNO.obj");
+
 		MeshRenderer->SetRenderableAndShader(Model, shader);
+		MeshRenderer->PropertyLayout.AddVec3("color");
 
 		MeshRenderer->LocalRotation = vec3(0.f, 180.f, 0.f);
 		MeshRenderer->LocalPosition = vec3(0.f, -1.f, 0.f);
@@ -25,6 +27,7 @@ namespace Nata
 
 	void EShip::Begin()
 	{
+		MeshRenderer->PropertyLayout.SetVec3("color", vec3(1.f));
 	}
 
 	void EShip::Tick(float dt)

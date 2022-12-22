@@ -7,17 +7,19 @@ namespace Nata
 
 	void NAssetLoader::Submit(NAsset* asset)
 	{
-		asset->ID = m_IterID;
+		asset->m_ID = m_IterID;
 		m_IterID++;
 		m_LoadedAssets.push_back(asset);
 	}
 
 	NAsset::NAsset()
 	{
-		ID = 0;
+		m_ID = 0;
+		m_Type = 0;
 	}
 	NAsset::NAsset(std::string path)
 	{
-		ID = 0;
+		m_ID = 0;
+		m_Type = 0;
 	}
 }

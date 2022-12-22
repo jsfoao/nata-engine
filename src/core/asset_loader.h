@@ -2,6 +2,11 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <filesystem>
+#include <fstream>
+#include "utils/fileutils.h"
+
+using recursive_directory_iterator = std::filesystem::recursive_directory_iterator;
 
 namespace Nata
 {
@@ -14,6 +19,17 @@ namespace Nata
 
 	public:
 		static void Submit(NAsset* asset);
+
+		// loads all assets in folder
+		template<typename T>
+		static void Load(std::string folderPath)
+		{
+			for (const auto& dirEntry : recursive_directory_iterator(folderPath))
+			{
+				std::string path = dirEntry.path().string();
+				new T(path);
+			}
+		}
 		
 		template<typename T>
 		static T* Get(std::string path)
@@ -47,7 +63,8 @@ namespace Nata
 
 	protected:
 		std::string m_Path;
-		unsigned int ID;
+		unsigned int m_ID;
+		unsigned int m_Type;
 
 	public:
 		NAsset();

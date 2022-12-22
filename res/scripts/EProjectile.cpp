@@ -7,9 +7,11 @@ namespace Nata
 		MeshRenderer = AddComponent<CModelRenderer>();
 		BoxCollider = AddComponent<CBoxCollider>();
 
-		NShader* shader = new NShader("src\\shaders\\unlit.vert", "src\\shaders\\unlit.frag");
-		Model = new NModel("res\\models\\cube.obj");
+		NShader* shader = NAssetLoader::Get<NShader>("src\\shaders\\unlit.vert");
+		Model = NAssetLoader::Get<NModel>("res\\models\\cube.obj");
+
 		MeshRenderer->SetRenderableAndShader(Model, shader);
+		MeshRenderer->PropertyLayout.AddVec3("color");
 
 		BoxCollider->Bounds = vec3(1.f);
 		BoxCollider->DrawHandles = true;
@@ -22,6 +24,7 @@ namespace Nata
 
 	void EProjectile::Begin()
 	{
+		MeshRenderer->PropertyLayout.SetVec3("color", vec3(1.f, 0.f, 0.f));
 	}
 
 	void EProjectile::Tick(float dt)

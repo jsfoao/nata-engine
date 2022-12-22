@@ -9,5 +9,6 @@ namespace Nata
     {
     public:
         static std::string ReadFile(const char* filepath);
+        static std::string GetFileExtension(std::string filePath);
     };
 }
