@@ -123,6 +123,9 @@
     <ClCompile Include="res\scripts\EAsteroid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\asset_loader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\nata.h">
@@ -3125,7 +3128,7 @@
     <ClInclude Include="res\scripts\EAsteroid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\item_pool.h">
+    <ClInclude Include="src\core\asset_loader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -24,8 +24,6 @@ namespace Nata
 
 		EAsteroid* asteroid1 = Instantiate<EAsteroid>(GetWorld(), vec3(3.f, 0.f, 0.f));
 		EAsteroid* asteroid2 = Instantiate<EAsteroid>(GetWorld(), vec3(-3.f, 0.f, 0.f));
-		asteroid1->ModelRendererComp->SetRenderableAndShader(AsteroidModel, DiffuseShader);
-		asteroid2->ModelRendererComp->SetRenderableAndShader(AsteroidModel, DiffuseShader);
 		asteroid1->Color = vec3(1.f, 0.f, 0.f);
 		asteroid2->Color = vec3(0.f, 1.f, 0.f);
 	}

@@ -7,6 +7,9 @@ namespace Nata
 		ModelRendererComp = AddComponent<CModelRenderer>();
 		BoxColliderComp = AddComponent<CBoxCollider>();
 
+		Model = NAssetLoader::Get<NModel>("res\\models\\rock_by_dommk.obj");
+		Shader = NAssetLoader::Get<NShader>("src\\shaders\\diffuse.vert");
+		ModelRendererComp->SetRenderableAndShader(Model, Shader);
 		ModelRendererComp->PropertyLayout.AddVec3("color");
 
 		BoxColliderComp->AddOnCollisionEnterCallback(OnCollisionEnter);
@@ -18,18 +21,13 @@ namespace Nata
 		Zlimit = 30.f;
 	}
 
-	void EAsteroid::OnEnable()
+	void EAsteroid::Begin()
 	{
-		std::cout << "OnEnable" << std::endl;
 		RotationAxis = Math::Random(vec3(-1.f), vec3(1.f));
 		float scale = Math::Random(0.02f, 0.06f);
 		Transform->Scale = vec3(scale);
 		RotationSpeed = BaseSpeed / scale;
 		BoxColliderComp->Bounds = Transform->Scale * 100.f;
-	}
-
-	void EAsteroid::Begin()
-	{
 		ModelRendererComp->PropertyLayout.SetVec3("color", Color);
 	}
 

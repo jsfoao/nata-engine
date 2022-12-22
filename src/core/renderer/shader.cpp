@@ -2,17 +2,27 @@
 
 namespace Nata
 {
-	NShader::NShader(){}
+	NShader::NShader()
+	{
+		m_VertPath = nullptr;
+		m_FragPath = nullptr;
+		m_ID = 0;
+	}
 
 	NShader::NShader(const char* vertPath, const char* fragPath)
 	{
 		m_VertPath = vertPath;
 		m_FragPath = fragPath;
-
-		m_ID = Load();
+		m_Path = vertPath;
+		if (Load() == false)
+		{
+			std::cout << "NSHADER::LOAD : Couldnt load shader" << std::endl;
+			return;
+		};
+		NAssetLoader::Submit(this);
 	}
 
-	unsigned int NShader::Load()
+	bool NShader::Load()
 	{
 		unsigned int program = glCreateProgram();
 
@@ -34,7 +44,7 @@ namespace Nata
 			std::vector<char> error(length);
 			glGetShaderInfoLog(vertex, length, &length, &error[0]);
 			glDeleteShader(vertex);
-			return 0;
+			return false;
 		}
 
 		// FRAGMENT
@@ -54,7 +64,7 @@ namespace Nata
 			std::vector<char> error(length);
 			glGetShaderInfoLog(fragment, length, &length, &error[0]);
 			glDeleteShader(fragment);
-			return 0;
+			return false;
 		}
 
 		glAttachShader(program, vertex);
@@ -66,7 +76,8 @@ namespace Nata
 		glDeleteShader(vertex);
 		glDeleteShader(fragment);
 
-		return program;
+		m_ID = program;
+		return true;
 	}
 
 	unsigned int NShader::GetUniformLocation(const char* name)

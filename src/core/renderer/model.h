@@ -1,4 +1,5 @@
 #pragma once
+#include "core/asset_loader.h"
 #include "renderable.h"
 #include "core/glm_math.h"
 #include <vector>
@@ -14,7 +15,7 @@
 using namespace std;
 namespace Nata
 {
-	class NModel : public NRenderable
+	class NModel : public NAsset, public NRenderable
 	{
 	public:
 		vector<NMesh> Meshes;
@@ -34,7 +35,7 @@ namespace Nata
 			}
 		}
 
-		void Load(string path);
+		bool Load() override;
 		void ProcessNode(aiNode* node, const aiScene* scene);
 		NMesh ProcessMesh(aiMesh* mesh, const aiScene* scene);
 		vector<NTexture> LoadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName);

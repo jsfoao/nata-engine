@@ -111,6 +111,7 @@
     <ClCompile Include="res\scripts\EProjectile.cpp" />
     <ClCompile Include="res\scripts\EShip.cpp" />
     <ClCompile Include="res\scripts\GSpaceShooter.cpp" />
+    <ClCompile Include="src\core\asset_loader.cpp" />
     <ClCompile Include="src\core\comp\CBoxCollider.cpp" />
     <ClCompile Include="src\core\comp\CCamera.cpp" />
     <ClCompile Include="src\core\comp\CCollider.cpp" />
@@ -1094,6 +1095,7 @@
     <ClInclude Include="include\imgui\imstb_truetype.h" />
     <ClInclude Include="include\stb_image.h" />
     <ClInclude Include="res\scripts\EPlayer.hpp" />
+    <ClInclude Include="src\core\asset_loader.h" />
     <ClInclude Include="src\core\comp\CBoxCollider.h" />
     <ClInclude Include="src\core\comp\CCollider.h" />
     <ClInclude Include="src\core\comp\collisionutils.h" />
@@ -1115,7 +1117,6 @@
     <ClInclude Include="src\core\editor\handles.h" />
     <ClInclude Include="src\core\glm_math.h" />
     <ClInclude Include="src\core\input.h" />
-    <ClInclude Include="src\core\item_pool.h" />
     <ClInclude Include="src\core\key.h" />
     <ClInclude Include="src\core\renderer\buffer.h" />
     <ClInclude Include="src\core\renderer\camera.h" />

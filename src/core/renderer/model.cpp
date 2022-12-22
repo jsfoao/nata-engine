@@ -4,7 +4,13 @@ namespace Nata
 {
 	NModel::NModel(string path)
 	{
-		Load(path);
+		m_Path = path;
+		if (Load() == false)
+		{
+			std::cout << "NMODEL::LOAD : Couldnt load model" << std::endl;
+			return;
+		};
+		NAssetLoader::Submit(this);
 	}
 
 	void NModel::Draw()
@@ -19,17 +25,19 @@ namespace Nata
 		}
 	}
 
-	void NModel::Load(string path)
+	bool NModel::Load()
 	{
 		Assimp::Importer importer;
-		const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+		const aiScene* scene = importer.ReadFile(m_Path, aiProcess_Triangulate | aiProcess_FlipUVs);
 
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 		{
 			std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
+			return false;
 		}
 
 		ProcessNode(scene->mRootNode, scene);
+		return true;
 	}
 
 	void NModel::ProcessNode(aiNode* node, const aiScene* scene)

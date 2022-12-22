@@ -3,7 +3,7 @@
 #include <iostream>
 #include "utils/fileutils.h"
 #include <vector>
-
+#include "core/asset_loader.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
@@ -12,7 +12,7 @@ using namespace glm;
 
 namespace Nata
 {
-	class NShader
+	class NShader : public NAsset
 	{
 	public:
 		unsigned int m_ID;
@@ -26,14 +26,10 @@ namespace Nata
 		NShader();
 		NShader(const char* vertPath, const char* fragPath);
 
-		/// <summary>
-		/// Equivalent to glUseProgram(this)
-		/// </summary>
+		// equivalent to glUseProgram(this)
 		void Enable();
 
-		/// <summary>
-		/// Equivalent to glUseProgram(NULL)
-		/// </summary>
+		// equivalent to glUseProgram(NULL)
 		void Disable();
 		inline unsigned int GetID() { return m_ID; }
 
@@ -48,10 +44,8 @@ namespace Nata
 		void SetUniform4f(const char* name, const vec4& v);
 		void SetUniformMat4(const char* name, const mat4& matrix);
 		
-		/// <summary>
-		/// Creates program and attaches shaders to it. Returns program id
-		/// </summary>
-		unsigned int Load();
+		// Creates program and attaches shaders to it
+		bool Load() override;
 
 	protected:
 		unsigned int GetUniformLocation(const char* name);
