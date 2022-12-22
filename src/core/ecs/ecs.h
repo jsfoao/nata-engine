@@ -1,16 +1,10 @@
 #pragma once
 #include <vector>
+#include <queue>
 #include "core/glm_math.h"
-#include <chrono>
 #include <iostream>
 
 using namespace std;
-
-using std::chrono::high_resolution_clock;
-using std::chrono::duration_cast;
-using std::chrono::duration;
-using std::chrono::milliseconds;
-
 
 namespace Nata
 {
@@ -111,6 +105,7 @@ namespace Nata
 	protected:
 		NWorld* m_World;
 		vector<CComponent*> m_Components;
+		bool m_Initialized;
 		friend class NWorld;
 
 	public:
@@ -152,8 +147,10 @@ namespace Nata
 			return m_Components;
 		}
 
+		virtual void OnEnable() {};
 		virtual void Begin() {};
 		virtual void Tick(float dt) {};
+		virtual void OnDisable() {};
 	};
 
 	// behaviour in level lifetime
@@ -169,16 +166,17 @@ namespace Nata
 		inline NWorld* GetWorld() { return m_World; }
 		inline void SetWorld(NWorld* world) { m_World = world; }
 
-		virtual void Begin(){};
-		virtual void Tick(float dt){};
+		virtual void Awake() {};
+		virtual void Begin() {};
+		virtual void Tick(float dt) {};
 	};
 
 	// behaviour in application lifetime
 	class NGameInstance
 	{
 	public:
-		virtual void Begin(){};
-		virtual void Tick(float dt){};
+		virtual void Begin() {};
+		virtual void Tick(float dt) {};
 	};
 
 	// space where entities are inserted in
@@ -187,11 +185,13 @@ namespace Nata
 	protected:
 		GGameMode* m_GameMode;
 		vector<EEntity*> m_Entities;
+		queue<EEntity*> m_NextFrame;
 
 	public:
 		NWorld();
 
 		void Destroy(EEntity* entity);
+		void Awake();
 		void Begin();
 		void Tick(float dt);
 
@@ -205,7 +205,8 @@ namespace Nata
 			entity->m_World = this;
 			entity->Transform->Position = vec3(0.f);
 			m_Entities.push_back(entity);
-			entity->Begin();
+			m_NextFrame.push(entity);
+			entity->OnEnable();
 			return entity;
 		}
 
@@ -217,7 +218,8 @@ namespace Nata
 			entity->Transform->Position = position;
 			entity->Transform->Rotation = vec3(0.f);
 			m_Entities.push_back(entity);
-			entity->Begin();
+			m_NextFrame.push(entity);
+			entity->OnEnable();
 			return entity;
 		}
 
@@ -229,7 +231,8 @@ namespace Nata
 			entity->Transform->Position = position;
 			entity->Transform->Rotation = rotation;
 			m_Entities.push_back(entity);
-			entity->Begin();
+			m_NextFrame.push(entity);
+			entity->OnEnable();
 			return entity;
 		}
 	};

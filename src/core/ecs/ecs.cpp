@@ -33,6 +33,7 @@ namespace Nata
 	{
 		Transform = AddComponent<CTransform>();
 		m_World = nullptr;
+		m_Initialized = false;
 	}
 
 	EEntity::~EEntity()
@@ -73,21 +74,24 @@ namespace Nata
 		std::cout << "WARNING::DESTROY: OBJECT IS NOT INSTANTIATED" << std::endl;
 	}
 
+	void NWorld::Awake()
+	{
+		m_GameMode->Awake();
+	}
+
 	void NWorld::Begin()
 	{
 		m_GameMode->Begin();
-		for (EEntity* entity : m_Entities)
-		{
-			entity->Begin();
-			for (CComponent* comp : entity->m_Components)
-			{
-				comp->Begin();
-			}
-		}
 	}
 
 	void NWorld::Tick(float dt)
 	{
+		while (!m_NextFrame.empty())
+		{
+			m_NextFrame.front()->Begin();
+			m_NextFrame.pop();
+		}
+
 		m_GameMode->Tick(dt);
 		for (int e = m_Entities.size() - 1; e >= 0; e--)
 		{

@@ -100,8 +100,6 @@ namespace Nata
 			return;
 		}
 		Shader->Enable();
-		PropertyLayout.SetProperties();
-		//PropertyCallback();
 		BindResources();
 		mat4 model = mat4(1.f);
 		model = translate(model, Position);

@@ -27,6 +27,7 @@ namespace Nata
 	public:
 		GSpaceShooter();
 
+		void Awake() override;
 		void Begin() override;
 		void Tick(float dt) override;
 	};

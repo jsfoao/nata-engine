@@ -9,10 +9,7 @@ namespace Nata
 
 		NShader* shader = new NShader("src\\shaders\\unlit.vert", "src\\shaders\\unlit.frag");
 		Model = new NModel("res\\models\\cube.obj");
-		MeshRenderer->Init(shader, Model);
-
-		Model->PropertyLayout.AddVec3("color");
-		Model->PropertyLayout.SetVec3("color", vec3(1.f, 1.f, 0.f));
+		MeshRenderer->SetRenderableAndShader(Model, shader);
 
 		BoxCollider->Bounds = vec3(1.f);
 		BoxCollider->DrawHandles = true;

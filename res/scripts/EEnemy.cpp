@@ -12,10 +12,7 @@ namespace Nata
 		Shader = new NShader("src\\shaders\\diffuse.vert", "src\\shaders\\diffuse.frag");
 		Model = new NModel("res\\models\\cube.obj");
 
-		Model->PropertyLayout.AddVec3("color");
-		Model->PropertyLayout.SetVec3("color", vec3(0.f, 0.f, 0.5f));
-
-		ModelRenderer->Init(Shader, Model);
+		ModelRenderer->SetRenderableAndShader(Model, Shader);
 		BoxCollider->Bounds = vec3(2.f);
 
 		Speed = 10.f;

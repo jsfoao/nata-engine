@@ -4,26 +4,22 @@ namespace Nata
 {
 	INIT_COMPONENT(CModelRenderer);
 
-	CModelRenderer::CModelRenderer() : CComponent()
+	CModelRenderer::CModelRenderer() : CComponent(), NRenderable()
 	{
 		INIT_ID(CModelRenderer);
-		m_Shader = nullptr;
-		m_Texture = nullptr;
-		m_Model = nullptr;
 		m_IsVisible = true;
-		Position = vec3(0.f);
-		Rotation = vec3(0.f);
-		Scale = vec3(0.f);
+		LocalPosition = vec3(0.f);
+		LocalRotation = vec3(0.f);
+		LocalScale = vec3(0.f);
+		m_Renderable = nullptr;
 	}
 
-	void CModelRenderer::Init(NShader* shader, NModel* model, NTexture* texture)
+	void CModelRenderer::SetRenderableAndShader(NRenderable* renderable, NShader* shader)
 	{
-		m_Shader = shader;
-		m_Texture = texture;
-		m_Model = model;
-		model->Shader = m_Shader;
-		model->PropertyLayout.Bind(m_Shader);
-		m_IsVisible = true;
+		Shader = shader;
+		m_Renderable = renderable;
+		m_Renderable->Shader = Shader;
+		PropertyLayout.Bind(Shader);
 	}
 
 	void CModelRenderer::Tick(float dt)
@@ -33,9 +29,18 @@ namespace Nata
 		{
 			return;
 		}
-		m_Model->Position = m_Owner->Transform->Position + Position;
-		m_Model->Scale = m_Owner->Transform->Scale + Scale;
-		m_Model->Rotation = m_Owner->Transform->Rotation + Rotation;
-		NEngine::Window->GetRenderer()->Submit(m_Model);
+		Position = m_Owner->Transform->Position + LocalPosition;
+		Scale = m_Owner->Transform->Scale + LocalScale;
+		Rotation = m_Owner->Transform->Rotation + LocalRotation;
+		NEngine::Window->GetRenderer()->Submit(this);
+	}
+
+	void CModelRenderer::Draw()
+	{
+		m_Renderable->Position = Position;
+		m_Renderable->Scale = Scale;
+		m_Renderable->Rotation = Rotation;
+		PropertyLayout.SetProperties();
+		m_Renderable->Draw();
 	}
 }

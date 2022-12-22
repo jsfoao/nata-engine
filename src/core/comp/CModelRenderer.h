@@ -4,26 +4,27 @@
 namespace Nata
 {
 	class NWindow;
-	class CModelRenderer : public CComponent
+	class CModelRenderer : public CComponent, public NRenderable
 	{
 		GENERATE_COMPONENT;
 	public:
-		vec3 Rotation;
-		vec3 Scale;
-		vec3 Position;
+		vec3 LocalRotation;
+		vec3 LocalScale;
+		vec3 LocalPosition;
+		NPropertyBlockLayout PropertyLayout;
+
 	protected:
-		NShader* m_Shader;
-		NTexture* m_Texture;
-		NModel* m_Model;
+		NRenderable* m_Renderable;
 		bool m_IsVisible;
 
 	public:
 		CModelRenderer();
-		void Init(NShader* shader, NModel* model, NTexture* texture = nullptr);
 		inline void SetVisibility(bool visibility) { m_IsVisible = visibility; }
-		inline NShader* GetShader() { return m_Shader; }
-		inline NModel* GetModel() { return m_Model; }
+		inline NRenderable* GetRenderable() { return m_Renderable; }
+		inline void SetRenderable(NRenderable* renderable) { m_Renderable = renderable; }
+		void SetRenderableAndShader(NRenderable* renderable, NShader* shader);
 		
 		void Tick(float dt) override;
+		void Draw() override;
 	};
 }

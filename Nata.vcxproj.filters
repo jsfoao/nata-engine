@@ -111,9 +111,6 @@
     <ClCompile Include="res\scripts\EEnemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\utils\EEntityTemplate.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="res\scripts\GSpaceShooter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -3117,9 +3114,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="res\scripts\EEnemy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utils\EEntityTemplate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="res\scripts\GSpaceShooter.h">

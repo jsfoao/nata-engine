@@ -9,12 +9,10 @@ namespace Nata
 
 		NShader* shader = new NShader("src\\shaders\\diffuse.vert", "src\\shaders\\diffuse.frag");
 		Model = new NModel("res\\models\\LowPolyFiatUNO.obj");
-		MeshRenderer->Init(shader, Model);
+		MeshRenderer->SetRenderableAndShader(Model, shader);
 
-		Model->PropertyLayout.AddVec3("color");
-		Model->PropertyLayout.SetVec3("color", vec3(1.f, 1.f, 1.f));
-		MeshRenderer->Rotation = vec3(0.f, 180.f, 0.f);
-		MeshRenderer->Position = vec3(0.f, -1.f, 0.f);
+		MeshRenderer->LocalRotation = vec3(0.f, 180.f, 0.f);
+		MeshRenderer->LocalPosition = vec3(0.f, -1.f, 0.f);
 		BoxCollider->Bounds = vec3(2.f, 2.f, 4.f);
 		BoxCollider->DrawHandles = true;
 

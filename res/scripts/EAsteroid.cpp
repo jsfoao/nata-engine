@@ -7,31 +7,36 @@ namespace Nata
 		ModelRendererComp = AddComponent<CModelRenderer>();
 		BoxColliderComp = AddComponent<CBoxCollider>();
 
+		ModelRendererComp->PropertyLayout.AddVec3("color");
+
 		BoxColliderComp->AddOnCollisionEnterCallback(OnCollisionEnter);
-
+		
 		Transform->Scale = vec3(0.05f);
-
+		Color = vec3(1.f);
 		BaseSpeed = 1.f;
 		MoveSpeed = 10.f;
 		Zlimit = 30.f;
 	}
 
+	void EAsteroid::OnEnable()
+	{
+		std::cout << "OnEnable" << std::endl;
+		RotationAxis = Math::Random(vec3(-1.f), vec3(1.f));
+		float scale = Math::Random(0.02f, 0.06f);
+		Transform->Scale = vec3(scale);
+		RotationSpeed = BaseSpeed / scale;
+		BoxColliderComp->Bounds = Transform->Scale * 100.f;
+	}
+
 	void EAsteroid::Begin()
 	{
-		RotationAxis = Math::Random(vec3(-1.f), vec3(1.f));
-		float scale = Math::Random(0.02f, 0.04f);
-		RotationSpeed = BaseSpeed / scale;
-		Transform->Scale = vec3(scale);
-		BoxColliderComp->Bounds = Transform->Scale * 100.f;
+		ModelRendererComp->PropertyLayout.SetVec3("color", Color);
 	}
 
 	void EAsteroid::Tick(float dt)
 	{
-		//ModelRendererComp->GetModel()->PropertyLayout.AddVec3("color");
-		//ModelRendererComp->GetModel()->PropertyLayout.SetVec3("color", vec3(1.f));
-
 		Transform->Rotation += RotationAxis * RotationSpeed * dt;
-		Transform->Position += vec3(0.f, 0.f, 1.f) * MoveSpeed * dt;
+		//Transform->Position += vec3(0.f, 0.f, 1.f) * MoveSpeed * dt;
 
 		if (Transform->Position.z >= Zlimit)
 		{

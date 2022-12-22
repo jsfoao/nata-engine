@@ -15,7 +15,6 @@ namespace Nata
 			Meshes[i].Scale = Scale;
 			Meshes[i].Rotation = Rotation;
 			Meshes[i].Shader = Shader;
-			Meshes[i].PropertyLayout = PropertyLayout;
 			Meshes[i].Draw();
 		}
 	}

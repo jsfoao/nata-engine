@@ -21,16 +21,20 @@ int main(int argc, char** argv)
 		std::cout << "ERROR::WORLD : INVALID WORLD" << std::endl;
 		return 0;
 	}
-	if (NEngine::Camera == nullptr)
-	{
-		std::cout << "WARNING::CAMERA : INVALID CAMERA" << std::endl;
-	}
 
 	float deltaTime = 0.f;
 	double lastFrame = 0.f;
 
 	NWorld* world = NEngine::World;
+	world->Awake();
 	world->Begin();
+
+	if (NEngine::Camera == nullptr)
+	{
+		std::cout << "WARNING::CAMERA : INVALID CAMERA" << std::endl;
+	}
+
+	bool begin = true;
 	while (!window->Closed())
 	{
 		window->Clear();

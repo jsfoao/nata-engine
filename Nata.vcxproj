@@ -133,7 +133,6 @@
     <ClCompile Include="src\core\window.cpp" />
     <ClCompile Include="src\core\renderer\shader.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\utils\EEntityTemplate.cpp" />
     <ClCompile Include="src\utils\fileutils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -1130,7 +1129,6 @@
     <ClInclude Include="src\exercises\exercises.hpp" />
     <ClInclude Include="src\core\renderer\shader.h" />
     <ClInclude Include="src\nata.h" />
-    <ClInclude Include="src\utils\EEntityTemplate.h" />
     <ClInclude Include="src\utils\fileutils.h" />
   </ItemGroup>
   <ItemGroup>

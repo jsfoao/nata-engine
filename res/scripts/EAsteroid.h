@@ -14,6 +14,8 @@ namespace Nata
 		NModel* Model;
 		NShader* Shader;
 
+		vec3 Color;
+
 		// rotation
 		float BaseSpeed;
 		float RotationSpeed;
@@ -25,6 +27,7 @@ namespace Nata
 
 	public:
 		EAsteroid();
+		void OnEnable() override;
 		void Begin() override;
 		void Tick(float dt) override;
 
