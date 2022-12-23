@@ -124,7 +124,6 @@ namespace Nata
 			int index = GetEntityIndex(m_Destroy.front());
 			if (index == -1)
 			{
-				delete m_Destroy.front();
 				m_Destroy.pop();
 				continue;
 			}
