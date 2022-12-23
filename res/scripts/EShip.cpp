@@ -47,7 +47,12 @@ namespace Nata
 
 
 		Handles::DrawHandles(Transform, 5.f);
-		Handles::DrawLine(Transform->Position, Transform->Position - Transform->Forward * 100.f, vec3(1.f));
+		Handles::DrawLine(Transform->Position, Transform->Position - Transform->Forward * 50.f, vec3(1.f));
+		Handles::DrawCircle(
+			Transform->Position - Transform->Forward * 50.f,
+			1.f,
+			NEngine::Camera->GetOwner()->Transform->Right,
+			vec3(1.f));
 	}
 
 	void EShip::ProcessInput()

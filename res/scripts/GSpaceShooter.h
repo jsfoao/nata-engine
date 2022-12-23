@@ -24,6 +24,8 @@ namespace Nata
 		bool Spawning;
 		float SpawnOffset;
 
+		NObjectPool<EAsteroid>* AsteroidPool;
+
 	public:
 		GSpaceShooter();
 

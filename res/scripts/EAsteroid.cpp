@@ -49,7 +49,12 @@ namespace Nata
 		EProjectile* proj = dynamic_cast<EProjectile*>(other->GetOwner());
 		if (proj != nullptr)
 		{
-			std::cout << "Killed by projectile" << std::endl;
+			Destroy(world, other->GetOwner());
+			Destroy(world, owner->GetOwner());
+		}
+		EShip* ship = dynamic_cast<EShip*>(other->GetOwner());
+		if (ship != nullptr)
+		{
 			Destroy(world, other->GetOwner());
 			Destroy(world, owner->GetOwner());
 		}
