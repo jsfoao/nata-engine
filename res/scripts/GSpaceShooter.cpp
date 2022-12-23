@@ -27,6 +27,7 @@ namespace Nata
 
 		Ship = Instantiate<EShip>(GetWorld());
 		Camera->Target = Ship;
+		// ahfaipfjapifjapifja
 	}
 
 	void GSpaceShooter::Begin()
