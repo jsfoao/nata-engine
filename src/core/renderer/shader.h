@@ -26,6 +26,8 @@ namespace Nata
 		NShader();
 		NShader(const char* vertPath, const char* fragPath);
 
+		static NShader* Init(const char* vertPath, const char* fragPath);
+
 		// equivalent to glUseProgram(this)
 		void Enable();
 

@@ -11,11 +11,11 @@ namespace Nata
 
 	void GSpaceShooter::Awake()
 	{
-		new NModel("res\\models\\LowPolyFiatUNO.obj");
-		new NModel("res\\models\\rock_by_dommk.obj");
-		new NModel("res\\models\\cube.obj");
-		new NShader("src\\shaders\\diffuse.vert", "src\\shaders\\diffuse.frag");
-		new NShader("src\\shaders\\unlit.vert", "src\\shaders\\unlit.frag");
+		NModel::Init("res\\models\\LowPolyFiatUNO.obj");
+		NModel::Init("res\\models\\rock_by_dommk.obj");
+		NModel::Init("res\\models\\cube.obj");
+		NShader::Init("src\\shaders\\diffuse.vert", "src\\shaders\\diffuse.frag");
+		NShader::Init("src\\shaders\\unlit.vert", "src\\shaders\\unlit.frag");
 
 		Camera = Instantiate<EFollowCamera>(GetWorld());
 		NEngine::Camera = Camera->CameraComp;

@@ -22,6 +22,11 @@ namespace Nata
 		NAssetLoader::Submit(this);
 	}
 
+	NShader* NShader::Init(const char* vertPath, const char* fragPath)
+	{
+		return new NShader(vertPath, fragPath);
+	}
+
 	bool NShader::Load()
 	{
 		unsigned int program = glCreateProgram();

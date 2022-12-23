@@ -13,6 +13,11 @@ namespace Nata
 		NAssetLoader::Submit(this);
 	}
 
+	NModel* NModel::Init(std::string path)
+	{
+		return new NModel(path);
+	}
+
 	void NModel::Draw()
 	{
 		for (unsigned int i = 0; i < Meshes.size(); i++)

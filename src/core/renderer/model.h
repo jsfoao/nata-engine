@@ -25,7 +25,9 @@ namespace Nata
 		unsigned int VertexCount;
 		unsigned int TrisCount;
 
-		NModel(string path);
+	public:
+		NModel(std::string path);
+		static NModel* Init(std::string path);
 		void Draw() override;
 		void AddTexture(NTexture texture)
 		{
