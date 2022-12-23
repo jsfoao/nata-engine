@@ -12,10 +12,8 @@ namespace Nata
 		// first initialization of world and objects
 		static inline void Begin()
 		{
-			NWorld* world = new NWorld();
-			NEngine::World = world;
-			GSpaceShooter* gameMode = new GSpaceShooter();
-			world->SetGameMode(gameMode);
+			NEngine::World = NWorld::Init();
+			NEngine::World->SetGameMode(GGameMode::Init<GSpaceShooter>());
 		}
 
 		// runs before world tick

@@ -34,6 +34,7 @@ namespace Nata
 		Transform = AddComponent<CTransform>();
 		m_World = nullptr;
 		m_Initialized = false;
+		m_Destroyed = false;
 	}
 
 	EEntity::~EEntity()
@@ -60,18 +61,37 @@ namespace Nata
 		m_GameMode = gameMode;
 	}
 
-	void NWorld::Destroy(EEntity* entity)
+	int NWorld::GetEntityIndex(EEntity* entity)
 	{
 		for (unsigned int i = 0; i < m_Entities.size(); i++)
 		{
-			if (m_Entities[i] == entity)
+			if (entity == m_Entities[i])
 			{
-				m_Entities.erase(m_Entities.begin() + i);
-				delete entity;
-				return;
+				return i;
 			}
 		}
-		std::cout << "WARNING::DESTROY: OBJECT IS NOT INSTANTIATED" << std::endl;
+		return -1;
+	}
+
+	NWorld* NWorld::Init()
+	{
+		NWorld* world = new NWorld();
+		world->m_GameMode = nullptr;
+		return world;
+	}
+
+	NWorld* NWorld::Init(GGameMode* gameMode)
+	{
+		NWorld* world = new NWorld();
+		gameMode->m_World = world;
+		world->m_GameMode = gameMode;
+		return world;
+	}
+
+	void NWorld::Destroy(EEntity* entity)
+	{
+		m_Destroy.push(entity);
+		entity->m_Destroyed = true;
 	}
 
 	void NWorld::Awake()
@@ -86,10 +106,30 @@ namespace Nata
 
 	void NWorld::Tick(float dt)
 	{
-		while (!m_NextFrame.empty())
+		// Begin entities on queue from previous frame
+		while (!m_Begin.empty())
 		{
-			m_NextFrame.front()->Begin();
-			m_NextFrame.pop();
+			// Dont begin destroyed entities
+			if (m_Begin.front()->m_Destroyed)
+			{
+				continue;
+			}
+			m_Begin.front()->Begin();
+			m_Begin.pop();
+		}
+
+		// Destroy entities on queue from previous frame
+		while (!m_Destroy.empty())
+		{
+			int index = GetEntityIndex(m_Destroy.front());
+			if (index == -1)
+			{
+				delete m_Destroy.front();
+				m_Destroy.pop();
+				continue;
+			}
+			m_Entities.erase(m_Entities.begin() + index);
+			m_Destroy.pop();
 		}
 
 		m_GameMode->Tick(dt);
@@ -151,4 +191,9 @@ namespace Nata
 	}
 
 	unsigned int CTransform::TypeID = 0;
+	NObject::NObject()
+	{
+		Name = "";
+		m_ID = 0;
+	}
 }

@@ -45,12 +45,13 @@ namespace Nata
 
 	void EAsteroid::OnCollisionEnter(CCollider* owner, CCollider* other)
 	{
+		NWorld* world = owner->GetOwner()->GetWorld();
 		EProjectile* proj = dynamic_cast<EProjectile*>(other->GetOwner());
 		if (proj != nullptr)
 		{
 			std::cout << "Killed by projectile" << std::endl;
-			Destroy(other->GetOwner()->GetWorld(), other->GetOwner());
-			Destroy(owner->GetOwner()->GetWorld(), owner->GetOwner());
+			Destroy(world, other->GetOwner());
+			Destroy(world, owner->GetOwner());
 		}
 	}
 }

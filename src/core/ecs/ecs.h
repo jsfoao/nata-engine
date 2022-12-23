@@ -3,8 +3,13 @@
 #include <queue>
 #include "core/glm_math.h"
 #include <iostream>
+#include <string>
 
 using namespace std;
+
+#define SELF \
+    static auto helper() -> std::remove_reference<decltype(*this)>::type; \
+    typedef decltype(helper()) self
 
 namespace Nata
 {
@@ -24,7 +29,14 @@ namespace Nata
 	class NObject
 	{
 	public:
-		unsigned int ID;
+		std::string Name;
+
+	protected:
+		unsigned int m_ID;
+
+	public:
+		NObject();
+		inline unsigned int GetID() { return m_ID; }
 	};
 
 	// Entity components
@@ -93,6 +105,7 @@ namespace Nata
 
 	public:
 		CTransform();
+
 		void SetParent(CTransform* parent);
 		void Tick(float dt) override;
 	};
@@ -106,6 +119,7 @@ namespace Nata
 		NWorld* m_World;
 		vector<CComponent*> m_Components;
 		bool m_Initialized;
+		bool m_Destroyed;
 		friend class NWorld;
 
 	public:
@@ -154,7 +168,7 @@ namespace Nata
 	};
 
 	// behaviour in level lifetime
-	class GGameMode
+	class GGameMode : public NObject
 	{
 	protected:
 		NWorld* m_World;
@@ -162,6 +176,13 @@ namespace Nata
 
 	public:
 		GGameMode();
+
+		template<typename T, class = typename std::enable_if<std::is_base_of<GGameMode, T>::value>::type>
+		static T* Init()
+		{
+			T* gameMode = new T();
+			return gameMode;
+		}
 
 		inline NWorld* GetWorld() { return m_World; }
 		inline void SetWorld(NWorld* world) { m_World = world; }
@@ -180,12 +201,15 @@ namespace Nata
 	};
 
 	// space where entities are inserted in
-	class NWorld
+	class NWorld : public NObject
 	{
 	protected:
 		GGameMode* m_GameMode;
 		vector<EEntity*> m_Entities;
-		queue<EEntity*> m_NextFrame;
+		// Entities to begin next frame
+		queue<EEntity*> m_Begin;
+		// Entities to destroy next frame
+		queue<EEntity*> m_Destroy;
 
 	public:
 		NWorld();
@@ -197,6 +221,10 @@ namespace Nata
 
 		inline vector<EEntity*> GetAllEntities() { return m_Entities; }
 		void SetGameMode(GGameMode* gameMode);
+		int GetEntityIndex(EEntity* entity);
+
+		static NWorld* Init();
+		static NWorld* Init(GGameMode* gameMode);
 
 		template<typename T, class = typename std::enable_if<std::is_base_of<EEntity, T>::value>::type>
 		T* Instantiate()
@@ -204,9 +232,13 @@ namespace Nata
 			T* entity = new T();
 			entity->m_World = this;
 			entity->Transform->Position = vec3(0.f);
+			entity->m_ID = m_Entities.size();
+		
 			m_Entities.push_back(entity);
-			m_NextFrame.push(entity);
+			m_Begin.push(entity);
+		
 			entity->OnEnable();
+		
 			return entity;
 		}
 
@@ -217,9 +249,13 @@ namespace Nata
 			entity->m_World = this;
 			entity->Transform->Position = position;
 			entity->Transform->Rotation = vec3(0.f);
+			entity->m_ID = m_Entities.size();
+		
 			m_Entities.push_back(entity);
-			m_NextFrame.push(entity);
+			m_Begin.push(entity);
+		
 			entity->OnEnable();
+			
 			return entity;
 		}
 
@@ -230,9 +266,13 @@ namespace Nata
 			entity->m_World = this;
 			entity->Transform->Position = position;
 			entity->Transform->Rotation = rotation;
+
+			entity->m_ID = m_Entities.size();
 			m_Entities.push_back(entity);
-			m_NextFrame.push(entity);
+			m_Begin.push(entity);
+			
 			entity->OnEnable();
+			
 			return entity;
 		}
 	};
