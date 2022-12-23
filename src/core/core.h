@@ -71,5 +71,15 @@ namespace Nata
         return components;
     }
 
+    static void SetEnable(EEntity* entity, bool enable)
+    {
+        entity->SetEnable(enable);
+    }
+
+    static void SetEnable(CComponent* component, bool enable)
+    {
+        component->SetEnable(enable);
+    }
+
     void Destroy(NWorld* world, EEntity* entity);
 }

@@ -48,20 +48,20 @@ namespace Nata
 		unsigned int m_TypeID = 0;
 
 		friend class EEntity;
+		friend class NWorld;
 
 	public:
 		CComponent();
 		CComponent(EEntity* owner);
 
+		void SetEnable(bool enable);
 		inline unsigned int GetTypeID() { return m_TypeID; }
 		inline EEntity* GetOwner() { return m_Owner; }
 		inline void SetOwner(EEntity* owner) { m_Owner = owner; }
-		inline void SetEnabled(bool enabled) { m_Enabled = enabled; }
 
 		virtual void Begin() {};
 		virtual void Tick(float dt) {};
-		void SuperBegin();
-		void SuperTick(float dt);
+		virtual void OnEnable() {};
 	};
 
 	//std::vector<CComponent> CompRegistry;
@@ -118,7 +118,7 @@ namespace Nata
 	protected:
 		NWorld* m_World;
 		vector<CComponent*> m_Components;
-		bool m_Initialized;
+		bool m_Enabled;
 		bool m_Destroyed;
 		friend class NWorld;
 
@@ -128,6 +128,7 @@ namespace Nata
 
 		inline NWorld* GetWorld() { return m_World; }
 		inline void SetWorld(NWorld* world) { m_World = world; }
+		void SetEnable(bool enable);
 
 		// Create and add component of type
 		template<typename T, class = typename std::enable_if<std::is_base_of<CComponent, T>::value>::type>

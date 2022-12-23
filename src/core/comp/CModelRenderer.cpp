@@ -24,7 +24,6 @@ namespace Nata
 
 	void CModelRenderer::Tick(float dt)
 	{
-		SuperTick(dt);
 		if (!m_IsVisible)
 		{
 			return;

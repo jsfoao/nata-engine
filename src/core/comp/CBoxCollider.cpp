@@ -17,7 +17,6 @@ namespace Nata
 
 	void CBoxCollider::Begin()
 	{
-		SuperBegin();
 		if (LockOwner)
 		{
 			Position = GetOwner()->Transform->Position;

@@ -16,6 +16,8 @@ namespace Nata
 		BoxColliderComp->AddOnCollisionEnterCallback(OnCollisionEnter);
 		
 		Transform->Scale = vec3(0.05f);
+		RotationAxis = vec3(0.f);
+		RotationSpeed = 0.f;
 		Color = vec3(1.f);
 		BaseSpeed = 1.f;
 		MoveSpeed = 10.f;

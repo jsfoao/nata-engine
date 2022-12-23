@@ -13,27 +13,17 @@ namespace Nata
 		m_Enabled = true;
 	}
 
-	void CComponent::SuperBegin()
+	void CComponent::SetEnable(bool enable)
 	{
-		if (!m_Enabled)
-		{
-			return;
-		}
-	}
-
-	void CComponent::SuperTick(float dt)
-	{
-		if (!m_Enabled)
-		{
-			return;
-		}
+		m_Enabled = enable;
+		OnEnable();
 	}
 
 	EEntity::EEntity()
 	{
 		Transform = AddComponent<CTransform>();
 		m_World = nullptr;
-		m_Initialized = false;
+		m_Enabled = true;
 		m_Destroyed = false;
 	}
 
@@ -42,6 +32,16 @@ namespace Nata
 		for (CComponent* component : m_Components)
 		{
 			delete component;
+		}
+	}
+
+	void EEntity::SetEnable(bool enable)
+	{
+		m_Enabled = enable;
+		OnEnable();
+		for (auto& comp : m_Components)
+		{
+			comp->SetEnable(enable);
 		}
 	}
 
@@ -135,11 +135,14 @@ namespace Nata
 		for (int e = m_Entities.size() - 1; e >= 0; e--)
 		{
 			EEntity* entity = m_Entities[e];
-			entity->Tick(dt);
+			if (entity->m_Enabled)
+				entity->Tick(dt);
+
 			for (int c = entity->m_Components.size() - 1; c >= 0; c--)
 			{
 				CComponent* component = m_Entities[e]->m_Components[c];
-				component->Tick(dt);
+				if (component->m_Enabled)
+					component->Tick(dt);
 			}
 		}
 	}

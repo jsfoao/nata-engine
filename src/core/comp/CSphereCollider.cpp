@@ -14,7 +14,6 @@ namespace Nata
 
 	void CSphereCollider::Begin()
 	{
-		SuperBegin();
 	}
 
 	void CSphereCollider::Tick(float dt)
