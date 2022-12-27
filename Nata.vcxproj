@@ -122,6 +122,7 @@
     <ClCompile Include="src\core\editor\handles.cpp" />
     <ClCompile Include="src\core\glm_math.cpp" />
     <ClCompile Include="src\core\input.cpp" />
+    <ClCompile Include="src\core\object_pool.cpp" />
     <ClCompile Include="src\core\renderer\buffer.cpp" />
     <ClCompile Include="src\core\core.cpp" />
     <ClCompile Include="src\core\renderer\mesh.cpp" />
@@ -1118,6 +1119,7 @@
     <ClInclude Include="src\core\glm_math.h" />
     <ClInclude Include="src\core\input.h" />
     <ClInclude Include="src\core\key.h" />
+    <ClInclude Include="src\core\object_pool.h" />
     <ClInclude Include="src\core\renderer\buffer.h" />
     <ClInclude Include="src\core\renderer\camera.h" />
     <ClInclude Include="src\core\renderer\mesh.h" />

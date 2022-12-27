@@ -3,6 +3,7 @@
 #include "core/comp/CModelRenderer.h"
 #include "core/comp/CBoxCollider.h"
 #include "EProjectile.h"
+#include "EShip.h"
 
 namespace Nata
 {

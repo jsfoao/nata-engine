@@ -11,6 +11,8 @@ namespace Nata
 
 	void GSpaceShooter::Awake()
 	{
+		AsteroidPool = new NObjectPool<EAsteroid>;
+
 		NModel::Init("res\\models\\LowPolyFiatUNO.obj");
 		NModel::Init("res\\models\\rock_by_dommk.obj");
 		NModel::Init("res\\models\\cube.obj");
@@ -48,7 +50,8 @@ namespace Nata
 		if (CurrentTime >= SpawnTime)
 		{
 			vec2 dir = Math::Random(vec2(-1.f), vec2(1.f)) * SpawnOffset;
-			EAsteroid* asteroid = Instantiate<EAsteroid>(GetWorld(), vec3(dir.x, dir.y, EnemySpawnZ));
+			//EAsteroid* asteroid = Instantiate<EAsteroid>(GetWorld(), vec3(dir.x, dir.y, EnemySpawnZ));
+			EAsteroid* asteroid = AsteroidPool->Create(vec3(dir.x, dir.y, EnemySpawnZ));
 			CurrentTime = 0.f;
 		}
 	}
