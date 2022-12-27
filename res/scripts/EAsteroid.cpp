@@ -2,6 +2,8 @@
 
 namespace Nata
 {
+	NObjectPool<EAsteroid>* EAsteroid::Pool = nullptr;
+
 	EAsteroid::EAsteroid() : EEntity()
 	{
 		ModelRendererComp = AddComponent<CModelRenderer>();
@@ -41,7 +43,7 @@ namespace Nata
 
 		if (Transform->Position.z >= Zlimit)
 		{
-			Destroy(GetWorld(), this);
+			EAsteroid::Pool->Delete(this);
 		}
 	}
 
@@ -51,14 +53,14 @@ namespace Nata
 		EProjectile* proj = dynamic_cast<EProjectile*>(other->GetOwner());
 		if (proj != nullptr)
 		{
+			EAsteroid::Pool->Delete(owner->GetOwner());
 			Destroy(world, other->GetOwner());
-			Destroy(world, owner->GetOwner());
 		}
-		EShip* ship = dynamic_cast<EShip*>(other->GetOwner());
-		if (ship != nullptr)
-		{
-			Destroy(world, other->GetOwner());
-			Destroy(world, owner->GetOwner());
-		}
+		//EShip* ship = dynamic_cast<EShip*>(other->GetOwner());
+		//if (ship != nullptr)
+		//{
+		//	EAsteroid::Pool->Delete(owner->GetOwner());
+		//	Destroy(world, other->GetOwner());
+		//}
 	}
 }

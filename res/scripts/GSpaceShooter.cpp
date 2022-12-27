@@ -11,14 +11,13 @@ namespace Nata
 
 	void GSpaceShooter::Awake()
 	{
-		AsteroidPool = new NObjectPool<EAsteroid>;
-
 		NModel::Init("res\\models\\LowPolyFiatUNO.obj");
 		NModel::Init("res\\models\\rock_by_dommk.obj");
 		NModel::Init("res\\models\\cube.obj");
 		NShader::Init("src\\shaders\\diffuse.vert", "src\\shaders\\diffuse.frag");
 		NShader::Init("src\\shaders\\unlit.vert", "src\\shaders\\unlit.frag");
 
+		AsteroidPool = new NObjectPool<EAsteroid>();
 		Camera = Instantiate<EFollowCamera>(GetWorld());
 		NEngine::Camera = Camera->CameraComp;
 
@@ -47,11 +46,13 @@ namespace Nata
 			return;
 		}
 		CurrentTime += dt;
+		std::cout << CurrentTime << std::endl;
 		if (CurrentTime >= SpawnTime)
 		{
 			vec2 dir = Math::Random(vec2(-1.f), vec2(1.f)) * SpawnOffset;
 			//EAsteroid* asteroid = Instantiate<EAsteroid>(GetWorld(), vec3(dir.x, dir.y, EnemySpawnZ));
 			EAsteroid* asteroid = AsteroidPool->Create(vec3(dir.x, dir.y, EnemySpawnZ));
+			asteroid->Pool = AsteroidPool;
 			CurrentTime = 0.f;
 		}
 	}

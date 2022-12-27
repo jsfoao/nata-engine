@@ -47,7 +47,7 @@ namespace Nata
 		std::vector<CBoxCollider*> boxColliders = GetAllComponentsOfType<CBoxCollider>(GetOwner()->GetWorld());
 		for (CBoxCollider* collider : boxColliders)
 		{
-			if (collider == this)
+			if (collider == this || collider->m_Enabled == false)
 			{
 				continue;
 			}
@@ -75,8 +75,18 @@ namespace Nata
 
 		if (DrawHandles)
 		{
-			Handles::DrawWireCube(Position, Bounds, HandlesColor);
+			Handles::DrawWireCube(Position, Bounds, vec3(1.f, 0.f, 0.f));
 		}
+	}
+
+	void CBoxCollider::OnDisable()
+	{
+		for (auto& col : m_Overlaps)
+		{
+			col->m_Overlaps.clear();
+			col->CallOnCollisionExitCallback(col, this);
+		}
+		m_Overlaps.clear();
 	}
 
 	void CBoxCollider::OnCollision(CCollider* owner, CCollider* other)
@@ -85,14 +95,14 @@ namespace Nata
 
 	void CBoxCollider::OnCollisionEnter(CCollider* owner, CCollider* other)
 	{
-		owner->HandlesColor = vec3(0.f, 1.f, 0.f);
+		//owner->HandlesColor = vec3(0.f, 1.f, 0.f);
 	}
 
 	void CBoxCollider::OnCollisionExit(CCollider* owner, CCollider* other)
 	{
-		if (owner->GetOverlapsSize() == 0)
-		{
-			owner->HandlesColor = vec3(1.f, 0.f, 0.f);
-		}
+		//if (owner->GetOverlapsSize() == 0)
+		//{
+		//	owner->HandlesColor = vec3(1.f, 0.f, 0.f);
+		//}
 	}
 }

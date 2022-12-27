@@ -14,6 +14,7 @@ namespace Nata
 		CBoxCollider* BoxColliderComp;
 		NModel* Model;
 		NShader* Shader;
+		static NObjectPool<EAsteroid>* Pool;
 
 		vec3 Color;
 

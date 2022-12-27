@@ -10,7 +10,6 @@ int main(int argc, char** argv)
 	NRenderer* renderer = window->GetRenderer();
 	NEngine::Window = window;
 	NEngine::Input = window->GetInput();
-	Handles::Init();
 
 	glEnable(GL_DEPTH_TEST);
 
@@ -34,6 +33,7 @@ int main(int argc, char** argv)
 		std::cout << "WARNING::CAMERA : INVALID CAMERA" << std::endl;
 	}
 
+	Handles::Init();
 	bool begin = true;
 	while (!window->Closed())
 	{

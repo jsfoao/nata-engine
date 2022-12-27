@@ -16,7 +16,14 @@ namespace Nata
 	void CComponent::SetEnable(bool enable)
 	{
 		m_Enabled = enable;
-		OnEnable();
+		if (enable == true)
+		{
+			OnEnable();
+		}
+		if (enable == false)
+		{
+			OnDisable();
+		}
 	}
 
 	EEntity::EEntity()
@@ -38,7 +45,14 @@ namespace Nata
 	void EEntity::SetEnable(bool enable)
 	{
 		m_Enabled = enable;
-		OnEnable();
+		if (enable == true)
+		{
+			OnEnable();
+		}
+		else
+		{
+			OnDisable();
+		}
 		for (auto& comp : m_Components)
 		{
 			comp->SetEnable(enable);
@@ -92,6 +106,7 @@ namespace Nata
 	{
 		m_Destroy.push(entity);
 		entity->m_Destroyed = true;
+		entity->OnDestroy();
 	}
 
 	void NWorld::Awake()

@@ -22,6 +22,7 @@ namespace Nata
 		inline NBox GetBox() { return m_Box; }
 		void Begin() override;
 		void Tick(float dt) override;
+		void OnDisable() override;
 
 	private:
 		static void OnCollision(CCollider* owner, CCollider* other);

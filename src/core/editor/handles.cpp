@@ -174,7 +174,7 @@ namespace Nata
     bool Handles::Init()
     {
         SetEnable(true);
-        Shader = new NShader("src\\shaders\\unlit.vert", "src\\shaders\\unlit.frag");
+        Shader = NAssetLoader::Get<NShader>("src\\shaders\\unlit.vert");
         return Shader != nullptr;
     }
 

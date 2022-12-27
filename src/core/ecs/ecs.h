@@ -62,6 +62,7 @@ namespace Nata
 		virtual void Begin() {};
 		virtual void Tick(float dt) {};
 		virtual void OnEnable() {};
+		virtual void OnDisable() {};
 	};
 
 	//std::vector<CComponent> CompRegistry;
@@ -136,6 +137,7 @@ namespace Nata
 		{
 			T* comp = new T();
 			comp->m_Owner = this;
+			comp->m_Enabled = m_Enabled;
 			m_Components.push_back(comp);
 			return comp;
 		}
@@ -166,6 +168,7 @@ namespace Nata
 		virtual void Begin() {};
 		virtual void Tick(float dt) {};
 		virtual void OnDisable() {};
+		virtual void OnDestroy() {};
 	};
 
 	// behaviour in level lifetime
@@ -238,7 +241,7 @@ namespace Nata
 			m_Entities.push_back(entity);
 			m_Begin.push(entity);
 		
-			entity->OnEnable();
+			entity->SetEnable(true);
 		
 			return entity;
 		}
@@ -255,7 +258,7 @@ namespace Nata
 			m_Entities.push_back(entity);
 			m_Begin.push(entity);
 		
-			entity->OnEnable();
+			entity->SetEnable(true);
 			
 			return entity;
 		}
@@ -273,7 +276,7 @@ namespace Nata
 			m_Begin.push(entity);
 			
 			entity->OnEnable();
-			
+
 			return entity;
 		}
 	};

@@ -33,6 +33,7 @@ namespace Nata
     template<typename T, class = typename std::enable_if<std::is_base_of<EEntity, T>::value>::type>
     T* Instantiate(NWorld* world, vec3 position)
     {
+
         return world->Instantiate<T>(position);
     }
 
