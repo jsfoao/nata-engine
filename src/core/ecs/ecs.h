@@ -119,6 +119,7 @@ namespace Nata
 	protected:
 		NWorld* m_World;
 		vector<CComponent*> m_Components;
+		vector<CComponent*> m_EnabledComponents;
 		bool m_Enabled;
 		bool m_Destroyed;
 		friend class NWorld;
@@ -209,11 +210,19 @@ namespace Nata
 	{
 	protected:
 		GGameMode* m_GameMode;
+		// All entities in world, both enabled and disabled
 		vector<EEntity*> m_Entities;
+		// Only enabled entities in world
+		vector<EEntity*> m_Enabled;
+
+		// Entities to enable/disable next frame
+		queue<std::pair<EEntity*, bool>> m_EnableQueue;
 		// Entities to begin next frame
-		queue<EEntity*> m_Begin;
+		queue<EEntity*> m_BeginQueue;
 		// Entities to destroy next frame
-		queue<EEntity*> m_Destroy;
+		queue<EEntity*> m_DestroyQueue;
+
+		friend class EEntity;
 
 	public:
 		NWorld();
@@ -224,6 +233,7 @@ namespace Nata
 		void Tick(float dt);
 
 		inline vector<EEntity*> GetAllEntities() { return m_Entities; }
+		inline GGameMode* GetGameMode() { return m_GameMode; }
 		void SetGameMode(GGameMode* gameMode);
 		int GetEntityIndex(EEntity* entity);
 
@@ -231,7 +241,7 @@ namespace Nata
 		static NWorld* Init(GGameMode* gameMode);
 
 		template<typename T, class = typename std::enable_if<std::is_base_of<EEntity, T>::value>::type>
-		T* Instantiate()
+		T* Instantiate(bool enable = true)
 		{
 			T* entity = new T();
 			entity->m_World = this;
@@ -239,15 +249,15 @@ namespace Nata
 			entity->m_ID = m_Entities.size();
 		
 			m_Entities.push_back(entity);
-			m_Begin.push(entity);
+			m_BeginQueue.push(entity);
 		
-			entity->SetEnable(true);
-		
+			entity->SetEnable(enable);
+
 			return entity;
 		}
 
 		template<typename T, class = typename std::enable_if<std::is_base_of<EEntity, T>::value>::type>
-		T* Instantiate(vec3 position)
+		T* Instantiate(vec3 position, bool enable = true)
 		{
 			T* entity = new T();
 			entity->m_World = this;
@@ -256,15 +266,15 @@ namespace Nata
 			entity->m_ID = m_Entities.size();
 		
 			m_Entities.push_back(entity);
-			m_Begin.push(entity);
+			m_BeginQueue.push(entity);
 		
-			entity->SetEnable(true);
+			entity->SetEnable(enable);
 			
 			return entity;
 		}
 
 		template<typename T, class = typename std::enable_if<std::is_base_of<EEntity, T>::value>::type>
-		T* Instantiate(vec3 position, vec3 rotation)
+		T* Instantiate(vec3 position, vec3 rotation, bool enable = true)
 		{
 			T* entity = new T();
 			entity->m_World = this;
@@ -273,9 +283,9 @@ namespace Nata
 
 			entity->m_ID = m_Entities.size();
 			m_Entities.push_back(entity);
-			m_Begin.push(entity);
-			
-			entity->OnEnable();
+			m_BeginQueue.push(entity);
+
+			entity->SetEnable(enable);
 
 			return entity;
 		}

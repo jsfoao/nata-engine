@@ -25,22 +25,22 @@ namespace Nata
     };
 
     template<typename T, class = typename std::enable_if<std::is_base_of<EEntity, T>::value>::type>
-    T* Instantiate(NWorld* world)
+    T* Instantiate(NWorld* world, bool enable = true)
     {
-        return world->Instantiate<T>();
+        return world->Instantiate<T>(enable);
     }
 
     template<typename T, class = typename std::enable_if<std::is_base_of<EEntity, T>::value>::type>
-    T* Instantiate(NWorld* world, vec3 position)
+    T* Instantiate(NWorld* world, vec3 position, bool enable = true)
     {
 
-        return world->Instantiate<T>(position);
+        return world->Instantiate<T>(position, enable);
     }
 
     template<typename T, class = typename std::enable_if<std::is_base_of<EEntity, T>::value>::type>
-    T* Instantiate(NWorld* world, vec3 position, vec3 rotation)
+    T* Instantiate(NWorld* world, vec3 position, vec3 rotation, bool enable = true)
     {
-        return world->Instantiate<T>(position, rotation);
+        return world->Instantiate<T>(position, rotation, enable);
     }
 
     template<typename T, class = typename std::enable_if<std::is_base_of<EEntity, T>::value>::type>

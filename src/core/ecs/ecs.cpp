@@ -30,7 +30,7 @@ namespace Nata
 	{
 		Transform = AddComponent<CTransform>();
 		m_World = nullptr;
-		m_Enabled = true;
+		m_Enabled = false;
 		m_Destroyed = false;
 	}
 
@@ -44,18 +44,14 @@ namespace Nata
 
 	void EEntity::SetEnable(bool enable)
 	{
-		m_Enabled = enable;
-		if (enable == true)
-		{
-			OnEnable();
-		}
-		else
-		{
-			OnDisable();
-		}
+		std::pair<EEntity*, bool> enabledState;
+		enabledState.first = this;
+		enabledState.second = enable;
+		GetWorld()->m_EnableQueue.push(enabledState);
+
 		for (auto& comp : m_Components)
 		{
-			comp->SetEnable(enable);
+			comp->m_Enabled = enable;
 		}
 	}
 
@@ -104,7 +100,7 @@ namespace Nata
 
 	void NWorld::Destroy(EEntity* entity)
 	{
-		m_Destroy.push(entity);
+		m_DestroyQueue.push(entity);
 		entity->m_Destroyed = true;
 		entity->OnDestroy();
 	}
@@ -121,41 +117,65 @@ namespace Nata
 
 	void NWorld::Tick(float dt)
 	{
+		// Enable entities on queue from previous frame
+		while (!m_EnableQueue.empty())
+		{
+			EEntity* entity = m_EnableQueue.front().first;
+			bool enabled = m_EnableQueue.front().second;
+			entity->m_Enabled = enabled;
+
+			if (entity->m_Enabled == true)
+			{
+				m_Enabled.push_back(entity);
+			}
+			else
+			{
+				for (unsigned int i = 0; i < m_Enabled.size(); i++)
+				{
+					if (entity == m_Enabled[i])
+					{
+						m_Enabled.erase(m_Enabled.begin() + i);
+					}
+				}
+			}
+			m_EnableQueue.pop();
+		}
+
 		// Begin entities on queue from previous frame
-		while (!m_Begin.empty())
+		while (!m_BeginQueue.empty())
 		{
 			// Dont begin destroyed entities
-			if (m_Begin.front()->m_Destroyed)
+			if (m_BeginQueue.front()->m_Destroyed)
 			{
 				continue;
 			}
-			m_Begin.front()->Begin();
-			m_Begin.pop();
+			m_BeginQueue.front()->Begin();
+			m_BeginQueue.pop();
 		}
 
 		// Destroy entities on queue from previous frame
-		while (!m_Destroy.empty())
+		while (!m_DestroyQueue.empty())
 		{
-			int index = GetEntityIndex(m_Destroy.front());
+			int index = GetEntityIndex(m_DestroyQueue.front());
 			if (index == -1)
 			{
-				m_Destroy.pop();
+				m_DestroyQueue.pop();
 				continue;
 			}
 			m_Entities.erase(m_Entities.begin() + index);
-			m_Destroy.pop();
+			m_DestroyQueue.pop();
 		}
 
 		m_GameMode->Tick(dt);
-		for (int e = m_Entities.size() - 1; e >= 0; e--)
+		// Only tick on enabled entities
+		for (int e = m_Enabled.size() - 1; e >= 0; e--)
 		{
-			EEntity* entity = m_Entities[e];
-			if (entity->m_Enabled)
-				entity->Tick(dt);
+			EEntity* entity = m_Enabled[e];
+			entity->Tick(dt);
 
 			for (int c = entity->m_Components.size() - 1; c >= 0; c--)
 			{
-				CComponent* component = m_Entities[e]->m_Components[c];
+				CComponent* component = m_Enabled[e]->m_Components[c];
 				if (component->m_Enabled)
 					component->Tick(dt);
 			}

@@ -18,6 +18,8 @@ namespace Nata
 		float Acceleration;
 		float RotationOffset;
 
+		static NObjectPool<EProjectile>* ProjectilePool;
+
 	public:
 		EShip();
 		void Begin() override;

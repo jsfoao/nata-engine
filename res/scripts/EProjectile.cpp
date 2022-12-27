@@ -2,6 +2,8 @@
 
 namespace Nata
 {
+	NObjectPool<EProjectile>* EProjectile::ProjectilePool = nullptr;
+
 	EProjectile::EProjectile() : EEntity()
 	{
 		MeshRenderer = AddComponent<CModelRenderer>();
@@ -25,16 +27,26 @@ namespace Nata
 	void EProjectile::Begin()
 	{
 		MeshRenderer->PropertyLayout.SetVec3("color", vec3(1.f, 0.f, 0.f));
+		CurrentTime = LifeTime;
+
+		std::cout << "PROJECTILE : BEGIN" << std::endl;
+	}
+
+	void EProjectile::OnEnable()
+	{
+		CurrentTime = LifeTime;
+		std::cout << "PROJECTILE : ONENABLE" << std::endl;
 	}
 
 	void EProjectile::Tick(float dt)
 	{
 		Transform->Position += Direction * Speed * dt;
-		LifeTime -= dt;
-		if (LifeTime <= 0)
+		CurrentTime -= dt;
+		if (CurrentTime <= 0)
 		{
-			Destroy(GetWorld(), this);
-			std::cout << "Destroyed Projectile" << std::endl;
+			ProjectilePool->Delete(this);
+			std::cout << "PROJECTILE : DELETED" << std::endl;
+			CurrentTime = LifeTime;
 		}
 	}
 }

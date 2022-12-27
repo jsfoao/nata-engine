@@ -14,8 +14,6 @@ namespace Nata
 		CBoxCollider* BoxColliderComp;
 		NModel* Model;
 		NShader* Shader;
-		static NObjectPool<EAsteroid>* Pool;
-
 		vec3 Color;
 
 		// rotation
@@ -26,6 +24,9 @@ namespace Nata
 		// movement
 		float MoveSpeed;
 		float Zlimit;
+
+		static NObjectPool<EAsteroid>* AsteroidPool;
+		static NObjectPool<EProjectile>* ProjectilePool;
 
 	public:
 		EAsteroid();

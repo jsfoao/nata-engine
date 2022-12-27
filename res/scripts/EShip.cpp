@@ -2,6 +2,8 @@
 
 namespace Nata
 {
+	NObjectPool<EProjectile>* EShip::ProjectilePool = nullptr;
+
 	EShip::EShip() : EEntity()
 	{
 		MeshRenderer = AddComponent<CModelRenderer>();
@@ -69,7 +71,10 @@ namespace Nata
 	{
 		vec3 posRight = Transform->Position - Transform->Forward * 1.f + Transform->Right * 1.f;
 		vec3 posLeft = Transform->Position - Transform->Forward * 1.f - Transform->Right * 1.f;
-		Instantiate<EProjectile>(GetWorld(), posRight)->Direction = -Transform->Forward;
-		Instantiate<EProjectile>(GetWorld(), posLeft)->Direction = -Transform->Forward;
+		EProjectile* proj;
+		proj = ProjectilePool->Create(posRight);
+		proj->Direction = -Transform->Forward;
+		proj = ProjectilePool->Create(posLeft);
+		proj->Direction = -Transform->Forward;
 	}
 }

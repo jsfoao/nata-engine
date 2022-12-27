@@ -14,10 +14,14 @@ namespace Nata
 		vec3 Direction;
 		float Speed;
 		float LifeTime;
+		float CurrentTime;
+
+		static NObjectPool<EProjectile>* ProjectilePool;
 
 	public:
 		EProjectile();
 		void Begin() override;
+		void OnEnable() override;
 		void Tick(float dt) override;
 
 		static void OnCollisionEnter(CCollider* owner, CCollider* other);

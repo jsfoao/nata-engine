@@ -34,29 +34,29 @@ namespace Nata
 	class NObjectPool
 	{
 	protected:
-		static const int PoolSize = 100;
-		FObject<T>* m_Objects[PoolSize];
+		unsigned int Size;
+		std::vector<FObject<T>*> m_Objects;
 		FObject<T>* m_CurrentObj;
 	public:
-		NObjectPool()
+		NObjectPool(unsigned int size)
 		{
-			for (unsigned int i = 0; i < PoolSize; i++)
+			Size = size;
+			m_Objects.reserve(Size);
+			for (unsigned int i = 0; i < Size; i++)
 			{
 				FObject<T>* obj = new FObject<T>();
-				m_Objects[i] = obj;
+				m_Objects.push_back(obj);
 			}
 
-			for (unsigned int i = 0; i < PoolSize - 1; i++)
+			for (unsigned int i = 0; i < Size - 1; i++)
 			{
-				T* entity = Instantiate<T>(NEngine::World);
-				entity->SetEnable(false);
+				T* entity = Instantiate<T>(NEngine::World, false);
 				m_Objects[i]->Object = entity;
 				m_Objects[i]->Next = m_Objects[i + 1];
 			}
-			T* entity = Instantiate<T>(NEngine::World);
-			entity->SetEnable(false);
-			m_Objects[PoolSize - 1]->Object = entity;
-			m_Objects[PoolSize - 1]->Next = nullptr;
+			T* entity = Instantiate<T>(NEngine::World, false);
+			m_Objects[Size - 1]->Object = entity;
+			m_Objects[Size - 1]->Next = nullptr;
 
 			m_CurrentObj = m_Objects[0];
 		}
@@ -77,7 +77,7 @@ namespace Nata
 
 		void Delete(EEntity* entity)
 		{
-			for (unsigned int i = 0; i < PoolSize; i++)
+			for (unsigned int i = 0; i < Size; i++)
 			{
 				if (entity == m_Objects[i]->Object)
 				{

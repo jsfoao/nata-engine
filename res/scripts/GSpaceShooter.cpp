@@ -2,6 +2,9 @@
 
 namespace Nata
 {
+	NObjectPool<EAsteroid>* GSpaceShooter::AsteroidPool = nullptr;
+	NObjectPool<EProjectile>* GSpaceShooter::ProjectilePool = nullptr;
+
 	GSpaceShooter::GSpaceShooter() : GGameMode()
 	{
 		Camera = nullptr;
@@ -17,7 +20,15 @@ namespace Nata
 		NShader::Init("src\\shaders\\diffuse.vert", "src\\shaders\\diffuse.frag");
 		NShader::Init("src\\shaders\\unlit.vert", "src\\shaders\\unlit.frag");
 
-		AsteroidPool = new NObjectPool<EAsteroid>();
+		AsteroidPool = new NObjectPool<EAsteroid>(100);
+		ProjectilePool = new NObjectPool<EProjectile>(500);
+
+		// Initiliazing pools on objects, clean this up
+		EAsteroid::ProjectilePool = ProjectilePool;
+		EAsteroid::AsteroidPool = AsteroidPool;
+		EShip::ProjectilePool = ProjectilePool;
+		EProjectile::ProjectilePool = ProjectilePool;
+
 		Camera = Instantiate<EFollowCamera>(GetWorld());
 		NEngine::Camera = Camera->CameraComp;
 
@@ -46,13 +57,10 @@ namespace Nata
 			return;
 		}
 		CurrentTime += dt;
-		std::cout << CurrentTime << std::endl;
 		if (CurrentTime >= SpawnTime)
 		{
 			vec2 dir = Math::Random(vec2(-1.f), vec2(1.f)) * SpawnOffset;
-			//EAsteroid* asteroid = Instantiate<EAsteroid>(GetWorld(), vec3(dir.x, dir.y, EnemySpawnZ));
 			EAsteroid* asteroid = AsteroidPool->Create(vec3(dir.x, dir.y, EnemySpawnZ));
-			asteroid->Pool = AsteroidPool;
 			CurrentTime = 0.f;
 		}
 	}
