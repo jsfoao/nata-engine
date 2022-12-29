@@ -33,7 +33,7 @@ namespace Nata
 			MaxRotationSpeed = 100.f;
 			ZLimit = 40.f;
 			Model = NAssetLoader::Get<NModel>("res\\models\\rock_by_dommk.obj");
-			Shader = NAssetLoader::Get<NShader>("src\\shaders\\diffuse.vert");
+			Shader = NAssetLoader::Get<NShader>("res\\shaders\\diffuse.vert");
 			Color = vec3(0.5f);
 
 			for (unsigned int i = 0; i < 6; i++)
@@ -111,14 +111,12 @@ namespace Nata
 						EProjectile* proj = dynamic_cast<EProjectile*>(collider->GetOwner());
 						if (proj != nullptr)
 						{
-							std::cout << "INTERSECT PROJECTILE" << std::endl;
 							proj->ProjectilePool->Delete(proj);
 						}
 
 						EShip* ship = dynamic_cast<EShip*>(collider->GetOwner());
 						if (ship != nullptr)
 						{
-							std::cout << "INTERSECT SHIP" << std::endl;
 							ship->Transform->Position = vec3(0.f);
 							Clear();
 						}

@@ -11,7 +11,7 @@ namespace Nata
 		BoxColliderComp = AddComponent<CBoxCollider>();
 
 		Model = NAssetLoader::Get<NModel>("res\\models\\rock_by_dommk.obj");
-		Shader = NAssetLoader::Get<NShader>("src\\shaders\\diffuse.vert");
+		Shader = NAssetLoader::Get<NShader>("res\\shaders\\diffuse.vert");
 
 		ModelRendererComp->SetRenderableAndShader(Model, Shader);
 		ModelRendererComp->PropertyLayout.AddVec3("color");

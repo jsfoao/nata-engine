@@ -9,7 +9,7 @@ namespace Nata
 		MeshRenderer = AddComponent<CModelRenderer>();
 		BoxCollider = AddComponent<CBoxCollider>();
 
-		NShader* shader = NAssetLoader::Get<NShader>("src\\shaders\\diffuse.vert");
+		NShader* shader = NAssetLoader::Get<NShader>("res\\shaders\\diffuse.vert");
 		Model = NAssetLoader::Get<NModel>("res\\models\\LowPolyFiatUNO.obj");
 
 		MeshRenderer->SetRenderableAndShader(Model, shader);

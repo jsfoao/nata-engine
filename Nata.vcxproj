@@ -71,7 +71,8 @@
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)bin" "$(TargetDir)" /e /y /i /r</Command>
+      <Command>xcopy "$(SolutionDir)bin" "$(TargetDir)" /e /y /i /r
+xcopy "$(SolutionDir)res" "$(TargetDir)res" /e /y /i /r</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -1295,25 +1296,25 @@
     <None Include="include\glm\gtx\vector_angle.inl" />
     <None Include="include\glm\gtx\vector_query.inl" />
     <None Include="include\glm\gtx\wrap.inl" />
-    <None Include="src\shaders\diffuse.frag" />
-    <None Include="src\shaders\diffuse.vert" />
-    <None Include="src\shaders\lit.frag" />
-    <None Include="src\shaders\lit.vert" />
-    <None Include="src\shaders\basic.frag" />
-    <None Include="src\shaders\basic.vert" />
-    <None Include="src\shaders\coordinates.frag" />
-    <None Include="src\shaders\coordinates.vert" />
-    <None Include="src\shaders\lighting.frag" />
-    <None Include="src\shaders\lighting.vert" />
-    <None Include="src\shaders\unlit.frag" />
-    <None Include="src\shaders\unlit.vert" />
-    <None Include="src\shaders\test.frag" />
-    <None Include="src\shaders\test.vert" />
-    <None Include="src\shaders\test2.frag" />
-    <None Include="src\shaders\transform.frag" />
-    <None Include="src\shaders\transform.vert" />
-    <None Include="src\shaders\unlit_textured.frag" />
-    <None Include="src\shaders\unlit_textured.vert" />
+    <None Include="res\shaders\diffuse.frag" />
+    <None Include="res\shaders\diffuse.vert" />
+    <None Include="res\shaders\lit.frag" />
+    <None Include="res\shaders\lit.vert" />
+    <None Include="res\shaders\basic.frag" />
+    <None Include="res\shaders\basic.vert" />
+    <None Include="res\shaders\coordinates.frag" />
+    <None Include="res\shaders\coordinates.vert" />
+    <None Include="res\shaders\lighting.frag" />
+    <None Include="res\shaders\lighting.vert" />
+    <None Include="res\shaders\unlit.frag" />
+    <None Include="res\shaders\unlit.vert" />
+    <None Include="res\shaders\test.frag" />
+    <None Include="res\shaders\test.vert" />
+    <None Include="res\shaders\test2.frag" />
+    <None Include="res\shaders\transform.frag" />
+    <None Include="res\shaders\transform.vert" />
+    <None Include="res\shaders\unlit_textured.frag" />
+    <None Include="res\shaders\unlit_textured.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

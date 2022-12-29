@@ -18,8 +18,8 @@ namespace Nata
 		NModel::Init("res\\models\\LowPolyFiatUNO.obj");
 		NModel::Init("res\\models\\rock_by_dommk.obj");
 		NModel::Init("res\\models\\cube.obj");
-		NShader::Init("src\\shaders\\diffuse.vert", "src\\shaders\\diffuse.frag");
-		NShader::Init("src\\shaders\\unlit.vert", "src\\shaders\\unlit.frag");
+		NShader::Init("res\\shaders\\diffuse.vert", "res\\shaders\\diffuse.frag");
+		NShader::Init("res\\shaders\\unlit.vert", "res\\shaders\\unlit.frag");
 
 		DataPool = new NDAsteroidPool(1000);
 		ProjectilePool = new NObjectPool<EProjectile>(500);
