@@ -58,6 +58,7 @@ namespace Nata
 		inline unsigned int GetTypeID() { return m_TypeID; }
 		inline EEntity* GetOwner() { return m_Owner; }
 		inline void SetOwner(EEntity* owner) { m_Owner = owner; }
+		inline bool IsEnable() { return m_Enabled; }
 
 		virtual void Begin() {};
 		virtual void Tick(float dt) {};

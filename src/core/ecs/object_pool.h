@@ -1,6 +1,6 @@
 #pragma once
-#include "core.h"
-#include "ecs/ecs.h"
+#include "core/core.h"
+#include "core/ecs/ecs.h"
 
 namespace Nata
 {
@@ -40,6 +40,7 @@ namespace Nata
 	public:
 		NObjectPool(unsigned int size)
 		{
+			unsigned int id = 0;
 			Size = size;
 			m_Objects.reserve(Size);
 			for (unsigned int i = 0; i < Size; i++)

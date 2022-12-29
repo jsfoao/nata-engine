@@ -104,6 +104,7 @@
     <ClInclude Include="res\scripts\EProjectile.h" />
     <ClInclude Include="res\scripts\EShip.h" />
     <ClInclude Include="res\scripts\GSpaceShooter.h" />
+    <ClInclude Include="res\scripts\NDAsteroidPool.h" />
     <ClInclude Include="src\app.cpp" />
     <ClCompile Include="res\scripts\EAsteroid.cpp" />
     <ClCompile Include="res\scripts\EEnemy.cpp" />
@@ -122,7 +123,6 @@
     <ClCompile Include="src\core\editor\handles.cpp" />
     <ClCompile Include="src\core\glm_math.cpp" />
     <ClCompile Include="src\core\input.cpp" />
-    <ClCompile Include="src\core\object_pool.cpp" />
     <ClCompile Include="src\core\renderer\buffer.cpp" />
     <ClCompile Include="src\core\core.cpp" />
     <ClCompile Include="src\core\renderer\mesh.cpp" />
@@ -1104,6 +1104,7 @@
     <ClInclude Include="src\core\core.h" />
     <ClInclude Include="src\core\comp\CCamera.h" />
     <ClInclude Include="src\core\comp\CModelRenderer.h" />
+    <ClInclude Include="src\core\ecs\dots.h" />
     <ClInclude Include="src\core\ecs\ECamera.hpp" />
     <ClInclude Include="res\scripts\NShooterGameMode.hpp" />
     <ClInclude Include="res\scripts\EOurObject.hpp" />
@@ -1119,7 +1120,7 @@
     <ClInclude Include="src\core\glm_math.h" />
     <ClInclude Include="src\core\input.h" />
     <ClInclude Include="src\core\key.h" />
-    <ClInclude Include="src\core\object_pool.h" />
+    <ClInclude Include="src\core\ecs\object_pool.h" />
     <ClInclude Include="src\core\renderer\buffer.h" />
     <ClInclude Include="src\core\renderer\camera.h" />
     <ClInclude Include="src\core\renderer\mesh.h" />

@@ -126,6 +126,7 @@ namespace Nata
 
 			if (entity->m_Enabled == true)
 			{
+				entity->OnEnable();
 				m_Enabled.push_back(entity);
 			}
 			else
@@ -134,6 +135,7 @@ namespace Nata
 				{
 					if (entity == m_Enabled[i])
 					{
+						entity->OnDisable();
 						m_Enabled.erase(m_Enabled.begin() + i);
 					}
 				}

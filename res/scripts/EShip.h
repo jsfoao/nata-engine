@@ -23,6 +23,7 @@ namespace Nata
 	public:
 		EShip();
 		void Begin() override;
+		void OnEnable() override;
 		void Tick(float dt) override;
 		void Shoot();
 

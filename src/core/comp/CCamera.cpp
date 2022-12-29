@@ -11,7 +11,7 @@ namespace Nata
 		m_Projection = mat4(1.f);
 		m_Fov = 45.f;
 		m_Near = 0.1f;
-		m_Far = 100.f;
+		m_Far = 150.f;
 	}
 
 	void CCamera::Tick(float deltaTime)

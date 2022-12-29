@@ -4,6 +4,7 @@ namespace Nata
 {
 	NObjectPool<EAsteroid>* GSpaceShooter::AsteroidPool = nullptr;
 	NObjectPool<EProjectile>* GSpaceShooter::ProjectilePool = nullptr;
+	NDAsteroidPool* GSpaceShooter::DataPool = nullptr;
 
 	GSpaceShooter::GSpaceShooter() : GGameMode()
 	{
@@ -20,12 +21,11 @@ namespace Nata
 		NShader::Init("src\\shaders\\diffuse.vert", "src\\shaders\\diffuse.frag");
 		NShader::Init("src\\shaders\\unlit.vert", "src\\shaders\\unlit.frag");
 
-		AsteroidPool = new NObjectPool<EAsteroid>(100);
+		DataPool = new NDAsteroidPool(1000);
 		ProjectilePool = new NObjectPool<EProjectile>(500);
 
 		// Initiliazing pools on objects, clean this up
 		EAsteroid::ProjectilePool = ProjectilePool;
-		EAsteroid::AsteroidPool = AsteroidPool;
 		EShip::ProjectilePool = ProjectilePool;
 		EProjectile::ProjectilePool = ProjectilePool;
 
@@ -33,9 +33,11 @@ namespace Nata
 		NEngine::Camera = Camera->CameraComp;
 
 		Spawning = true;
-		SpawnTime = 1.5f;
+		SpawnTime = 0.2f;
 		EnemySpawnZ = -75.f;
-		SpawnOffset = 4.f;
+		SpawnOffset = 10.f;
+
+		AsteroidCount = 0;
 
 		Ship = Instantiate<EShip>(GetWorld());
 		Camera->Target = Ship;
@@ -43,10 +45,20 @@ namespace Nata
 
 	void GSpaceShooter::Begin()
 	{
+		DataPool->world = GetWorld();
+		DataPool->Begin();
 	}
 
 	void GSpaceShooter::Tick(float dt)
 	{
+		if (NEngine::Input->GetKeyDown(GLFW_KEY_R))
+		{
+			DataPool->Clear();
+			Ship->Transform->Position = vec3(0.f);
+		}
+
+		DataPool->Tick(dt);
+
 		for (int i = -2; i < 10; i++)
 		{
 			Handles::DrawSquare(vec3(0.f, 0.f, i * -15.f), vec2(16.f, 9.f), vec3(0.f, 0.f, 1.f), vec3(0.4f));
@@ -59,8 +71,10 @@ namespace Nata
 		CurrentTime += dt;
 		if (CurrentTime >= SpawnTime)
 		{
+			int id = DataPool->EnableID();
 			vec2 dir = Math::Random(vec2(-1.f), vec2(1.f)) * SpawnOffset;
-			EAsteroid* asteroid = AsteroidPool->Create(vec3(dir.x, dir.y, EnemySpawnZ));
+			DataPool->Transform[id].Position = vec3(dir.x, dir.y, -100.f);
+	
 			CurrentTime = 0.f;
 		}
 	}

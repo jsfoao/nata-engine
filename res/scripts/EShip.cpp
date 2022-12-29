@@ -18,7 +18,7 @@ namespace Nata
 		MeshRenderer->LocalRotation = vec3(0.f, 180.f, 0.f);
 		MeshRenderer->LocalPosition = vec3(0.f, -1.f, 0.f);
 		BoxCollider->Bounds = vec3(2.f, 2.f, 4.f);
-		BoxCollider->DrawHandles = true;
+		BoxCollider->DrawHandles = false;
 
 		Input = vec3(0.f);
 		Velocity = vec3(0.f);
@@ -29,7 +29,12 @@ namespace Nata
 
 	void EShip::Begin()
 	{
-		MeshRenderer->PropertyLayout.SetVec3("color", vec3(1.f));
+		MeshRenderer->PropertyLayout.SetVec3("color", vec3(0.5f, 0.5f, 1.f));
+	}
+
+	void EShip::OnEnable()
+	{
+		Velocity = vec3(0.f);
 	}
 
 	void EShip::Tick(float dt)
@@ -48,13 +53,14 @@ namespace Nata
 		Transform->Position += Velocity;
 
 
-		Handles::DrawHandles(Transform, 5.f);
-		Handles::DrawLine(Transform->Position, Transform->Position - Transform->Forward * 50.f, vec3(1.f));
+		//Handles::DrawHandles(Transform, 5.f);
+		//Handles::DrawLine(Transform->Position, Transform->Position - Transform->Forward * 50.f, vec3(1.f));
 		Handles::DrawCircle(
-			Transform->Position - Transform->Forward * 50.f,
-			1.f,
+			Transform->Position - Transform->Forward * 30.f,
+			0.8f,
 			NEngine::Camera->GetOwner()->Transform->Right,
 			vec3(1.f));
+		Handles::DrawSquare(Transform->Position - Transform->Forward * 15.f, vec2(1.5f), vec3(0.f, 0.f, 1.f), vec3(1.f));
 	}
 
 	void EShip::ProcessInput()

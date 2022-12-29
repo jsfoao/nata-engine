@@ -4,6 +4,7 @@
 #include "EShip.h"
 #include "EEnemy.h"
 #include "EAsteroid.h"
+#include "NDAsteroidPool.h"
 
 namespace Nata
 {
@@ -24,8 +25,11 @@ namespace Nata
 		bool Spawning;
 		float SpawnOffset;
 
+		unsigned int AsteroidCount;
+
 		static NObjectPool<EAsteroid>* AsteroidPool;
 		static NObjectPool<EProjectile>* ProjectilePool;
+		static NDAsteroidPool* DataPool;
 
 	public:
 		GSpaceShooter();

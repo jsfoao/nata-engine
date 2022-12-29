@@ -24,6 +24,7 @@
 #include "core/window.h"
 #include "core/asset_loader.h"
 #include "core/ecs/object_pool.h"
+#include "core/ecs/dots.h"
 
 // Nata :: Renderer
 #include "core/renderer/shader.h"
