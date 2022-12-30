@@ -1,5 +1,6 @@
 # Data-Oriented Architecture Studies
 This repo contains a collection of studies on data-oriented architecture using my own 3D game engine that uses OpenGL for rendering. The project features data-oriented, pooled and instantiated (not cached) objects that work seamlessly together.
+
 ![Demo](/docs/shooterdemo.gif  "Demo")
 
 ## Highlights
