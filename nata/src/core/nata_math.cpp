@@ -1,4 +1,4 @@
-#include "glm_math.h"
+#include "nata_math.h"
 
 namespace Math
 {

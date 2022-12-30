@@ -1,7 +1,7 @@
 #pragma once
 #include "core/core.h"
 #include "core/ecs/ecs.h"
-#include "core/glm_math.h"
+#include "nata_math.h"
 
 namespace Nata
 {

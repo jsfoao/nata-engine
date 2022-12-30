@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "core/glm_math.h"
+#include "nata_math.h"
 #include "texture.h"
 #include "shader.h"
 #include "buffer.h"

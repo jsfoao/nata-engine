@@ -1,7 +1,7 @@
 #pragma once
 #include "core/asset_loader.h"
 #include "renderable.h"
-#include "core/glm_math.h"
+#include "nata_math.h"
 #include <vector>
 #include "texture.h"
 #include "shader.h"

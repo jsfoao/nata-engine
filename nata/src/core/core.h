@@ -1,6 +1,6 @@
 #pragma once
 #include "core/ecs/ecs.h"
-#include "core/glm_math.h"
+#include "nata_math.h"
 
 namespace Nata
 {

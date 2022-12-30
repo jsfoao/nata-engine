@@ -1,7 +1,7 @@
 #pragma once
-#include "ecs.h"
-#include "core/comp/CCamera.h"
-#include "core/glm_math.h"
+#include "ecs/ecs.h"
+#include "comp/CCamera.h"
+#include "nata_math.h"
 
 namespace Nata
 {

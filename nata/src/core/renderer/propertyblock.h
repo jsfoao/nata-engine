@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "core/glm_math.h"
+#include "nata_math.h"
 #include "core/renderer/shader.h"
 
 namespace Nata

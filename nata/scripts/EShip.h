@@ -1,8 +1,8 @@
 #pragma once
 #include "nata.h"
-#include "core/comp/CModelRenderer.h"
-#include "core/comp/CBoxCollider.h"
-#include "scripts/EProjectile.h"
+#include "comp/CModelRenderer.h"
+#include "comp/CBoxCollider.h"
+#include "EProjectile.h"
 
 namespace Nata
 {

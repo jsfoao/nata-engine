@@ -1,5 +1,5 @@
 #pragma once
-#include "core/glm_math.h"
+#include "nata_math.h"
 
 namespace Nata
 {

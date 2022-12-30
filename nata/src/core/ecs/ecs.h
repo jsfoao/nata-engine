@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <queue>
-#include "core/glm_math.h"
+#include "nata_math.h"
 #include <iostream>
 #include <string>
 

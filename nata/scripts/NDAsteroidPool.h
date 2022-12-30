@@ -1,7 +1,7 @@
 #pragma once
-#include "core/ecs/ecs.h"
-#include "core/ecs/dots.h"
-#include "core/glm_math.h"
+#include "ecs/ecs.h"
+#include "ecs/dots.h"
+#include "nata_math.h"
 #include <queue>
 
 namespace Nata
