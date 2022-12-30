@@ -1,0 +1,6 @@
+#NataAsset
+Type=1
+Name=DiffuseShader
+ID=1
+Path=res\assets
+ObjectPath=res\shaders\diffuse.vert

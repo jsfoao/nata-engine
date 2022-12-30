@@ -15,6 +15,8 @@ namespace Nata
 		{
 			NEngine::World = NWorld::Init();
 			NEngine::World->SetGameMode(GGameMode::Init<GTests>());
+			NModel::Create("res\\models\\cube.obj", "res\\assets", "CubeTest");
+			NShader::Create("res\\shaders\\diffuse.vert", "res\\shaders\\diffuse.frag", "res\\assets", "DiffuseShader");
 		}
 
 		// runs before world tick

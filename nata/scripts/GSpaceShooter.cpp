@@ -15,11 +15,9 @@ namespace Nata
 
 	void GSpaceShooter::Awake()
 	{
-		NModel::Init("res\\models\\LowPolyFiatUNO.obj");
-		NModel::Init("res\\models\\rock_by_dommk.obj");
-		NModel::Init("res\\models\\cube.obj");
-		NShader::Init("res\\shaders\\diffuse.vert", "res\\shaders\\diffuse.frag");
-		NShader::Init("res\\shaders\\unlit.vert", "res\\shaders\\unlit.frag");
+		NModel::Create("res\\models\\LowPolyFiatUNO.obj", "assets\\models", "car");
+		NModel::Create("res\\models\\rock_by_dommk.obj", "assets\\models", "rock");
+		NShader::Create("res\\shaders\\diffuse.vert", "res\\shaders\\diffuse.frag", "assets\\shaders", "diffuse");
 
 		DataPool = new NDAsteroidPool(1000);
 		ProjectilePool = new NObjectPool<EProjectile>(500);

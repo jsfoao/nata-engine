@@ -104,6 +104,7 @@ xcopy "$(SolutionDir)res" "$(TargetDir)res" /e /y /i /r</Command>
     <ClInclude Include="scripts\EFollowCamera.h" />
     <ClInclude Include="scripts\EProjectile.h" />
     <ClInclude Include="scripts\EShip.h" />
+    <ClInclude Include="scripts\ETestObject.h" />
     <ClInclude Include="scripts\GSpaceShooter.h" />
     <ClInclude Include="scripts\GTests.h" />
     <ClInclude Include="scripts\NDAsteroidPool.h" />
@@ -113,6 +114,7 @@ xcopy "$(SolutionDir)res" "$(TargetDir)res" /e /y /i /r</Command>
     <ClCompile Include="scripts\EFollowCamera.cpp" />
     <ClCompile Include="scripts\EProjectile.cpp" />
     <ClCompile Include="scripts\EShip.cpp" />
+    <ClCompile Include="scripts\ETestObject.cpp" />
     <ClCompile Include="scripts\GSpaceShooter.cpp" />
     <ClCompile Include="scripts\GTests.cpp" />
     <ClCompile Include="src\core\asset_loader.cpp" />

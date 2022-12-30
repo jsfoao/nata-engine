@@ -32,8 +32,8 @@ namespace Nata
 			MinRotationSpeed = 50.f;
 			MaxRotationSpeed = 100.f;
 			ZLimit = 40.f;
-			Model = NAssetLoader::Get<NModel>("res\\models\\rock_by_dommk.obj");
-			Shader = NAssetLoader::Get<NShader>("res\\shaders\\diffuse.vert");
+			Model = NAsset::Get<NModel>("res\\models\\rock_by_dommk.obj");
+			Shader = NAsset::Get<NShader>("res\\shaders\\diffuse.vert");
 			Color = vec3(0.5f);
 
 			for (unsigned int i = 0; i < 6; i++)
