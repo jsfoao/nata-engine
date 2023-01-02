@@ -28,14 +28,48 @@ namespace Nata
 	// Everything that is instanced, has ID and is serialized in engine
 	class NObject
 	{
+		friend class NWorld;
+		friend class EEntity;
+		friend class CComponent;
+		friend class GGameMode;
+
 	public:
 		std::string Name;
 
 	protected:
 		unsigned int m_ID;
+		bool m_Began;
+		bool m_Enabled;
+		// TODO: implement destroyed logic
+		bool m_Destroyed;
+		NWorld* m_World;
 
 	public:
 		NObject();
+
+		virtual void OnEnable() {};
+		virtual void Awake() {};
+		virtual void Begin() {};
+		virtual void Tick(float dt) {};
+		virtual void OnDisable() {};
+		virtual void OnDestroy() {};
+		
+		virtual void Super_OnEnable() {};
+		virtual void Super_Awake() {};
+		virtual void Super_Begin() {};
+		virtual void Super_Tick(float dt) {};
+		virtual void Super_OnDisable() {};
+		virtual void Super_OnDestroy() {};
+
+		inline NWorld* GetWorld() { return m_World; }
+		inline void SetWorld(NWorld* world) { m_World = world; }
+		inline bool IsEnabled() { return m_Enabled; }
+
+		// Enables object next frame
+		void Super_SetEnable(bool enable);
+		virtual void SetEnable(bool enable) {};
+		virtual void Super_Destroy() {};
+
 		inline unsigned int GetID() { return m_ID; }
 	};
 
@@ -44,8 +78,7 @@ namespace Nata
 	{
 	protected:
 		EEntity* m_Owner;
-		bool m_Enabled;
-		unsigned int m_TypeID = 0;
+		bool m_PreEnable;
 
 		friend class EEntity;
 		friend class NWorld;
@@ -54,39 +87,18 @@ namespace Nata
 		CComponent();
 		CComponent(EEntity* owner);
 
-		void SetEnable(bool enable);
-		inline unsigned int GetTypeID() { return m_TypeID; }
+		void Super_OnEnable() override;
+		void Super_Awake() override;
+		void Super_Begin() override;
+		void Super_Tick(float dt) override;
+		void Super_OnDisable() override;
+		void Super_OnDestroy() override;
+
 		inline EEntity* GetOwner() { return m_Owner; }
 		inline void SetOwner(EEntity* owner) { m_Owner = owner; }
-		inline bool IsEnable() { return m_Enabled; }
-
-		virtual void Begin() {};
-		virtual void Tick(float dt) {};
-		virtual void OnEnable() {};
-		virtual void OnDisable() {};
+		void SetEnable(bool enable) override;
+		void Super_Destroy() override;
 	};
-
-	//std::vector<CComponent> CompRegistry;
-	//template<typename T>
-	//void CompRegister()
-	//{
-	//	if (CompRegistry.size() == 0) 
-	//	{
-	//		CompRegistry.push_back(T);
-	//		T::TypeID = CComponentID;
-	//		return;
-	//	}
-	//	for (unsigned int i = 0; i < CompRegistry.size(); i++)
-	//	{
-	//		if (typeid(T).name == typeid(CompRegistry[i]).name)
-	//		{
-	//			return;
-	//		}
-	//	}
-	//	CompRegistry.push_back(T);
-	//	T::TypeID = CComponentID;
-	//	CComponentID++;
-	//}
 
 	class CTransform : public CComponent
 	{
@@ -96,20 +108,33 @@ namespace Nata
 		vec3 Scale;
 		vec3 Rotation;
 		vec3 LocalPosition;
+		vec3 LocalRotation;
+		vec3 LocalScale;
 
 		vec3 Forward;
 		vec3 Right;
 		vec3 Up;
 		
-		CTransform* Parent;
-		vector<CTransform*> Children;
-		bool IsParented;
+	protected:
+		CTransform* m_Parent;
+		vector<CTransform*> m_Children;
+		bool m_IsParented;
 
 	public:
 		CTransform();
 
-		void SetParent(CTransform* parent);
 		void Tick(float dt) override;
+		// Set parent to nullptr to remove parent
+		void SetParent(CTransform* parent);
+	};
+
+	class CSpatialComponent : public CComponent
+	{
+	public:
+		// Local transform
+		CTransform* Transform;
+
+		CSpatialComponent();
 	};
 
 	class EEntity : public NObject
@@ -118,33 +143,40 @@ namespace Nata
 		class CTransform* Transform;
 
 	protected:
-		NWorld* m_World;
 		vector<CComponent*> m_Components;
 		vector<CComponent*> m_EnabledComponents;
-		bool m_Enabled;
 		bool m_Destroyed;
 		friend class NWorld;
+		friend class CComponent;
 
 	public:
 		EEntity();
 		~EEntity();
 
+		void Super_OnEnable() override;
+		void Super_Awake() override;
+		void Super_Begin() override;
+		void Super_Tick(float dt) override;
+		void Super_OnDisable() override;
+		void Super_OnDestroy() override;
+
 		inline NWorld* GetWorld() { return m_World; }
 		inline void SetWorld(NWorld* world) { m_World = world; }
-		void SetEnable(bool enable);
+		void SetEnable(bool enable) override;
+		void Super_Destroy() override;
 
 		// Create and add component of type
 		template<typename T, class = typename std::enable_if<std::is_base_of<CComponent, T>::value>::type>
-		T* AddComponent()
+		T* AddComponent(bool enable = true)
 		{
 			T* comp = new T();
 			comp->m_Owner = this;
-			comp->m_Enabled = m_Enabled;
+			comp->m_Enabled = enable;
 			m_Components.push_back(comp);
 			return comp;
 		}
 
-		template<typename T>
+		template<typename T, class = typename std::enable_if<std::is_base_of<CComponent, T>::value>::type>
 		T* GetComponent()
 		{
 			for (CComponent* comp : m_Components)
@@ -153,10 +185,6 @@ namespace Nata
 				{
 					return (T*)comp;
 				}
-				//if (comp->GetTypeID() == T::TypeID)
-				//{
-				//	return (T*)comp;
-				//}
 			}
 			return nullptr;
 		}
@@ -165,19 +193,11 @@ namespace Nata
 		{
 			return m_Components;
 		}
-
-		virtual void OnEnable() {};
-		virtual void Begin() {};
-		virtual void Tick(float dt) {};
-		virtual void OnDisable() {};
-		virtual void OnDestroy() {};
 	};
 
 	// behaviour in level lifetime
 	class GGameMode : public NObject
 	{
-	protected:
-		NWorld* m_World;
 		friend class NWorld;
 
 	public:
@@ -216,31 +236,34 @@ namespace Nata
 		// Only enabled entities in world
 		vector<EEntity*> m_Enabled;
 
-		// Entities to enable/disable next frame
-		queue<std::pair<EEntity*, bool>> m_EnableQueue;
-		// Entities to begin next frame
-		queue<EEntity*> m_BeginQueue;
-		// Entities to destroy next frame
-		queue<EEntity*> m_DestroyQueue;
+		// Objects to enable/disable next frame
+		queue<std::tuple<NObject*, bool>> m_EnableQueue;
+		// Objects to begin next frame
+		queue<NObject*> m_BeginQueue;
+		// Objects to destroy next frame
+		queue<NObject*> m_DestroyQueue;
 
 		friend class EEntity;
+		friend class CComponent;
+		friend class NObject;
 
 	public:
 		NWorld();
 
-		void Destroy(EEntity* entity);
-		void Awake();
-		void Begin();
-		void Tick(float dt);
+		static NWorld* Init();
+		static NWorld* Init(GGameMode* gameMode);
+
+		void Awake() override;
+		void Begin() override;
+		void Tick(float dt) override;
 
 		inline vector<EEntity*> GetAllEntities() { return m_Entities; }
+		inline vector<EEntity*> GetAllEnabledEntities() { return m_Enabled; }
 		inline GGameMode* GetGameMode() { return m_GameMode; }
 		void SetGameMode(GGameMode* gameMode);
 		int GetEntityIndex(EEntity* entity);
 
-		static NWorld* Init();
-		static NWorld* Init(GGameMode* gameMode);
-
+		void Destroy(NObject* object);
 		template<typename T, class = typename std::enable_if<std::is_base_of<EEntity, T>::value>::type>
 		T* Instantiate(bool enable = true)
 		{
@@ -250,8 +273,6 @@ namespace Nata
 			entity->m_ID = m_Entities.size();
 		
 			m_Entities.push_back(entity);
-			m_BeginQueue.push(entity);
-		
 			entity->SetEnable(enable);
 
 			return entity;
@@ -266,9 +287,7 @@ namespace Nata
 			entity->Transform->Rotation = vec3(0.f);
 			entity->m_ID = m_Entities.size();
 		
-			m_Entities.push_back(entity);
-			m_BeginQueue.push(entity);
-		
+			m_Entities.push_back(entity);		
 			entity->SetEnable(enable);
 			
 			return entity;
@@ -284,8 +303,6 @@ namespace Nata
 
 			entity->m_ID = m_Entities.size();
 			m_Entities.push_back(entity);
-			m_BeginQueue.push(entity);
-
 			entity->SetEnable(enable);
 
 			return entity;
