@@ -38,6 +38,7 @@
 
 // Nata :: Editor
 #include "core/editor/handles.h"
+#include "core/debug.h"
 
 using namespace Nata;
 using namespace glm;

@@ -10,7 +10,7 @@ namespace Nata
 		BoxCollider->AddOnCollisionEnterCallback(OnCollisionEnter);
 
 		ModelRenderer->SetRenderableAndShader(Model, Shader);
-		BoxCollider->Bounds = vec3(2.f);
+		BoxCollider->Transform->Scale = vec3(2.f);
 
 		Speed = 10.f;
 		Zlimit = 10.f;

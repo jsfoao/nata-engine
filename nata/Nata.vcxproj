@@ -124,6 +124,7 @@ xcopy "$(SolutionDir)res" "$(TargetDir)res" /e /y /i /r</Command>
     <ClCompile Include="src\core\comp\CModelRenderer.cpp" />
     <ClCompile Include="src\core\comp\collisionutils.cpp" />
     <ClCompile Include="src\core\comp\CSphereCollider.cpp" />
+    <ClCompile Include="src\core\debug.cpp" />
     <ClCompile Include="src\core\ecs\ecs.cpp" />
     <ClCompile Include="src\core\editor\handles.cpp" />
     <ClCompile Include="src\core\nata_math.cpp" />
@@ -1109,6 +1110,7 @@ xcopy "$(SolutionDir)res" "$(TargetDir)res" /e /y /i /r</Command>
     <ClInclude Include="src\core\core.h" />
     <ClInclude Include="src\core\comp\CCamera.h" />
     <ClInclude Include="src\core\comp\CModelRenderer.h" />
+    <ClInclude Include="src\core\debug.h" />
     <ClInclude Include="src\core\ecs\dots.h" />
     <ClInclude Include="src\core\comp\ECamera.hpp" />
     <ClInclude Include="res\scripts\NShooterGameMode.hpp" />

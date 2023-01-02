@@ -17,7 +17,7 @@ namespace Nata
 
 		MeshRenderer->LocalRotation = vec3(0.f, 180.f, 0.f);
 		MeshRenderer->LocalPosition = vec3(0.f, -1.f, 0.f);
-		BoxCollider->Bounds = vec3(2.f, 2.f, 4.f);
+		BoxCollider->Transform->Scale = vec3(2.f, 2.f, 4.f);
 		BoxCollider->DrawHandles = false;
 
 		Input = vec3(0.f);

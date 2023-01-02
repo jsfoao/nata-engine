@@ -15,7 +15,7 @@ namespace Nata
 		MeshRenderer->SetRenderableAndShader(Model, shader);
 		MeshRenderer->PropertyLayout.AddVec3("color");
 
-		BoxCollider->Bounds = vec3(1.2f);
+		BoxCollider->Transform->Scale = vec3(1.2f);
 		BoxCollider->DrawHandles = false;
 
 		Transform->Scale = vec3(0.4f);

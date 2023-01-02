@@ -6,10 +6,8 @@ namespace Nata
 
 	CSphereCollider::CSphereCollider() : CCollider()
 	{
-		INIT_ID(CSphereCollider);
 		Position = vec3(0.f);
 		Radius = 1.f;
-		LockOwner = true;
 	}
 
 	void CSphereCollider::Begin()
@@ -18,10 +16,7 @@ namespace Nata
 
 	void CSphereCollider::Tick(float dt)
 	{
-		if (LockOwner)
-		{
-			Position = GetOwner()->Transform->Position;
-		}
+		SuperTick(dt);
 
 		m_Sphere = NSphere(Position, Radius);
 

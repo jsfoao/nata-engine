@@ -6,7 +6,7 @@ namespace Nata
 
 	CModelRenderer::CModelRenderer() : CComponent(), NRenderable()
 	{
-		INIT_ID(CModelRenderer);
+		Name = "ModelRenderer";
 		m_IsVisible = true;
 		LocalPosition = vec3(0.f);
 		LocalRotation = vec3(0.f);

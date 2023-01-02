@@ -6,7 +6,6 @@ namespace Nata
 
 	CCamera::CCamera() : CComponent()
 	{
-		INIT_ID(CCamera);
 		m_View = mat4(1.f);
 		m_Projection = mat4(1.f);
 		m_Fov = 45.f;

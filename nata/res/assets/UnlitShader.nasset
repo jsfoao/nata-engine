@@ -1,0 +1,6 @@
+#NataAsset
+Type=1
+Name=UnlitShader
+ID=2
+Path=res\assets
+ObjectPath=res\shaders\unlit.vert

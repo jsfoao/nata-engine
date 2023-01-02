@@ -33,7 +33,7 @@ namespace Nata
 		float scale = Math::Random(0.02f, 0.06f);
 		Transform->Scale = vec3(scale);
 		RotationSpeed = BaseSpeed / scale;
-		BoxColliderComp->Bounds = Transform->Scale * 100.f;
+		BoxColliderComp->Transform->Scale = Transform->Scale * 100.f;
 		ModelRendererComp->PropertyLayout.SetVec3("color", Color);
 	}
 
