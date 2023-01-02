@@ -69,8 +69,50 @@ namespace Nata
         DrawLine(v3, v7, color);
     }
 
+    void Handles::DrawWireCube(const vec3& pos, const vec3& rot, const vec3& size, const vec3& color)
+    {
+        if (!m_Enabled)
+        {
+            return;
+        }
+        mat4 model = mat4(1.f);
+        model = rotate(model, radians(rot.x), vec3(-1.f, 0.f, 0.f));
+        model = rotate(model, radians(rot.y), vec3(0.f, -1.f, 0.f));
+        model = rotate(model, radians(rot.z), vec3(0.f, 0.f, 1.f));
+
+        vec3 hsize = size / 2.f;
+        vec3 v0 = vec4(pos.x - hsize.x, pos.y - hsize.y, pos.z - hsize.z, 0.f) * model;
+        vec3 v1 = vec4(pos.x + hsize.x, pos.y - hsize.y, pos.z - hsize.z, 0.f) * model;
+        vec3 v2 = vec4(pos.x + hsize.x, pos.y - hsize.y, pos.z + hsize.z, 0.f) * model;
+        vec3 v3 = vec4(pos.x - hsize.x, pos.y - hsize.y, pos.z + hsize.z, 0.f) * model;
+        vec3 v4 = vec4(pos.x - hsize.x, pos.y + hsize.y, pos.z - hsize.z, 0.f) * model;
+        vec3 v5 = vec4(pos.x + hsize.x, pos.y + hsize.y, pos.z - hsize.z, 0.f) * model;
+        vec3 v6 = vec4(pos.x + hsize.x, pos.y + hsize.y, pos.z + hsize.z, 0.f) * model;
+        vec3 v7 = vec4(pos.x - hsize.x, pos.y + hsize.y, pos.z + hsize.z, 0.f) * model;
+
+
+        DrawLine(v0, v1, color);
+        DrawLine(v1, v2, color);
+        DrawLine(v2, v3, color);
+        DrawLine(v3, v0, color);
+
+        DrawLine(v4, v5, color);
+        DrawLine(v5, v6, color);
+        DrawLine(v6, v7, color);
+        DrawLine(v7, v4, color);
+
+        DrawLine(v0, v4, color);
+        DrawLine(v1, v5, color);
+        DrawLine(v2, v6, color);
+        DrawLine(v3, v7, color);
+    }
+
     void Handles::DrawHandles(const CTransform* transform, const float size)
     {
+        if (!m_Enabled)
+        {
+            return;
+        }
         Handles::DrawLine(transform->Position, transform->Position + transform->Right * size, vec3(1.f, 0.f, 0.f));
         Handles::DrawLine(transform->Position, transform->Position + transform->Up * size, vec3(0.f, 1.f, 0.f));
         Handles::DrawLine(transform->Position, transform->Position + transform->Forward * size, vec3(0.f, 0.f, 1.f));
@@ -174,7 +216,7 @@ namespace Nata
     bool Handles::Init()
     {
         SetEnable(true);
-        Shader = NAsset::Get<NShader>("res\\shaders\\unlit.vert");
+        Shader = NAsset::Get<NShader>("res\\assets\\UnlitShader");
         return Shader != nullptr;
     }
 
