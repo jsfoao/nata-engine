@@ -6,14 +6,14 @@ namespace Nata
 
 	CCollider::CCollider() : CSpatialComponent()
 	{
-		position = vec3(0.f);
+		Position = vec3(0.f);
+		Rotation = vec3(0.f);
+		Scale = vec3(1.f);
 		LockPosition = true;
 		LockRotation = true;
 		LockScale = false;
 		HandlesColor = vec3(1.f, 0.f, 0.f);
 		DrawHandles = true;
-
-
 	}
 
 	void CCollider::SuperBegin()

@@ -16,6 +16,7 @@ ETestObject::ETestObject() : EEntity()
 	ModelRendererComp->PropertyLayout.SetVec3("color", vec3(1.f));
 
 	Transform->Scale = vec3(1.f);
+	Enable = true;
 }
 
 void ETestObject::Begin()
@@ -30,8 +31,8 @@ void ETestObject::Tick(float dt)
 
 	if (NEngine::Input->GetKeyDown(GLFW_KEY_SPACE))
 	{
-		BoxColliderComp->Super_SetEnable(true);
-		Debug::Log(this);
+		BoxColliderComp->SetEnable(Enable);
+		Enable = !Enable;
 	}
 
 }

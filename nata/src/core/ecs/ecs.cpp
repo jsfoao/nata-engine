@@ -2,37 +2,32 @@
 namespace Nata
 {
 	unsigned int CTransform::TypeID = 0;
+	NWorld* NWorld::Current = nullptr;
 	NObject::NObject()
 	{
 		Name = "Object";
+		m_World = NWorld::Current;
 		m_ID = 0;
 		m_Began = false;
-		m_Enabled = false;
 		m_Destroyed = false;
+		m_Enabled = false;
 	}
 
 	void NObject::Super_SetEnable(bool enable)
 	{
-		std::tuple<NObject*, bool> enabledState;
-		std::get<0>(enabledState) = this;
-		std::get<1>(enabledState) = enable;
-		GetWorld()->m_EnableQueue.push(enabledState);
+		std::tuple<NObject*, bool> state = std::make_tuple(this, enable);
+		m_World->m_EnableQueue.push(state);
 	}
 
-	CComponent::CComponent()
+	CComponent::CComponent() : NObject()
 	{
+		m_PreEnable = false;
 		m_Owner = nullptr;
-		m_Enabled = true;
-	}
-
-	CComponent::CComponent(EEntity* owner)
-	{
-		m_Owner = owner;
-		m_Enabled = true;
 	}
 
 	void CComponent::Super_OnEnable()
 	{
+		m_Enabled = true;
 		OnEnable();
 	}
 
@@ -48,11 +43,14 @@ namespace Nata
 
 	void CComponent::Super_Tick(float dt)
 	{
+		if (!m_Enabled)
+			return;
 		Tick(dt);
 	}
 
 	void CComponent::Super_OnDisable()
 	{
+		m_Enabled = false;
 		OnDisable();
 	}
 
@@ -61,7 +59,7 @@ namespace Nata
 		OnDestroy();
 	}
 
-	void CComponent::SetEnable(bool enable)
+	void CComponent::SetEnable(bool enable, bool thisFrame)
 	{
 		m_PreEnable = enable;
 
@@ -69,15 +67,18 @@ namespace Nata
 		if (enable == m_Enabled)
 			return;
 
-		Super_SetEnable(enable);
-		EEntity* owner = GetOwner();
-		if (owner != nullptr)
+		// Force enableinstead  if component doesn't have owner or if being forced
+		if (m_Owner == nullptr || thisFrame == true)
 		{
-			if (!owner->m_Enabled)
-			{
-				return;
-			}
+			m_Enabled = enable;
+			return;
 		}
+
+		// Owner not enabled, component can't be enabled, only pre-enabled
+		if (!m_Owner->m_Enabled)
+			return;
+
+		Super_SetEnable(enable);
 		if (!m_Began)
 		{
 			m_Began = true;
@@ -96,12 +97,10 @@ namespace Nata
 		}
 	}
 
-	EEntity::EEntity()
+	EEntity::EEntity() : NObject()
 	{
+		SetEnable(true);
 		Transform = AddComponent<CTransform>();
-		m_World = nullptr;
-		m_Enabled = false;
-		m_Destroyed = false;
 	}
 
 	EEntity::~EEntity()
@@ -114,7 +113,12 @@ namespace Nata
 
 	void EEntity::Super_OnEnable()
 	{
+		m_Enabled = true;
 		m_World->m_Enabled.push_back(this);
+		for (auto& comp : m_Components)
+		{
+			comp->SetEnable(comp->m_PreEnable, true);
+		}
 		OnEnable();
 	}
 
@@ -135,6 +139,14 @@ namespace Nata
 
 	void EEntity::Super_OnDisable()
 	{
+		for (unsigned int i = 0; i < m_World->m_Enabled.size(); i++)
+		{
+			if (this == m_World->m_Enabled[i])
+			{
+				m_World->m_Enabled.erase(m_World->m_Enabled.begin() + i);
+				break;
+			}
+		}
 		OnDisable();
 	}
 
@@ -143,13 +155,14 @@ namespace Nata
 		OnDestroy();
 	}
 
-	void EEntity::SetEnable(bool enable)
+	void EEntity::SetEnable(bool enable, bool thisFrame)
 	{
 		// Object is already enabled
 		if (enable == m_Enabled)
 			return;
 
 		Super_SetEnable(enable);
+
 		if (!m_Began)
 		{
 			m_Began = true;
@@ -177,6 +190,10 @@ namespace Nata
 	NWorld::NWorld()
 	{
 		m_GameMode = nullptr;
+		if (NWorld::Current == nullptr)
+		{
+			NWorld::Current = this;
+		}
 	}
 
 	void NWorld::SetGameMode(GGameMode* gameMode)
@@ -241,27 +258,15 @@ namespace Nata
 		{
 			NObject* object = std::get<0>(m_EnableQueue.front());
 			bool enabled = std::get<1>(m_EnableQueue.front());
-			object->m_Enabled = enabled;
 
 			// Enable entities on queue from previous frame
-			if (object->m_Enabled == true)
+			if (enabled == true)
 			{
 				object->Super_OnEnable();
 			}
-			else
+			if (enabled == false)
 			{
 				object->Super_OnDisable();
-				EEntity* entity = dynamic_cast<EEntity*>(object);
-				if (entity == nullptr)
-					continue;
-
-				for (unsigned int i = 0; i < m_Enabled.size(); i++)
-				{
-					if (entity == m_Enabled[i])
-					{
-						m_Enabled.erase(m_Enabled.begin() + i);
-					}
-				}
 			}
 			m_EnableQueue.pop();
 		}
@@ -303,7 +308,7 @@ namespace Nata
 		}
 	}
 
-	CTransform::CTransform()
+	CTransform::CTransform() : CComponent()
 	{
 		Name = "Transform";
 		Position = vec3(0.f);
@@ -317,6 +322,7 @@ namespace Nata
 		Up = vec3(0.f);
 		m_Parent = nullptr;
 		m_IsParented = false;
+		m_Enabled = false;
 	}
 
 	void CTransform::SetParent(CTransform* parent)
@@ -363,12 +369,12 @@ namespace Nata
 		Forward = normalize(Forward);
 		Up = -cross(Right, Forward);
 
-		if (m_IsParented)
-		{
-			Position = m_Parent->Position + LocalPosition;
-			Rotation = m_Parent->Rotation + LocalRotation;
-			Scale = m_Parent->Scale + LocalScale - vec3(1.f);
-		}
+		//if (m_IsParented)
+		//{
+		//	Position = m_Parent->Position + LocalPosition;
+		//	Rotation = m_Parent->Rotation + LocalRotation;
+		//	Scale = m_Parent->Scale + LocalScale - vec3(1.f);
+		//}
 	}
 
 	CSpatialComponent::CSpatialComponent() : CComponent()

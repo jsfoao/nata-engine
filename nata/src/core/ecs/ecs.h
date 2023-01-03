@@ -1,9 +1,10 @@
 #pragma once
 #include <vector>
 #include <queue>
-#include "nata_math.h"
 #include <iostream>
 #include <string>
+#include <tuple>
+#include "nata_math.h"
 
 using namespace std;
 
@@ -26,6 +27,7 @@ namespace Nata
 #define INIT_ID(T) m_TypeID = TypeID
 
 	// Everything that is instanced, has ID and is serialized in engine
+	// Objects will get constructed in current active world
 	class NObject
 	{
 		friend class NWorld;
@@ -60,14 +62,14 @@ namespace Nata
 		virtual void Super_Tick(float dt) {};
 		virtual void Super_OnDisable() {};
 		virtual void Super_OnDestroy() {};
-
+	
 		inline NWorld* GetWorld() { return m_World; }
 		inline void SetWorld(NWorld* world) { m_World = world; }
 		inline bool IsEnabled() { return m_Enabled; }
 
 		// Enables object next frame
 		void Super_SetEnable(bool enable);
-		virtual void SetEnable(bool enable) {};
+		virtual void SetEnable(bool enable, bool thisFrame = false) {};
 		virtual void Super_Destroy() {};
 
 		inline unsigned int GetID() { return m_ID; }
@@ -85,7 +87,6 @@ namespace Nata
 
 	public:
 		CComponent();
-		CComponent(EEntity* owner);
 
 		void Super_OnEnable() override;
 		void Super_Awake() override;
@@ -96,7 +97,7 @@ namespace Nata
 
 		inline EEntity* GetOwner() { return m_Owner; }
 		inline void SetOwner(EEntity* owner) { m_Owner = owner; }
-		void SetEnable(bool enable) override;
+		void SetEnable(bool enable, bool thisFrame = false) override;
 		void Super_Destroy() override;
 	};
 
@@ -162,7 +163,7 @@ namespace Nata
 
 		inline NWorld* GetWorld() { return m_World; }
 		inline void SetWorld(NWorld* world) { m_World = world; }
-		void SetEnable(bool enable) override;
+		void SetEnable(bool enable, bool thisFrame = false) override;
 		void Super_Destroy() override;
 
 		// Create and add component of type
@@ -171,7 +172,8 @@ namespace Nata
 		{
 			T* comp = new T();
 			comp->m_Owner = this;
-			comp->m_Enabled = enable;
+			comp->SetEnable(enable);
+			comp->m_World = m_World;
 			m_Components.push_back(comp);
 			return comp;
 		}
@@ -229,6 +231,9 @@ namespace Nata
 	// space where entities are inserted in
 	class NWorld : public NObject
 	{
+	public:
+		static NWorld* Current;
+
 	protected:
 		GGameMode* m_GameMode;
 		// All entities in world, both enabled and disabled
@@ -265,45 +270,52 @@ namespace Nata
 
 		void Destroy(NObject* object);
 		template<typename T, class = typename std::enable_if<std::is_base_of<EEntity, T>::value>::type>
-		T* Instantiate(bool enable = true)
+		static T* Instantiate(bool enable = true)
 		{
 			T* entity = new T();
-			entity->m_World = this;
-			entity->Transform->Position = vec3(0.f);
-			entity->m_ID = m_Entities.size();
-		
-			m_Entities.push_back(entity);
-			entity->SetEnable(enable);
+			entity->m_ID = NWorld::Current->m_Entities.size();
+
+			NWorld::Current->m_Entities.push_back(entity);
 
 			return entity;
 		}
 
 		template<typename T, class = typename std::enable_if<std::is_base_of<EEntity, T>::value>::type>
-		T* Instantiate(vec3 position, bool enable = true)
+		static T* Instantiate(vec3 position, bool enable = true)
 		{
 			T* entity = new T();
-			entity->m_World = this;
 			entity->Transform->Position = position;
 			entity->Transform->Rotation = vec3(0.f);
-			entity->m_ID = m_Entities.size();
+			entity->m_ID = NWorld::Current->m_Entities.size();
 		
-			m_Entities.push_back(entity);		
-			entity->SetEnable(enable);
+			NWorld::Current->m_Entities.push_back(entity);
 			
 			return entity;
 		}
 
 		template<typename T, class = typename std::enable_if<std::is_base_of<EEntity, T>::value>::type>
-		T* Instantiate(vec3 position, vec3 rotation, bool enable = true)
+		static T* Instantiate(vec3 position, vec3 rotation, bool enable = true)
 		{
 			T* entity = new T();
-			entity->m_World = this;
 			entity->Transform->Position = position;
 			entity->Transform->Rotation = rotation;
-
-			entity->m_ID = m_Entities.size();
+			entity->m_ID = NWorld::Current->m_Entities.size();
+			
 			m_Entities.push_back(entity);
-			entity->SetEnable(enable);
+
+			return entity;
+		}
+
+		template<typename T, class = typename std::enable_if<std::is_base_of<EEntity, T>::value>::type>
+		static T* Instantiate(vec3 position, vec3 rotation, vec3 scale, bool enable = true)
+		{
+			T* entity = new T();
+			entity->Transform->Position = position;
+			entity->Transform->Rotation = rotation;
+			entity->Transform->Scale = scale;
+			entity->m_ID = NWorld::Current->m_Entities.size();
+			
+			NWorld::Current->m_Entities.push_back(entity);
 
 			return entity;
 		}

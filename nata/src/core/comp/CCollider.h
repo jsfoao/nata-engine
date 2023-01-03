@@ -12,7 +12,10 @@ namespace Nata
 		GENERATE_COMPONENT;
 
 	public:
-		vec3 position;
+		vec3 Position;
+		vec3 Rotation;
+		vec3 Scale;
+
 		// sets position to be the same as the owner
 		bool LockPosition;
 		bool LockRotation;

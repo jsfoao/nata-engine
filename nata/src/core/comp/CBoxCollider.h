@@ -15,6 +15,7 @@ namespace Nata
 	public:
 		CBoxCollider();
 		inline NBox GetBox() { return m_Box; }
+		void OnEnable() override;
 		void Begin() override;
 		void Tick(float dt) override;
 		void OnDisable() override;

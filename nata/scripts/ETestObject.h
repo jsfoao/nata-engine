@@ -8,6 +8,7 @@ class ETestObject : public EEntity
 public:
 	CModelRenderer* ModelRendererComp;
 	CBoxCollider* BoxColliderComp;
+	bool Enable;
 
 public:
 	ETestObject();
