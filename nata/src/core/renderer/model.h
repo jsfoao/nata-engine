@@ -1,7 +1,7 @@
 #pragma once
 #include "core/asset_loader.h"
 #include "renderable.h"
-#include "core/glm_math.h"
+#include "nata_math.h"
 #include <vector>
 #include "texture.h"
 #include "shader.h"
@@ -27,7 +27,6 @@ namespace Nata
 
 	public:
 		NModel(std::string path);
-		static NModel* Init(std::string path);
 		void Draw() override;
 		void AddTexture(NTexture texture)
 		{
@@ -41,5 +40,7 @@ namespace Nata
 		void ProcessNode(aiNode* node, const aiScene* scene);
 		NMesh ProcessMesh(aiMesh* mesh, const aiScene* scene);
 		vector<NTexture> LoadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName);
+
+		static bool Create(std::string path, std::string dest, std::string name);
 	};
 }

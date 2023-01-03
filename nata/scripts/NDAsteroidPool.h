@@ -1,7 +1,7 @@
 #pragma once
-#include "core/ecs/ecs.h"
-#include "core/ecs/dots.h"
-#include "core/glm_math.h"
+#include "ecs/ecs.h"
+#include "ecs/dots.h"
+#include "nata_math.h"
 #include <queue>
 
 namespace Nata
@@ -32,8 +32,8 @@ namespace Nata
 			MinRotationSpeed = 50.f;
 			MaxRotationSpeed = 100.f;
 			ZLimit = 40.f;
-			Model = NAssetLoader::Get<NModel>("res\\models\\rock_by_dommk.obj");
-			Shader = NAssetLoader::Get<NShader>("res\\shaders\\diffuse.vert");
+			Model = NAsset::Get<NModel>("res\\models\\rock_by_dommk.obj");
+			Shader = NAsset::Get<NShader>("res\\shaders\\diffuse.vert");
 			Color = vec3(0.5f);
 
 			for (unsigned int i = 0; i < 6; i++)
@@ -61,8 +61,8 @@ namespace Nata
 				TransformDelta[i].Rotation = rotationSpeed * randomAxis;
 				TransformDelta[i].Scale = vec3(0.f);
 
-				BoxCollider[i].LockOwner = false;
-				BoxCollider[i].Bounds = Transform[i].Scale * 80.f;
+				BoxCollider[i].LockPosition = false;
+				BoxCollider[i].Transform->Scale = Transform[i].Scale * 80.f;
 
 				ModelRenderer[i].SetRenderableAndShader(Model, Shader);
 				ModelRenderer[i].PropertyLayout.AddVec3("color");
@@ -87,20 +87,20 @@ namespace Nata
 				Transform[id].Scale += TransformDelta[id].Scale;
 
 				// collisions
-				BoxCollider[id].Position = Transform[id].Position;
+				BoxCollider[id].Transform->Position = Transform[id].Position;
 
-				vec3 hBound = BoxCollider[id].Bounds / 2.f;
+				vec3 hBound = BoxCollider[id].Transform->Position / 2.f;
 				NBox box = NBox(
-					NRange(BoxCollider[id].Position.x - hBound.x, BoxCollider[id].Position.x + hBound.x),
-					NRange(BoxCollider[id].Position.y - hBound.y, BoxCollider[id].Position.y + hBound.y),
-					NRange(BoxCollider[id].Position.z - hBound.z, BoxCollider[id].Position.z + hBound.z)
+					NRange(BoxCollider[id].Transform->Position.x - hBound.x, BoxCollider[id].Transform->Position.x + hBound.x),
+					NRange(BoxCollider[id].Transform->Position.y - hBound.y, BoxCollider[id].Transform->Position.y + hBound.y),
+					NRange(BoxCollider[id].Transform->Position.z - hBound.z, BoxCollider[id].Transform->Position.z + hBound.z)
 				);
 
 				bool disabled = false;
 				std::vector<CBoxCollider*> boxColliders = GetAllComponentsOfType<CBoxCollider>(world);
 				for (CBoxCollider* collider : boxColliders)
 				{
-					if (collider->IsEnable() == false)
+					if (collider->IsEnabled() == false)
 					{
 						continue;
 					}

@@ -15,8 +15,8 @@
 // Texture library
 #include "stb_image.h"
 
-// OpenGL math library
-#include "core/glm_math.h"
+// glm math library plus nata math extensions
+#include "core/nata_math.h"
 
 // Nata
 #include "core/core.h"
@@ -38,6 +38,7 @@
 
 // Nata :: Editor
 #include "core/editor/handles.h"
+#include "core/debug.h"
 
 using namespace Nata;
 using namespace glm;

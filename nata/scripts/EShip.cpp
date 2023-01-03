@@ -9,15 +9,15 @@ namespace Nata
 		MeshRenderer = AddComponent<CModelRenderer>();
 		BoxCollider = AddComponent<CBoxCollider>();
 
-		NShader* shader = NAssetLoader::Get<NShader>("res\\shaders\\diffuse.vert");
-		Model = NAssetLoader::Get<NModel>("res\\models\\LowPolyFiatUNO.obj");
+		NShader* shader = NAsset::Get<NShader>("res\\shaders\\diffuse.vert");
+		Model = NAsset::Get<NModel>("res\\models\\LowPolyFiatUNO.obj");
 
 		MeshRenderer->SetRenderableAndShader(Model, shader);
 		MeshRenderer->PropertyLayout.AddVec3("color");
 
 		MeshRenderer->LocalRotation = vec3(0.f, 180.f, 0.f);
 		MeshRenderer->LocalPosition = vec3(0.f, -1.f, 0.f);
-		BoxCollider->Bounds = vec3(2.f, 2.f, 4.f);
+		BoxCollider->Transform->Scale = vec3(2.f, 2.f, 4.f);
 		BoxCollider->DrawHandles = false;
 
 		Input = vec3(0.f);

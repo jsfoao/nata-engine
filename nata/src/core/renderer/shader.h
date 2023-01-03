@@ -26,8 +26,6 @@ namespace Nata
 		NShader();
 		NShader(const char* vertPath, const char* fragPath);
 
-		static NShader* Init(const char* vertPath, const char* fragPath);
-
 		// equivalent to glUseProgram(this)
 		void Enable();
 
@@ -48,6 +46,8 @@ namespace Nata
 		
 		// Creates program and attaches shaders to it
 		bool Load() override;
+
+		static bool Create(std::string vertPath, std::string fragPath, std::string dest, std::string name);
 
 	protected:
 		unsigned int GetUniformLocation(const char* name);

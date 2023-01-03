@@ -3,7 +3,7 @@
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 #include "key.h"
-#include "core/glm_math.h"
+#include "nata_math.h"
 #include <vector>
 
 namespace Nata

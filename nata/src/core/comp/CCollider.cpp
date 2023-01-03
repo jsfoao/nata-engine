@@ -4,13 +4,58 @@ namespace Nata
 {
 	INIT_COMPONENT(CCollider);
 
-	CCollider::CCollider() : CComponent()
+	CCollider::CCollider() : CSpatialComponent()
 	{
-		INIT_ID(CCollider);
 		Position = vec3(0.f);
-		LockOwner = true;
+		Rotation = vec3(0.f);
+		Scale = vec3(1.f);
+		LockPosition = true;
+		LockRotation = true;
+		LockScale = false;
 		HandlesColor = vec3(1.f, 0.f, 0.f);
 		DrawHandles = true;
+	}
+
+	void CCollider::SuperBegin()
+	{
+		if (GetOwner() != nullptr)
+		{
+			m_LockTransform = GetOwner()->Transform;
+		}
+		else
+		{
+			m_LockTransform = Transform;
+		}
+
+		if (LockPosition)
+		{
+			Transform->Position = m_LockTransform->Position;
+		}
+		if (LockRotation)
+		{
+			Transform->Rotation = m_LockTransform->Rotation;
+		}
+		if (LockScale)
+		{
+			Transform->Scale = m_LockTransform->Scale;
+		}
+	}
+
+	void CCollider::SuperTick(float dt)
+	{
+		if (LockPosition)
+		{
+			Transform->Position = m_LockTransform->Position;
+		}
+		if (LockRotation)
+		{
+			Transform->Rotation = m_LockTransform->Rotation;
+		}
+		if (LockScale)
+		{
+			Transform->Scale = m_LockTransform->Scale;
+		}
+		Transform->Tick(dt);
 	}
 
 	void CCollider::CallOnCollisionCallback(CCollider* owner, CCollider* other)

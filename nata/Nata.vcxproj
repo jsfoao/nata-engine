@@ -57,7 +57,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NT_PLATFORM_WINDOWS;GLEW_STATIC;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)src;$(SolutionDir)res\scripts;$(SolutionDir)res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)src;$(SolutionDir)scripts;$(SolutionDir)res;$(SolutionDir)src\core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -99,20 +99,24 @@ xcopy "$(SolutionDir)res" "$(TargetDir)res" /e /y /i /r</Command>
     <ClCompile Include="include\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="include\imgui\imgui_tables.cpp" />
     <ClCompile Include="include\imgui\imgui_widgets.cpp" />
-    <ClInclude Include="res\scripts\EAsteroid.h" />
-    <ClInclude Include="res\scripts\EEnemy.h" />
-    <ClInclude Include="res\scripts\EFollowCamera.h" />
-    <ClInclude Include="res\scripts\EProjectile.h" />
-    <ClInclude Include="res\scripts\EShip.h" />
-    <ClInclude Include="res\scripts\GSpaceShooter.h" />
-    <ClInclude Include="res\scripts\NDAsteroidPool.h" />
+    <ClInclude Include="scripts\EAsteroid.h" />
+    <ClInclude Include="scripts\EEnemy.h" />
+    <ClInclude Include="scripts\EFollowCamera.h" />
+    <ClInclude Include="scripts\EProjectile.h" />
+    <ClInclude Include="scripts\EShip.h" />
+    <ClInclude Include="scripts\ETestObject.h" />
+    <ClInclude Include="scripts\GSpaceShooter.h" />
+    <ClInclude Include="scripts\GTests.h" />
+    <ClInclude Include="scripts\NDAsteroidPool.h" />
     <ClInclude Include="src\app.cpp" />
-    <ClCompile Include="res\scripts\EAsteroid.cpp" />
-    <ClCompile Include="res\scripts\EEnemy.cpp" />
-    <ClCompile Include="res\scripts\EFollowCamera.cpp" />
-    <ClCompile Include="res\scripts\EProjectile.cpp" />
-    <ClCompile Include="res\scripts\EShip.cpp" />
-    <ClCompile Include="res\scripts\GSpaceShooter.cpp" />
+    <ClCompile Include="scripts\EAsteroid.cpp" />
+    <ClCompile Include="scripts\EEnemy.cpp" />
+    <ClCompile Include="scripts\EFollowCamera.cpp" />
+    <ClCompile Include="scripts\EProjectile.cpp" />
+    <ClCompile Include="scripts\EShip.cpp" />
+    <ClCompile Include="scripts\ETestObject.cpp" />
+    <ClCompile Include="scripts\GSpaceShooter.cpp" />
+    <ClCompile Include="scripts\GTests.cpp" />
     <ClCompile Include="src\core\asset_loader.cpp" />
     <ClCompile Include="src\core\comp\CBoxCollider.cpp" />
     <ClCompile Include="src\core\comp\CCamera.cpp" />
@@ -120,9 +124,10 @@ xcopy "$(SolutionDir)res" "$(TargetDir)res" /e /y /i /r</Command>
     <ClCompile Include="src\core\comp\CModelRenderer.cpp" />
     <ClCompile Include="src\core\comp\collisionutils.cpp" />
     <ClCompile Include="src\core\comp\CSphereCollider.cpp" />
+    <ClCompile Include="src\core\debug.cpp" />
     <ClCompile Include="src\core\ecs\ecs.cpp" />
     <ClCompile Include="src\core\editor\handles.cpp" />
-    <ClCompile Include="src\core\glm_math.cpp" />
+    <ClCompile Include="src\core\nata_math.cpp" />
     <ClCompile Include="src\core\input.cpp" />
     <ClCompile Include="src\core\renderer\buffer.cpp" />
     <ClCompile Include="src\core\core.cpp" />
@@ -1105,8 +1110,9 @@ xcopy "$(SolutionDir)res" "$(TargetDir)res" /e /y /i /r</Command>
     <ClInclude Include="src\core\core.h" />
     <ClInclude Include="src\core\comp\CCamera.h" />
     <ClInclude Include="src\core\comp\CModelRenderer.h" />
+    <ClInclude Include="src\core\debug.h" />
     <ClInclude Include="src\core\ecs\dots.h" />
-    <ClInclude Include="src\core\ecs\ECamera.hpp" />
+    <ClInclude Include="src\core\comp\ECamera.hpp" />
     <ClInclude Include="res\scripts\NShooterGameMode.hpp" />
     <ClInclude Include="res\scripts\EOurObject.hpp" />
     <ClInclude Include="src\core\ecs\test_entity.hpp" />
@@ -1118,7 +1124,7 @@ xcopy "$(SolutionDir)res" "$(TargetDir)res" /e /y /i /r</Command>
     <ClInclude Include="src\core\ecs\world.hpp" />
     <ClInclude Include="src\core\editor\editor.h" />
     <ClInclude Include="src\core\editor\handles.h" />
-    <ClInclude Include="src\core\glm_math.h" />
+    <ClInclude Include="src\core\nata_math.h" />
     <ClInclude Include="src\core\input.h" />
     <ClInclude Include="src\core\key.h" />
     <ClInclude Include="src\core\ecs\object_pool.h" />

@@ -8,18 +8,14 @@ namespace Nata
 	class CSphereCollider;
 	class CBoxCollider: public CCollider
 	{
-		GENERATE_COMPONENT;
-
-	public:
-		vec3 Position;
-		vec3 Bounds;
-		
+		GENERATE_COMPONENT;		
 	protected:
 		NBox m_Box;
 
 	public:
 		CBoxCollider();
 		inline NBox GetBox() { return m_Box; }
+		void OnEnable() override;
 		void Begin() override;
 		void Tick(float dt) override;
 		void OnDisable() override;

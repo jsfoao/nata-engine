@@ -9,13 +9,13 @@ namespace Nata
 		MeshRenderer = AddComponent<CModelRenderer>();
 		BoxCollider = AddComponent<CBoxCollider>();
 
-		NShader* shader = NAssetLoader::Get<NShader>("res\\shaders\\unlit.vert");
-		Model = NAssetLoader::Get<NModel>("res\\models\\cube.obj");
+		NShader* shader = NAsset::Get<NShader>("unlit");
+		Model = NAsset::Get<NModel>("cube");
 
 		MeshRenderer->SetRenderableAndShader(Model, shader);
 		MeshRenderer->PropertyLayout.AddVec3("color");
 
-		BoxCollider->Bounds = vec3(1.2f);
+		BoxCollider->Transform->Scale = vec3(1.2f);
 		BoxCollider->DrawHandles = false;
 
 		Transform->Scale = vec3(0.4f);

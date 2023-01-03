@@ -102,31 +102,37 @@
     <ClCompile Include="src\core\comp\CCollider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="res\scripts\EShip.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="res\scripts\EProjectile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="res\scripts\EEnemy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="res\scripts\GSpaceShooter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="res\scripts\EFollowCamera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\glm_math.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="res\scripts\EAsteroid.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\asset_loader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\object_pool.cpp">
+    <ClCompile Include="scripts\EAsteroid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="scripts\EEnemy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="scripts\EFollowCamera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="scripts\EProjectile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="scripts\EShip.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="scripts\ETestObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="scripts\GSpaceShooter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="scripts\GTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\nata_math.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\debug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -174,9 +180,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\stb_image.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\glm_math.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\asio.hpp">
@@ -3074,9 +3077,6 @@
     <ClInclude Include="src\core\ecs\test_gamemode.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\ecs\ECamera.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\core\comp\CCamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -3113,28 +3113,49 @@
     <ClInclude Include="src\core\comp\collisionutils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="res\scripts\EShip.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="res\scripts\EProjectile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="res\scripts\EEnemy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="res\scripts\GSpaceShooter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="res\scripts\EFollowCamera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="res\scripts\EAsteroid.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\core\asset_loader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\object_pool.h">
+    <ClInclude Include="scripts\EAsteroid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scripts\EEnemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scripts\EFollowCamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scripts\EProjectile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scripts\EShip.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scripts\ETestObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scripts\GSpaceShooter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scripts\GTests.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scripts\NDAsteroidPool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\ecs\dots.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\comp\ECamera.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\nata_math.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\ecs\object_pool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\debug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -3161,19 +3182,6 @@
     <None Include="bin\SDL2_image.dll" />
     <None Include="bin\SDL2_ttf.dll" />
     <None Include="bin\zlib1.dll" />
-    <None Include="src\shaders\basic.frag" />
-    <None Include="src\shaders\basic.vert" />
-    <None Include="src\shaders\test.vert" />
-    <None Include="src\shaders\test.frag" />
-    <None Include="src\shaders\test2.frag" />
-    <None Include="src\shaders\transform.vert" />
-    <None Include="src\shaders\transform.frag" />
-    <None Include="src\shaders\coordinates.vert" />
-    <None Include="src\shaders\coordinates.frag" />
-    <None Include="src\shaders\lighting.vert" />
-    <None Include="src\shaders\lighting.frag" />
-    <None Include="src\shaders\unlit.vert" />
-    <None Include="src\shaders\unlit.frag" />
     <None Include="include\glm\detail\func_common.inl">
       <Filter>Header Files</Filter>
     </None>
@@ -3582,12 +3590,25 @@
     <None Include="include\glm\gtx\wrap.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="src\shaders\lit.vert" />
-    <None Include="src\shaders\lit.frag" />
     <None Include="bin\assimp-vc143-mtd.dll" />
-    <None Include="src\shaders\unlit_textured.frag" />
-    <None Include="src\shaders\unlit_textured.vert" />
-    <None Include="src\shaders\diffuse.frag" />
-    <None Include="src\shaders\diffuse.vert" />
+    <None Include="res\shaders\diffuse.frag" />
+    <None Include="res\shaders\diffuse.vert" />
+    <None Include="res\shaders\lit.frag" />
+    <None Include="res\shaders\lit.vert" />
+    <None Include="res\shaders\basic.frag" />
+    <None Include="res\shaders\basic.vert" />
+    <None Include="res\shaders\coordinates.frag" />
+    <None Include="res\shaders\coordinates.vert" />
+    <None Include="res\shaders\lighting.frag" />
+    <None Include="res\shaders\lighting.vert" />
+    <None Include="res\shaders\unlit.frag" />
+    <None Include="res\shaders\unlit.vert" />
+    <None Include="res\shaders\test.frag" />
+    <None Include="res\shaders\test.vert" />
+    <None Include="res\shaders\test2.frag" />
+    <None Include="res\shaders\transform.frag" />
+    <None Include="res\shaders\transform.vert" />
+    <None Include="res\shaders\unlit_textured.frag" />
+    <None Include="res\shaders\unlit_textured.vert" />
   </ItemGroup>
 </Project>

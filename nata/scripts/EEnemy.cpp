@@ -9,11 +9,8 @@ namespace Nata
 
 		BoxCollider->AddOnCollisionEnterCallback(OnCollisionEnter);
 
-		Shader = new NShader("src\\shaders\\diffuse.vert", "src\\shaders\\diffuse.frag");
-		Model = new NModel("res\\models\\cube.obj");
-
 		ModelRenderer->SetRenderableAndShader(Model, Shader);
-		BoxCollider->Bounds = vec3(2.f);
+		BoxCollider->Transform->Scale = vec3(2.f);
 
 		Speed = 10.f;
 		Zlimit = 10.f;

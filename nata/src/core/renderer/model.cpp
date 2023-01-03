@@ -2,20 +2,9 @@
 
 namespace Nata
 {
-	NModel::NModel(string path)
+	NModel::NModel(string path) 
 	{
-		m_Path = path;
-		if (Load() == false)
-		{
-			std::cout << "NMODEL::LOAD : Couldnt load model" << std::endl;
-			return;
-		};
-		NAssetLoader::Submit(this);
-	}
-
-	NModel* NModel::Init(std::string path)
-	{
-		return new NModel(path);
+		m_OrigPath = path;
 	}
 
 	void NModel::Draw()
@@ -33,7 +22,7 @@ namespace Nata
 	bool NModel::Load()
 	{
 		Assimp::Importer importer;
-		const aiScene* scene = importer.ReadFile(m_Path, aiProcess_Triangulate | aiProcess_FlipUVs);
+		const aiScene* scene = importer.ReadFile(m_OrigPath, aiProcess_Triangulate | aiProcess_FlipUVs);
 
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 		{
@@ -178,5 +167,22 @@ namespace Nata
 			}
 		}
 		return textures;
+	}
+	bool NModel::Create(std::string path, std::string dest, std::string name)
+	{
+		NModel* model = new NModel(path);
+		model->m_OrigPath = path;
+		model->m_Path = dest;
+		model->m_Name = name;
+		model->m_Type = AssetType::Model;
+		bool valid = model->Load();
+		if (!valid)
+		{
+			std::string message = "NMODEL::CREATE : Failed to create asset " + name;
+			std::cout << message << std::endl;
+			return false;
+		}
+		NAsset::Submit(model);
+		return true;
 	}
 }

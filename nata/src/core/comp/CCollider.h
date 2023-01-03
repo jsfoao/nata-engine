@@ -7,18 +7,24 @@ namespace Nata
 {
 	class CBoxCollider;
 	class CSphereCollider;
-	class CCollider : public CComponent
+	class CCollider : public CSpatialComponent
 	{
 		GENERATE_COMPONENT;
 
 	public:
 		vec3 Position;
+		vec3 Rotation;
+		vec3 Scale;
+
 		// sets position to be the same as the owner
-		bool LockOwner;
+		bool LockPosition;
+		bool LockRotation;
+		bool LockScale;
 		vec3 HandlesColor;
 		bool DrawHandles;
 
 	protected:
+		CTransform* m_LockTransform;
 		std::vector<void(*)(CCollider*, CCollider*)> m_OnCollisionCallbacks;
 		std::vector<void(*)(CCollider*, CCollider*)> m_OnCollisionEnterCallbacks;
 		std::vector<void(*)(CCollider*, CCollider*)> m_OnCollisionExitCallbacks;
@@ -30,6 +36,8 @@ namespace Nata
 
 	public:
 		CCollider();
+		void SuperBegin();
+		void SuperTick(float dt);
 
 		inline void AddOnCollisionCallback(void(*ptr)(CCollider*, CCollider*))
 		{

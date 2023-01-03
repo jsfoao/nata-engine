@@ -13,18 +13,6 @@ namespace Nata
 	{
 		m_VertPath = vertPath;
 		m_FragPath = fragPath;
-		m_Path = vertPath;
-		if (Load() == false)
-		{
-			std::cout << "NSHADER::LOAD : Couldnt load shader" << std::endl;
-			return;
-		};
-		NAssetLoader::Submit(this);
-	}
-
-	NShader* NShader::Init(const char* vertPath, const char* fragPath)
-	{
-		return new NShader(vertPath, fragPath);
 	}
 
 	bool NShader::Load()
@@ -82,6 +70,24 @@ namespace Nata
 		glDeleteShader(fragment);
 
 		m_ID = program;
+		return true;
+	}
+
+	bool NShader::Create(std::string vertPath, std::string fragPath, std::string dest, std::string name)
+	{
+		NShader* shader = new NShader(vertPath.c_str(), fragPath.c_str());
+		shader->m_OrigPath = vertPath;
+		shader->m_Path = dest;
+		shader->m_Name = name;
+		shader->m_Type = AssetType::Shader;
+		bool valid = shader->Load();
+		if (!valid)
+		{
+			std::string message = "NSHADER::CREATE : Failed to create asset " + dest;
+			std::cout << message << std::endl;
+			return false;
+		}
+		NAsset::Submit(shader);
 		return true;
 	}
 
