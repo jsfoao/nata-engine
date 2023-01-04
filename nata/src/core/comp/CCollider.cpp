@@ -22,10 +22,6 @@ namespace Nata
 		{
 			m_LockTransform = GetOwner()->Transform;
 		}
-		else
-		{
-			m_LockTransform = Transform;
-		}
 
 		if (LockPosition)
 		{

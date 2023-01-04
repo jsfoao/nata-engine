@@ -97,6 +97,7 @@ namespace Nata
 
 		inline EEntity* GetOwner() { return m_Owner; }
 		inline void SetOwner(EEntity* owner) { m_Owner = owner; }
+		inline bool IsPreEnabled() { return m_PreEnable; }
 		void SetEnable(bool enable, bool thisFrame = false) override;
 		void Super_Destroy() override;
 	};
@@ -273,6 +274,7 @@ namespace Nata
 		static T* Instantiate(bool enable = true)
 		{
 			T* entity = new T();
+			entity->SetEnable(enable);
 			entity->m_ID = NWorld::Current->m_Entities.size();
 
 			NWorld::Current->m_Entities.push_back(entity);
@@ -284,6 +286,7 @@ namespace Nata
 		static T* Instantiate(vec3 position, bool enable = true)
 		{
 			T* entity = new T();
+			entity->SetEnable(enable);
 			entity->Transform->Position = position;
 			entity->Transform->Rotation = vec3(0.f);
 			entity->m_ID = NWorld::Current->m_Entities.size();
@@ -297,6 +300,7 @@ namespace Nata
 		static T* Instantiate(vec3 position, vec3 rotation, bool enable = true)
 		{
 			T* entity = new T();
+			entity->SetEnable(enable);
 			entity->Transform->Position = position;
 			entity->Transform->Rotation = rotation;
 			entity->m_ID = NWorld::Current->m_Entities.size();
@@ -310,6 +314,7 @@ namespace Nata
 		static T* Instantiate(vec3 position, vec3 rotation, vec3 scale, bool enable = true)
 		{
 			T* entity = new T();
+			entity->SetEnable(enable);
 			entity->Transform->Position = position;
 			entity->Transform->Rotation = rotation;
 			entity->Transform->Scale = scale;

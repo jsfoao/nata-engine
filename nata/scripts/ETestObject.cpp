@@ -3,10 +3,9 @@
 ETestObject::ETestObject() : EEntity()
 {
 	Name = "TestObject";
-	BoxColliderComp = AddComponent<CBoxCollider>(false);
+	BoxColliderComp = AddComponent<CBoxCollider>();
 	BoxColliderComp->DrawHandles = true;
-	BoxColliderComp->LockPosition = true;
-	BoxColliderComp->Transform->Scale = vec3(2.f);
+	BoxColliderComp->Transform->Scale = vec3(1.f);
 
 	ModelRendererComp = AddComponent<CModelRenderer>();
 	NModel* model = NAsset::Get<NModel>("res\\assets\\CubeTest");
@@ -28,11 +27,4 @@ void ETestObject::Tick(float dt)
 {
 	Transform->Rotation += vec3(0.f, 90.f, 0.f) * dt;
 	Handles::DrawHandles(BoxColliderComp->Transform, 2.f);
-
-	if (NEngine::Input->GetKeyDown(GLFW_KEY_SPACE))
-	{
-		BoxColliderComp->SetEnable(Enable);
-		Enable = !Enable;
-	}
-
 }
