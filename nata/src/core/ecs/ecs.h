@@ -124,6 +124,7 @@ namespace Nata
 
 	public:
 		CTransform();
+		CTransform(vec3 position, vec3 rotation, vec3 scale);
 
 		void Tick(float dt) override;
 		// Set parent to nullptr to remove parent
@@ -305,7 +306,7 @@ namespace Nata
 			entity->Transform->Rotation = rotation;
 			entity->m_ID = NWorld::Current->m_Entities.size();
 			
-			m_Entities.push_back(entity);
+			NWorld::Current->m_Entities.push_back(entity);
 
 			return entity;
 		}

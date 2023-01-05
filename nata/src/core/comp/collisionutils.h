@@ -1,4 +1,6 @@
 #pragma once
+#include <vector>
+#include "ecs/ecs.h"
 #include "nata_math.h"
 
 namespace Nata
@@ -50,4 +52,5 @@ namespace Nata
 	bool Intersect(NBox a, NBox b);
 	bool Intersect(NSphere a, NSphere b);
 	bool Intersect(NSphere s, NBox b);
+	bool IntersectSAT(const CTransform& t1, const CTransform& t2);
 }

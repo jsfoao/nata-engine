@@ -328,6 +328,13 @@ namespace Nata
 		m_Enabled = false;
 	}
 
+	CTransform::CTransform(vec3 position, vec3 rotation, vec3 scale) : CComponent()
+	{
+		Position = position;
+		Rotation = rotation;
+		Scale = scale;
+	}
+
 	void CTransform::SetParent(CTransform* parent)
 	{
 		if (parent == nullptr)

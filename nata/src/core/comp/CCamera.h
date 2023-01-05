@@ -5,7 +5,7 @@
 
 namespace Nata
 {
-	class CCamera : public CComponent
+	class CCamera : public CSpatialComponent
 	{
 		GENERATE_COMPONENT;
 	private:
@@ -18,6 +18,7 @@ namespace Nata
 	public:
 		CCamera();
 
+		void Begin() override;
 		void Tick(float deltaTime) override;
 
 		inline void SetFov(float fov)

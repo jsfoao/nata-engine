@@ -51,10 +51,10 @@ namespace Nata
         {
             if (typeid(*entity).name() == typeid(T).name())
             {
-                entities.push_back(entity);
+                entities.push_back((T*)entity);
             }
         }
-        return (T*)entities;
+        return entities;
     }
 
     template<typename T, class = typename std::enable_if<std::is_base_of<CComponent, T>::value>::type>

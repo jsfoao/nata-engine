@@ -27,9 +27,9 @@ namespace Nata
 	{
 	public:
 		//mesh data
-		vector<Vertex> vertices;
-		vector<unsigned int> indices;
-		vector<NTexture> textures;
+		vector<Vertex> Vertices;
+		vector<unsigned int> Indices;
+		vector<NTexture> Textures;
 
 		bool DrawArrays;
 		int DrawMode;
@@ -52,7 +52,7 @@ namespace Nata
 		void DrawArr();
 		void AddTexture(NTexture texture)
 		{
-			textures.push_back(texture);
+			Textures.push_back(texture);
 		}
 
 		void SetVAO(VAO* vao)

@@ -6,9 +6,6 @@
 class GTests : public GGameMode
 {
 public:
-	ETestObject* object;
-
-public:
 	void Begin() override;
 	void Tick(float dt) override;
 };

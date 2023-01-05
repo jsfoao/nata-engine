@@ -59,4 +59,15 @@ namespace Nata
 		float dist = glm::sqrt(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z);
 		return dist < s.Radius;
 	}
+
+	bool IntersectSAT(const CTransform& t1, const CTransform& t2)
+	{
+		vec3 axis[6] = { t1.Forward, t1.Right, t1.Up, t2.Forward, t2.Right, t2.Up };
+
+		for (auto& axi : axis)
+		{
+			// do axis check
+		}
+		return false;
+	}
 }

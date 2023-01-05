@@ -4,13 +4,13 @@ namespace Nata
 {
 	NMesh::NMesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<NTexture> textures, bool drawArrays, int drawMode)
 	{
-		this->vertices = vertices;
-		this->indices = indices;
-		this->textures = textures;
+		this->Vertices = vertices;
+		this->Indices = indices;
+		this->Textures = textures;
 
 		m_VAO = new VAO();
-		m_VBO = new VBO(&this->vertices[0], this->vertices.size() * sizeof(Vertex));
-		m_IBO = new IBO(&this->indices[0], this->indices.size());
+		m_VBO = new VBO(&this->Vertices[0], this->Vertices.size() * sizeof(Vertex));
+		m_IBO = new IBO(&this->Indices[0], this->Indices.size());
 
 		DrawArrays = drawArrays;
 		DrawMode = drawMode;
@@ -20,11 +20,11 @@ namespace Nata
 
 	NMesh::NMesh(vector<Vertex> vertices, vector<NTexture> textures, bool drawArrays, int drawMode)
 	{
-		this->vertices = vertices;
-		this->textures = textures;
+		this->Vertices = vertices;
+		this->Textures = textures;
 
 		m_VAO = new VAO();
-		m_VBO = new VBO(&this->vertices[0], this->vertices.size() * sizeof(Vertex));
+		m_VBO = new VBO(&this->Vertices[0], this->Vertices.size() * sizeof(Vertex));
 
 		DrawArrays = drawArrays;
 		DrawMode = drawMode;
@@ -34,11 +34,11 @@ namespace Nata
 
 	NMesh::NMesh(vector<float> vertices, vector<NTexture> textures, bool drawArrays, int drawMode)
 	{
-		this->vertices = ToVertexData(vertices);
-		this->textures = textures;
+		this->Vertices = ToVertexData(vertices);
+		this->Textures = textures;
 
 		m_VAO = new VAO();
-		m_VBO = new VBO(&this->vertices[0], this->vertices.size() * sizeof(Vertex));
+		m_VBO = new VBO(&this->Vertices[0], this->Vertices.size() * sizeof(Vertex));
 
 		DrawArrays = drawArrays;
 		DrawMode = drawMode;
@@ -48,10 +48,10 @@ namespace Nata
 
 	NMesh::NMesh(vector<float> vertices, bool drawArrays, int drawMode)
 	{
-		this->vertices = ToVertexData(vertices);
+		this->Vertices = ToVertexData(vertices);
 
 		m_VAO = new VAO();
-		m_VBO = new VBO(&this->vertices[0], this->vertices.size() * sizeof(Vertex));
+		m_VBO = new VBO(&this->Vertices[0], this->Vertices.size() * sizeof(Vertex));
 
 		DrawArrays = drawArrays;
 		DrawMode = drawMode;
@@ -61,18 +61,18 @@ namespace Nata
 
 	void NMesh::BindResources()
 	{
-		if (this->textures.size() == 0)
+		if (this->Textures.size() == 0)
 			return;
 
 		Shader->Enable();
 
 		unsigned int diffuseNr = 0;
 		unsigned int specularNr = 0;
-		for (unsigned int i = 0; i < this->textures.size(); i++)
+		for (unsigned int i = 0; i < this->Textures.size(); i++)
 		{
 			glActiveTexture(GL_TEXTURE0 + i);
 			string number;
-			string name = this->textures[i].Type;
+			string name = this->Textures[i].Type;
 			if (name == TEXTURE_DIFFUSE)
 			{
 				number = to_string(diffuseNr);
@@ -88,7 +88,7 @@ namespace Nata
 				continue;
 			}
 			Shader->SetUniform1i((name + number).c_str(), i);
-			glBindTexture(GL_TEXTURE_2D, this->textures[i].m_ID);
+			glBindTexture(GL_TEXTURE_2D, this->Textures[i].m_ID);
 		}
 	}
 
@@ -111,7 +111,7 @@ namespace Nata
 
 		m_VAO->Bind();
 		m_IBO->Bind();
-		glDrawElements(GL_TRIANGLES, this->indices.size(), GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, this->Indices.size(), GL_UNSIGNED_INT, 0);
 		m_VAO->Unbind();
 		m_IBO->Unbind();
 	}
@@ -129,7 +129,7 @@ namespace Nata
 		Shader->SetUniformMat4("model", model);
 
 		m_VAO->Bind();
-		glDrawArrays(DrawMode, 0, vertices.size());
+		glDrawArrays(DrawMode, 0, Vertices.size());
 		m_VAO->Unbind();
 	}
 
