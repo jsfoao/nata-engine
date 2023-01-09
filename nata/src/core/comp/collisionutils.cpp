@@ -60,14 +60,188 @@ namespace Nata
 		return dist < s.Radius;
 	}
 
-	bool IntersectSAT(const CTransform& t1, const CTransform& t2)
+	bool IntersectSAT(NShape& s1, NShape& s2)
 	{
-		vec3 axis[6] = { t1.Forward, t1.Right, t1.Up, t2.Forward, t2.Right, t2.Up };
-
-		for (auto& axi : axis)
+		std::vector<vec3> axes;
+		bool pushed = false;
+		for (vec3 n1 : s1.GetEdgeNormals())
 		{
-			// do axis check
+			axes.push_back(n1);
+			for (vec3 n2 : s2.GetEdgeNormals())
+			{
+				if (!pushed)
+				{
+					axes.push_back(n2);
+				}
+				axes.push_back(glm::cross(n1, n2));
+			}
+			pushed = true;
 		}
-		return false;
+
+		std::vector<vec3> pos1 = s1.GetTransformedPos();
+		std::vector<vec3> pos2 = s2.GetTransformedPos();
+		for (vec3 axis : axes)
+		{
+			NRange r1 = MinMaxScalarProjection(pos1, axis);
+			NRange r2 = MinMaxScalarProjection(pos2, axis);
+			if (!RangesOverlap(r1, r2))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	bool RangesOverlap(NRange r1, NRange r2)
+	{
+		return r1.Min <= r2.Max && r1.Max >= r2.Min;
+	}
+
+	NRange MinMaxScalarProjection(std::vector<vec3> positions, vec3 axis)
+	{
+		float min = 99999.f;
+		float max = 0.f;
+		vec3 posMin = vec3(0.f);
+		vec3 posMax = vec3(0.f);
+		for (unsigned int i = 0; i < positions.size(); i++)
+		{
+			float scalarProj = glm::dot(positions[i], axis);
+			if (scalarProj < min)
+			{
+				min = scalarProj;
+				posMin = positions[i];
+			}
+		}
+
+		for (unsigned int i = 0; i < positions.size(); i++)
+		{
+			float scalarProj = glm::dot(positions[i], axis);
+			if (scalarProj > max)
+			{
+				max = scalarProj;
+				posMax = positions[i];
+			}
+		}
+		return NRange(min, max);
+	}
+
+	NShape::NShape()
+	{
+		Rotation = vec3(0.f);
+		Scale = vec3(1.f);
+	}
+
+	NShape::NShape(vec3 rot, vec3 scale)
+	{
+		Rotation = rot;
+		Scale = scale;
+	}
+
+	NShape::NShape(std::vector<vec3> positions, std::vector<vec3> normals, vec3 rot, vec3 scale)
+	{
+		Vertices = positions;
+		Normals = normals;
+		Rotation = rot;
+		Scale = scale;
+	}
+
+	void NShape::AddPosition(vec3 pos)
+	{
+		Vertices.push_back(pos);
+	}
+
+	void NShape::AddNormal(vec3 norm)
+	{
+		Normals.push_back(norm);
+	}
+
+	mat4 NShape::GetModel()
+	{
+		mat4 model = mat4(1.f);
+		model = glm::translate(model, Position);
+		model = glm::scale(model, Scale / 2.f);
+		model = glm::rotate(model, radians(Rotation.x), vec3(1.f, 0.f, 0.f));
+		model = glm::rotate(model, radians(Rotation.y), vec3(0.f, 1.f, 0.f));
+		model = glm::rotate(model, radians(Rotation.z), vec3(0.f, 0.f, 1.f));
+		return model;
+	}
+
+	std::vector<vec3> NShape::GetTransformedPos()
+	{
+		std::vector<vec3> transfPos;
+		mat4 model = GetModel();
+		for (vec3 pos : Vertices)
+		{
+			vec3 transformed = model * vec4(pos, 1.f);
+			transfPos.push_back(transformed);
+		}
+		return transfPos;
+	}
+
+	std::vector<vec3> NShape::GetEdgeNormals()
+	{
+		std::vector<vec3> edgeNormals;
+		for (vec3 normal : Normals)
+		{
+			bool exists = false;
+			vec3 absNormal = Math::Abs(normal);
+			for (vec3 edgeNormal : edgeNormals)
+			{
+				if (absNormal == edgeNormal)
+				{
+					exists = true;
+					break;
+				}
+			}
+			if (!exists)
+			{
+				edgeNormals.push_back(absNormal);
+			}
+		}
+
+		for (vec3 n : edgeNormals)
+		{
+			n = glm::normalize(GetModel() * vec4(n, 1.f));
+		}
+		return edgeNormals;
+	}
+
+	NBox NShape::GetBoundingBox()
+	{
+		NBox box;
+		box.RangeX = NRange(99999.f, 0.f);
+		box.RangeY = NRange(99999.f, 0.f);
+		box.RangeZ = NRange(99999.f, 0.f);
+		for (vec3 pos : Vertices)
+		{
+			// mins
+			if (pos.x < box.RangeX.Min)
+			{
+				box.RangeX.Min = pos.x;
+			}
+			if (pos.y < box.RangeY.Min)
+			{
+				box.RangeY.Min = pos.y;
+			}
+			if (pos.z < box.RangeZ.Min)
+			{
+				box.RangeZ.Min = pos.z;
+			}
+
+			// maxs
+			if (pos.x > box.RangeX.Max)
+			{
+				box.RangeX.Max = pos.x;
+			}
+			if (pos.y > box.RangeY.Max)
+			{
+				box.RangeY.Max = pos.y;
+			}
+			if (pos.z > box.RangeZ.Max)
+			{
+				box.RangeZ.Max = pos.z;
+			}
+		}
+		return box;
 	}
 }

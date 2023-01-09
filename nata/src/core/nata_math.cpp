@@ -56,4 +56,15 @@ namespace Math
 		float fy = min.y + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (max.y - min.y)));
 		return vec2(fx, fy);
 	}
+	vec3 Abs(vec3 v)
+	{
+		vec3 temp = vec3(0.f);
+		if (v != vec3(0.f))
+		{
+			temp.x = std::abs(v.x);
+			temp.y = std::abs(v.y);
+			temp.z = std::abs(v.z);
+		}
+		return temp;
+	}
 }

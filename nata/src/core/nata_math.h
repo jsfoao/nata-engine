@@ -17,4 +17,6 @@ namespace Math
 	float Random(float min, float max);
 	vec3 Random(vec3 min, vec3 max);
 	vec2 Random(vec2 min, vec2 max);
+
+	vec3 Abs(vec3 v);
 }

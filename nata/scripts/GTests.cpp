@@ -3,9 +3,9 @@
 void GTests::Begin()
 {
 	NEngine::Camera = Instantiate<ECamera>(GetWorld())->Camera;
-	ETestObject* obj1 = Instantiate<ETestObject>(GetWorld(), vec3(0.f, 2.f, 0.f), vec3(0.f, 0.f, 0.f));
+	ETestObject* obj1 = Instantiate<ETestObject>(GetWorld(), vec3(5.f, 2.f, 0.f), vec3(0.f, 0.f, 0.f));
 	obj1->InputEnabled = true;
-	ETestObject* obj2 = Instantiate<ETestObject>(GetWorld(), vec3(2.f, 2.f, 0.f), vec3(0.f));
+	ETestObject* obj2 = Instantiate<ETestObject>(GetWorld(), vec3(0.f, 2.f, 0.f), vec3(0.f));
 	obj1->Target = obj2;
 	obj2->Target = obj1;
 
