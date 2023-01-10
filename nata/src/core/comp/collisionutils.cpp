@@ -181,6 +181,11 @@ namespace Nata
 	std::vector<vec3> NShape::GetEdgeNormals()
 	{
 		std::vector<vec3> edgeNormals;
+		mat4 model = mat4(1.f);
+		model = glm::rotate(model, radians(Rotation.x), vec3(1.f, 0.f, 0.f));
+		model = glm::rotate(model, radians(Rotation.y), vec3(0.f, 1.f, 0.f));
+		model = glm::rotate(model, radians(Rotation.z), vec3(0.f, 0.f, 1.f));
+
 		for (vec3 normal : Normals)
 		{
 			bool exists = false;
@@ -199,9 +204,9 @@ namespace Nata
 			}
 		}
 
-		for (vec3 n : edgeNormals)
+		for (vec3& n : edgeNormals)
 		{
-			n = glm::normalize(GetModel() * vec4(n, 1.f));
+			n = glm::normalize(model * vec4(n, 1.f));
 		}
 		return edgeNormals;
 	}
@@ -212,34 +217,38 @@ namespace Nata
 		box.RangeX = NRange(99999.f, 0.f);
 		box.RangeY = NRange(99999.f, 0.f);
 		box.RangeZ = NRange(99999.f, 0.f);
+
+		mat4 model = GetModel();
 		for (vec3 pos : Vertices)
 		{
+			vec3 transformed = model * vec4(pos, 1.f);
+
 			// mins
-			if (pos.x < box.RangeX.Min)
+			if (transformed.x < box.RangeX.Min)
 			{
-				box.RangeX.Min = pos.x;
+				box.RangeX.Min = transformed.x;
 			}
-			if (pos.y < box.RangeY.Min)
+			if (transformed.y < box.RangeY.Min)
 			{
-				box.RangeY.Min = pos.y;
+				box.RangeY.Min = transformed.y;
 			}
-			if (pos.z < box.RangeZ.Min)
+			if (transformed.z < box.RangeZ.Min)
 			{
-				box.RangeZ.Min = pos.z;
+				box.RangeZ.Min = transformed.z;
 			}
 
 			// maxs
-			if (pos.x > box.RangeX.Max)
+			if (transformed.x > box.RangeX.Max)
 			{
-				box.RangeX.Max = pos.x;
+				box.RangeX.Max = transformed.x;
 			}
-			if (pos.y > box.RangeY.Max)
+			if (transformed.y > box.RangeY.Max)
 			{
-				box.RangeY.Max = pos.y;
+				box.RangeY.Max = transformed.y;
 			}
-			if (pos.z > box.RangeZ.Max)
+			if (transformed.z > box.RangeZ.Max)
 			{
-				box.RangeZ.Max = pos.z;
+				box.RangeZ.Max = transformed.z;
 			}
 		}
 		return box;

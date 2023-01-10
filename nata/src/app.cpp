@@ -16,6 +16,7 @@ namespace Nata
 			NEngine::World = NWorld::Init();
 			NEngine::World->SetGameMode(GGameMode::Init<GTests>());
 			NModel::Create("res\\models\\cube.obj", "res\\assets", "CubeTest");
+			NModel::Create("res\\models\\sphere.obj", "res\\assets", "SphereTest");
 			NShader::Create("res\\shaders\\diffuse.vert", "res\\shaders\\diffuse.frag", "res\\assets", "DiffuseShader");
 			NShader::Create("res\\shaders\\unlit.vert", "res\\shaders\\unlit.frag", "res\\assets", "UnlitShader");
 		}
