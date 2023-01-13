@@ -12,13 +12,6 @@ Nata Engine is a simple data-driven game engine built from the ground up in C++ 
 ![Demo](/docs/satcollision.gif  "Collisions")
 ![Demo](/docs/lightsources.gif  "Lighting")
 
-## Dependencies
- * [glfw](https://github.com/glfw/glfw) : A multi-platform library for OpenGL, OpenGL ES, Vulkan, window and input.
- * [glew](http://glew.sourceforge.net) : The OpenGL Extension Wrangler Library.
- * [glm](https://github.com/g-truc/glm) : OpenGL Mathematics (GLM) is a header only C++ mathematics library for graphics software based on the OpenGL Shading Language (GLSL) specifications.
-* [Assimp](https://www.assimp.org) : The Open Asset Import Library (short name: Assimp) is a portable Open-Source library to import various well-known 3D model formats in a uniform manner.
-* [imgui](http://glew.sourceforge.net) : Graphical user interface library.
-
 ## Roadmap
  * UI and screen space
  * Particle System
@@ -26,6 +19,13 @@ Nata Engine is a simple data-driven game engine built from the ground up in C++ 
  * Better logging and debugging
  * Networking
  * Editor graphical interface
+ 
+ ## Dependencies
+ * [glfw](https://github.com/glfw/glfw) : A multi-platform library for OpenGL, OpenGL ES, Vulkan, window and input.
+ * [glew](http://glew.sourceforge.net) : The OpenGL Extension Wrangler Library.
+ * [glm](https://github.com/g-truc/glm) : OpenGL Mathematics (GLM) is a header only C++ mathematics library for graphics software based on the OpenGL Shading Language (GLSL) specifications.
+* [Assimp](https://www.assimp.org) : The Open Asset Import Library (short name: Assimp) is a portable Open-Source library to import various well-known 3D model formats in a uniform manner.
+* [imgui](http://glew.sourceforge.net) : Graphical user interface library.
 
 ## Resources
 - [Learn OpenGL](https://learnopengl.com/)
