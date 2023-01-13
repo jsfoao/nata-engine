@@ -7,9 +7,6 @@ namespace Nata
 	CBoxCollider::CBoxCollider() : CCollider()
 	{
 		Name = "BoxCollider";
-		LockPosition = true;
-		LockRotation = true;
-		LockScale = true;
 		AddOnCollisionCallback(OnCollision);
 		AddOnCollisionEnterCallback(OnCollisionEnter);
 		AddOnCollisionExitCallback(OnCollisionExit);
@@ -21,6 +18,7 @@ namespace Nata
 
 	void CBoxCollider::Begin()
 	{
+		SuperBegin();
 		vec3 position = Transform->Position;
 		vec3 rotation = Transform->Rotation;
 		vec3 scale = Transform->Scale;
@@ -35,6 +33,7 @@ namespace Nata
 
 	void CBoxCollider::Tick(float dt)
 	{
+		SuperTick(dt);
 		vec3 position = Transform->Position;
 		vec3 rotation = Transform->Rotation;
 		vec3 scale = Transform->Scale;

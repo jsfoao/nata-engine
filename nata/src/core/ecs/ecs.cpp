@@ -17,6 +17,7 @@ namespace Nata
 	{
 		std::tuple<NObject*, bool> state = std::make_tuple(this, enable);
 		m_World->m_EnableQueue.push(state);
+		m_Enabled = enable;
 	}
 
 	CComponent::CComponent() : NObject()
@@ -99,7 +100,6 @@ namespace Nata
 
 	EEntity::EEntity() : NObject()
 	{
-		SetEnable(true);
 		Transform = AddComponent<CTransform>();
 	}
 
@@ -113,7 +113,6 @@ namespace Nata
 
 	void EEntity::Super_OnEnable()
 	{
-		m_Enabled = true;
 		m_World->m_Enabled.push_back(this);
 		for (auto& comp : m_Components)
 		{
@@ -162,6 +161,10 @@ namespace Nata
 			return;
 
 		Super_SetEnable(enable);
+		for (auto& comp : m_Components)
+		{
+			comp->SetEnable(comp->m_PreEnable);
+		}
 
 		if (!m_Began)
 		{
@@ -323,6 +326,13 @@ namespace Nata
 		m_Parent = nullptr;
 		m_IsParented = false;
 		m_Enabled = false;
+	}
+
+	CTransform::CTransform(vec3 position, vec3 rotation, vec3 scale) : CComponent()
+	{
+		Position = position;
+		Rotation = rotation;
+		Scale = scale;
 	}
 
 	void CTransform::SetParent(CTransform* parent)

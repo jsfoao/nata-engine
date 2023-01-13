@@ -5,7 +5,7 @@
 
 int main(int argc, char** argv)
 {
-	NWindow* window = new NWindow("Game", NEngine::WindowSizeX, NEngine::WindowSizeY);
+	NWindow* window = new NWindow("Nata", NEngine::WindowSizeX, NEngine::WindowSizeY);
 
 	NRenderer* renderer = window->GetRenderer();
 	NEngine::Window = window;

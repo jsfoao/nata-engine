@@ -14,8 +14,8 @@ namespace Nata
 		ECamera() : EEntity()
 		{
 			Camera = AddComponent<CCamera>();
-			Transform->Rotation = vec3(0.f, -90.f, 0.f);
-			Transform->Position = vec3(0.f, 0.f, 10.f);
+			Transform->Rotation = vec3(-30.f, -90.f, 0.f);
+			Transform->Position = vec3(0.f, 8.f, 10.f);
 		}
 
 		void Tick(float dt) override

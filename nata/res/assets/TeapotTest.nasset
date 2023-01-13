@@ -1,0 +1,6 @@
+#NataAsset
+Type=2
+Name=TeapotTest
+ID=1
+Path=res\assets
+ObjectPath=res\models\teapot.obj

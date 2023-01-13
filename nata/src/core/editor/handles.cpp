@@ -124,9 +124,9 @@ namespace Nata
         {
             return;
         }
-        DrawCircle(pos, 2.f, vec3(1.f, 0.f, 0.f), color);
-        DrawCircle(pos, 2.f, vec3(0.f, 1.f, 0.f), color);
-        DrawCircle(pos, 2.f, vec3(0.f, 0.f, 1.f), color);
+        DrawCircle(pos, radius, vec3(1.f, 0.f, 0.f), color);
+        DrawCircle(pos, radius, vec3(0.f, 1.f, 0.f), color);
+        DrawCircle(pos, radius, vec3(0.f, 0.f, 1.f), color);
     }
 
     void Handles::DrawCircle(const vec3& pos, const float radius, const vec3& normal, const vec3& color, const int segments)
